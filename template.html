@@ -1,0 +1,3050 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Archive Index — Carol Christian Poell</title>
+<meta name="description" content="현재 판매 중인 캐롤 크리스찬 포엘 매물">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#121110">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Two families, one request. Inter for what is read, IBM Plex Mono for what
+     is looked up: model numbers, seasons, prices, labels. Korean falls to the
+     device's own sans, as on the Helmut Lang index.                        -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* A dark sheet: black leather, raw grey, object-dyed brown in the photos
+     themselves; the page stays out of their way with no colour of its own.
+     Contrast on --paper, measured: ink 15.5 > mid 8.7 > soft 5.4 (on the
+     photo tint 14.5 · 8.1 · 5.1 — every text size passes 4.5:1) · line 3.3,
+     for the hairline marks only, never text.                             */
+  --paper:#121110; --ink:#ece8e1; --mid:#b5afa5; --soft:#8f897f;
+  --line:#6a655d;
+  --hair:#2b2926; --hair2:#1e1c1a; --tint:#1a1817;
+  /* Plex Mono has no Hangul: a Korean word in a mono line falls, glyph by
+     glyph, past the Latin monospaces to the device's own Korean sans      */
+  --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,Consolas,'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR','Noto Sans CJK KR',monospace;
+  --sans:'Inter','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR','Noto Sans CJK KR',system-ui,sans-serif;
+  --gut:36px; --cols:5; --gapc:24px; --gapr:50px; --maxw:1840px; --barh:46px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);overflow-x:hidden;
+  /* Korean falls to the device's own sans; Noto Sans KR is named last for
+     anyone who happens to have it installed, never downloaded. */
+  font-family:var(--sans);
+  font-size:13px;line-height:1.6;font-weight:400;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button,input,select{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0}
+button{cursor:pointer}
+::selection{background:var(--ink);color:var(--paper)}
+.srf{font-family:var(--sans);font-weight:300}
+.lbl{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1}
+
+/* ─────────── masthead ─────────── */
+.mast{padding:40px var(--gut) 30px;text-align:left}
+.mast .kicker{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);
+  margin-bottom:22px}
+.wm{font-family:var(--mono);font-weight:500;
+  font-size:11px;letter-spacing:.32em;text-transform:uppercase;line-height:1.2;margin:0;color:var(--mid)}
+.mast .sub{margin-top:10px;font-family:var(--sans);font-weight:300;font-size:clamp(24px,3.4vw,40px);
+  letter-spacing:-.01em;line-height:1.1;color:var(--ink)}
+.mast .tally{margin-top:16px;font-family:var(--mono);font-size:10.5px;color:var(--soft);letter-spacing:.04em}
+.mast .tally b{font-weight:400;color:var(--mid)}
+
+/* ─────────── nav bar ─────────── */
+.navwrap{position:sticky;top:0;z-index:40;background:var(--paper);
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.nav{display:flex;align-items:center;gap:26px;padding:0 var(--gut);height:46px}
+.cats{display:flex;align-items:center;gap:20px;flex:1;min-width:0;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none;height:100%}
+.cats::-webkit-scrollbar{display:none}
+.cats button{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--mid);
+  white-space:nowrap;position:relative;height:100%;transition:color .15s}
+.cats button:hover{color:var(--ink)}
+.cats button[aria-pressed="true"]{color:var(--ink)}
+.cats button[aria-pressed="true"]::after{content:'';position:absolute;left:0;right:0;bottom:-1px;
+  height:1px;background:var(--ink)}
+.tools{display:flex;align-items:center;gap:18px;flex:none}
+.tools button,.tools label{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--mid);
+  white-space:nowrap;transition:color .15s}
+.tools button:hover{color:var(--ink)}
+.tools button[aria-expanded="true"],.tools button[aria-pressed="true"]{color:var(--ink)}
+.tools .n{color:var(--soft);margin-left:4px}
+.selwrap{position:relative;display:flex;align-items:center}
+.selwrap select{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--mid);
+  -webkit-appearance:none;appearance:none;padding-right:14px;cursor:pointer;outline:0}
+.selwrap::after{content:'';position:absolute;right:2px;top:50%;width:5px;height:5px;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.qbox{display:flex;align-items:center;gap:9px;flex:none;width:0;overflow:hidden;
+  transition:width .28s cubic-bezier(.3,0,.2,1)}
+.qbox.on{width:min(280px,34vw)}
+.qbox input{width:100%;font-size:12px;outline:0;border-bottom:1px solid var(--hair);padding:3px 0;
+  background:transparent}
+/* the closed box is 0 wide, not gone: the field stayed in the tab order and a
+   keyboard user landed in an invisible input under a button saying collapsed.
+   The hiding waits out the width transition, or the text blinks away first. */
+.qbox input{transition:visibility 0s linear .28s}
+.qbox.on input{transition:visibility 0s}
+.qbox:not(.on) input{visibility:hidden}
+.qbox input::placeholder{color:var(--soft)}
+.qbox input:focus{border-bottom-color:var(--ink)}
+
+/* ─────────── filter panel ─────────── */
+.panel{display:none;border-bottom:1px solid var(--hair);background:var(--paper);
+  padding:34px var(--gut) 0;max-height:calc(100vh - 47px);overflow-y:auto;
+  position:sticky;top:46px;z-index:39}
+.panel::-webkit-scrollbar{width:4px}
+.panel::-webkit-scrollbar-thumb{background:var(--hair)}
+.panel.on{display:block}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:30px 34px;
+  max-width:1560px}
+@media(min-width:960px){
+  .pcol.wide{grid-column:span 2}
+  #fmotif{column-count:2;column-gap:34px}
+  #fmotif .opt{break-inside:avoid}
+}
+.pcol>.lbl{display:block;margin-bottom:13px}
+.yread{margin-left:14px;color:var(--ink);letter-spacing:.12em;font-variant-numeric:tabular-nums}
+.opt{display:flex;align-items:center;font-size:12px;color:var(--mid);padding:3px 0;
+  line-height:1.5;transition:color .12s;text-align:left;width:100%}
+.opt:hover{color:var(--ink)}
+.opt[aria-pressed="true"]{color:var(--ink)}
+.opt[aria-pressed="true"] .mk{background:var(--ink)}
+.opt.zero{color:var(--hair);pointer-events:none}
+.opt.zero .mk{border-color:var(--hair)}
+.opt.zero .c{color:var(--hair)}
+.mk{flex:none;width:5px;height:5px;border:1px solid var(--line);border-radius:50%;
+  margin-right:8px;transition:.12s}
+.opt:hover .mk{border-color:var(--ink)}
+.opt .c{margin-left:auto;font-size:10px;color:var(--soft);padding-left:14px;
+  font-variant-numeric:tabular-nums}
+#fnoyear .opt{max-width:280px}
+.yrow{display:flex;gap:3px;max-width:680px;align-items:flex-end}
+.yr{flex:1;min-width:0;display:flex;flex-direction:column;transition:.12s}
+.yr .bw{height:36px;display:flex;align-items:flex-end}
+.yr .v{width:100%;background:var(--hair);transition:.12s}
+.yr .y{margin-top:7px;font-size:9px;letter-spacing:.02em;color:var(--soft);text-align:center;
+  font-variant-numeric:tabular-nums;transition:.12s;padding-top:6px;border-top:1px solid var(--hair2)}
+.yr:hover .y{color:var(--ink)}
+.yr:hover .v{background:var(--line)}
+.yr[aria-pressed="true"] .y{color:var(--ink)}
+.yr[aria-pressed="true"] .v{background:var(--ink)}
+.sizein{width:100%;font-size:12px;border-bottom:1px solid var(--hair);padding:4px 0;outline:0;
+  background:transparent}
+.sizein:focus{border-bottom-color:var(--ink)}
+.sizein::placeholder{color:var(--soft)}
+.prow{display:flex;justify-content:space-between;align-items:center;margin-top:28px;
+  padding:14px 0;border-top:1px solid var(--hair2);position:sticky;bottom:0;background:var(--paper)}
+.prow button{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid)}
+.prow button:hover{color:var(--ink)}
+.prow .apply{color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px}
+
+/* ─────────── applied tokens ─────────── */
+.applied{display:none;align-items:center;flex-wrap:wrap;gap:8px 18px;
+  padding:13px var(--gut);border-bottom:1px solid var(--hair2)}
+.applied.on{display:flex}
+.tok{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mid);
+  display:inline-flex;align-items:center;gap:7px}
+.tok:hover{color:var(--ink)}
+.tok i{font-style:normal;font-size:12px;line-height:1;color:var(--soft)}
+.tok:hover i{color:var(--ink)}
+.applied .rst{margin-left:auto;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--soft)}
+.applied .rst:hover{color:var(--ink)}
+
+/* ─────────── grid ─────────── */
+main{padding:0 var(--gut)}
+.head{display:flex;align-items:baseline;justify-content:space-between;
+  padding:34px 0 26px}
+.head .h{font-family:var(--sans);font-weight:300;font-size:17px;
+  letter-spacing:0}
+.head .n{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);
+  font-variant-numeric:tabular-nums}
+.dist{font-size:10.5px;letter-spacing:.07em;color:var(--soft);
+  padding:0 0 26px;margin-top:-14px;line-height:1.95;overflow-wrap:anywhere}
+.dist>div+div{margin-top:2px}
+.dist .yv{display:inline-block;margin-right:15px;white-space:nowrap}
+.dist .lead{display:inline-block;margin-right:13px;text-transform:uppercase;letter-spacing:.15em;
+  font-size:9px;color:var(--soft)}
+.dist b{font-weight:400;color:var(--mid);font-variant-numeric:tabular-nums}
+.dist .q{font-variant-numeric:tabular-nums;color:var(--soft)}
+.dist .sep{margin:0 12px;color:var(--hair)}
+/* arrowing down scrolls the card into view; without this it lands under the
+   bar that is pinned to the top */
+article{scroll-margin-top:calc(var(--barh) + 14px)}
+.grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));
+  gap:var(--gapr) var(--gapc);padding-bottom:20px}
+article{position:relative;display:flex;flex-direction:column}
+.shot{position:relative;display:block;width:100%;aspect-ratio:4/5;background:var(--tint);
+  overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease}
+.shot img.on{opacity:1}
+.shot.dead::after{content:'NO IMAGE';position:absolute;inset:0;display:grid;place-items:center;
+  font-size:8.5px;letter-spacing:.2em;color:var(--mid)}
+.save{position:absolute;top:10px;right:10px;z-index:2;width:22px;height:22px;
+  display:grid;place-items:center;opacity:0;transition:opacity .15s}
+article:hover .save,.save.on,.save:focus-visible{opacity:1}
+.save span{width:7px;height:7px;border:1px solid var(--ink);border-radius:50%;display:block;
+  background:transparent;transition:.12s}
+.save.on span{background:var(--ink)}
+.cap{padding-top:13px}
+.flags{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);
+  margin-bottom:6px;min-height:13px}
+.flags .s{color:var(--soft)}
+.flags .d{color:var(--mid)}
+.flags span+span::before{content:'·';margin:0 6px;color:var(--soft)}
+h3.t{margin:0 0 7px;font-family:var(--sans);font-weight:400;
+  font-size:13.5px;line-height:1.42;letter-spacing:0;color:var(--ink);overflow-wrap:anywhere;min-height:2.76em;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+h3.t button{text-align:left;font:inherit;width:100%;transition:opacity .12s}
+h3.t button:hover{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:.5px}
+.p{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;letter-spacing:0}
+.p .alt{color:var(--soft);margin-left:7px;font-size:11px}
+.p .was{color:var(--soft);text-decoration:line-through;margin-left:7px;font-size:11px}
+.sub{margin-top:5px;font-size:11px;letter-spacing:.04em;color:var(--soft);overflow-wrap:anywhere}
+.sub .g{color:var(--mid)}
+.sub .age{color:var(--mid)}
+.qv .hist{margin-top:26px;padding-top:16px;border-top:1px solid var(--hair2)}
+.qv .hist .lbl{display:block;margin-bottom:10px}
+.qv .hist>div{display:flex;justify-content:space-between;gap:16px;padding:5px 0;font-size:12px;
+  color:var(--soft);border-bottom:1px solid var(--hair2)}
+.qv .hist>div b{font-weight:400;color:var(--mid);font-variant-numeric:tabular-nums}
+.qv .hist>div b .alt{color:var(--soft);margin-left:8px;font-size:11px}
+.qv .hist em{font-style:normal;margin-left:9px;font-size:11px}
+.qv .hist em.dn{color:var(--ink)} .qv .hist em.up{color:var(--soft)}
+.qv .hist .net{border:0;padding-top:9px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mid);justify-content:flex-start}
+
+/* ─────────── states ─────────── */
+.empty{padding:110px 0 140px;text-align:center;color:var(--mid);font-size:13px}
+.empty .lbl{display:block;margin-bottom:14px}
+.empty p{margin:0 0 26px;font-weight:300}
+.empty .drop{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:26px}
+.empty .drop button{font-size:12px;color:var(--mid);padding:5px 0;display:flex;
+  align-items:baseline;gap:12px}
+.empty .drop button:hover{color:var(--ink)}
+.empty .drop button span{font-size:10px;color:var(--soft);font-variant-numeric:tabular-nums}
+.empty .rst{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);
+  border-bottom:1px solid var(--hair);padding-bottom:3px}
+.empty .rst:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.more{padding:34px 0 80px;text-align:center}
+.more button{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);
+  border-bottom:1px solid var(--hair);padding-bottom:4px}
+.more button:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* ─────────── elsewhere ───────────
+   Where a platform cannot be collected — its terms, its bot wall, or a
+   market that is local by design — the page still takes the search there,
+   in that platform's own language. One quiet block, not a button bar. */
+.seek{padding:30px 0 64px;border-top:1px solid var(--hair2)}
+.seek[hidden]{display:none}
+.seek .lbl{display:block;margin-bottom:5px}
+.seek .qq{display:block;font-size:11px;color:var(--mid);margin-bottom:14px;overflow-wrap:anywhere}
+.seek .mkt{display:flex;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--hair2);font-size:12px}
+.seek .mkt>span{flex:0 0 44px;font-size:9.5px;letter-spacing:.16em;color:var(--soft)}
+/* wrapped links line up under the first one, not under the market's name */
+.seek .ls{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 20px}
+.seek a{color:var(--mid);border-bottom:1px solid transparent;padding-bottom:1px}
+.seek a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.seek a i{font-style:normal;font-size:10px;color:var(--soft);margin-left:5px}
+.panel .seek{padding:22px 0 4px;margin-top:28px;max-width:1560px}
+.sub .ab{color:var(--mid)}
+.qv .sc{margin-top:26px;padding-top:16px;border-top:1px solid var(--hair2)}
+.qv .sc .lbl{display:block;margin-bottom:8px}
+.qv .sc p{margin:0;font-size:12px;color:var(--mid);font-variant-numeric:tabular-nums}
+
+/* ─────────── colophon ─────────── */
+footer{border-top:1px solid var(--hair);margin-top:24px;padding:46px var(--gut) 90px}
+.colo{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:30px 42px;
+  max-width:1560px}
+.colo .lbl{display:block;margin-bottom:10px}
+.colo p{margin:0;font-size:11.5px;line-height:1.75;color:var(--mid);font-weight:300}
+.sig{margin-top:44px;padding-top:18px;border-top:1px solid var(--hair2);
+  font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+
+/* ─────────── quick view ─────────── */
+.ov{position:fixed;inset:0;z-index:80;background:var(--paper);display:none;opacity:0;
+  transition:opacity .2s}
+.ov.open{display:block;opacity:1}
+.qvtop{position:absolute;top:0;left:0;right:0;height:52px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 var(--gut);z-index:3;
+  border-bottom:1px solid var(--hair);background:var(--paper)}
+.qvtop .lbl{color:var(--mid)}
+.qvnav{display:flex;align-items:center;gap:20px}
+.qvnav button{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid)}
+.qvnav button:hover{color:var(--ink)}
+.qvnav button:disabled{color:var(--hair);cursor:default}
+.qv{position:absolute;top:52px;left:0;right:0;bottom:0;display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);overflow:hidden}
+.qv .pic{background:var(--tint);display:grid;place-items:center;overflow:hidden;position:relative}
+.qv .pic img{width:100%;height:100%;object-fit:contain;padding:34px}
+.qv .info{overflow-y:auto;padding:48px 44px 60px;border-left:1px solid var(--hair);
+  display:flex;flex-direction:column}
+.qv .info::-webkit-scrollbar{width:4px}
+.qv .info::-webkit-scrollbar-thumb{background:var(--hair)}
+.qv .flags{font-size:9px;letter-spacing:.17em;margin-bottom:14px}
+.qv h2{margin:0 0 22px;font-family:var(--sans);font-weight:300;
+  font-size:21px;line-height:1.35;overflow-wrap:anywhere}
+.qv .big{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums;letter-spacing:0}
+.qv .big .alt{font-size:12px;color:var(--soft);margin-left:9px}
+.qv .big .was{font-size:12px;color:var(--soft);text-decoration:line-through;margin-left:9px}
+.qv .kv{margin:30px 0 0;display:grid;grid-template-columns:72px 1fr;gap:10px 18px;font-size:12px}
+.qv .kv dt{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);
+  padding-top:2px}
+.qv .kv dd{margin:0;color:var(--mid)}
+.qv .tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px 14px}
+.qv .tags span{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+.qv .why{margin-top:16px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.qv .cmp{margin-top:32px;padding-top:16px;border-top:1px solid var(--hair2)}
+.qv .cmp .lbl{display:block;margin-bottom:10px}
+.qv .cmp a{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:12px;
+  color:var(--mid);border-bottom:1px solid var(--hair2)}
+.qv .cmp a img,.qv .cmp a .noimg{width:34px;height:42px;object-fit:cover;flex:none;
+  background:var(--tint);display:block}
+.qv .cmp a .w{flex:1;min-width:0;overflow-wrap:anywhere}
+.qv .cmp a b em{display:block;font-style:normal;font-size:10.5px;color:var(--soft);
+  text-align:right;margin-top:1px}
+.qv .cmp .gap{margin-top:10px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--soft);font-variant-numeric:tabular-nums}
+.qv .cmp a:hover{color:var(--ink)}
+.qv .cmp a b{font-weight:400;font-variant-numeric:tabular-nums}
+.qv .cmp a.lo{color:var(--ink)}
+.qv .cmp a.lo b{border-bottom:1px solid var(--ink);padding-bottom:1px}
+.qv .cmp a i{font-style:normal;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);margin-left:9px}
+.qv .kv .basis{font-size:10px;letter-spacing:.08em;color:var(--soft);display:block;margin-top:2px}
+.qv .cta{padding-top:42px;display:flex;align-items:center;gap:26px}
+.qv .cta a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+  border-bottom:1px solid var(--ink);padding-bottom:4px}
+.qv .cta button{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid)}
+.qv .cta button:hover{color:var(--ink)}
+.qvx{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid)}
+.qvx:hover{color:var(--ink)}
+
+.top{position:fixed;right:0;bottom:0;z-index:51;font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--mid);background:var(--paper);
+  padding:9px var(--gut) 11px;border-top:1px solid var(--hair2);border-left:1px solid var(--hair2);
+  opacity:0;pointer-events:none;transition:opacity .2s}
+.top.show{opacity:1;pointer-events:auto}
+.top:hover{color:var(--ink)}
+.kbd{position:fixed;left:0;bottom:0;z-index:50;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--soft);opacity:0;transition:opacity .2s;pointer-events:none;
+  background:var(--paper);padding:9px var(--gut) 11px;border-top:1px solid var(--hair2);
+  border-right:1px solid var(--hair2)}
+@media(hover:hover) and (min-width:1024px){ body:not(.noqv) .kbd.show{opacity:.92} }
+
+/* ─────────── device ladder ───────────
+   The column count is now stated per range instead of left to auto-fill.
+   auto-fill with a 230px floor gave 2 columns at 768px — a 347x434 photo,
+   about one garment per screen on an iPad held upright — and 9 columns at
+   2560px, where the eye cannot track a row. Stated counts hold the card
+   between roughly 220 and 285px at every width, which is the size the 4/5
+   photo was drawn for.                                                     */
+@media(max-width:399px){  :root{--gut:16px;--cols:2;--gapc:12px;--gapr:30px} }
+@media(min-width:400px) and (max-width:599px){  :root{--gut:20px;--cols:2;--gapc:14px;--gapr:34px} }
+@media(min-width:600px) and (max-width:767px){  :root{--gut:22px;--cols:3;--gapc:16px;--gapr:36px} }
+@media(min-width:768px) and (max-width:1023px){ :root{--gut:28px;--cols:3;--gapc:20px;--gapr:42px} }
+@media(min-width:1024px) and (max-width:1279px){:root{--gut:32px;--cols:4;--gapc:22px;--gapr:46px} }
+@media(min-width:1600px){ :root{--gut:44px;--cols:6;--gapc:26px;--gapr:54px} }
+
+/* One measure, centred, with the hairlines still running the full width:
+   the rule is structure and belongs to the window, the content does not. */
+.mast,.nav,.applied,main,.panel,footer,.qvtop{
+  padding-inline:max(var(--gut), calc((100% - var(--maxw))/2))}
+
+/* ─────────── type, by reading distance ───────────
+   The micro-type here is uppercase Latin, which stays legible small. Hangul
+   does not, and the card's own text is Hangul: size it on its own terms. */
+@media(max-width:767px){
+  h3.t{font-size:13.5px}
+  .p{font-size:12.5px}
+  .sub{font-size:11.5px;letter-spacing:.03em}
+  .dist{font-size:11px;line-height:1.85}
+  .opt{font-size:12.5px}
+  .colo p{font-size:12px}
+}
+@media(min-width:1280px){
+  h3.t{font-size:15px}
+  .p{font-size:13px}
+}
+
+/* ─────────── phone ─────────── */
+@media(max-width:767px){
+  :root{--barh:90px}
+  body{font-size:12.5px}
+  /* the masthead was eating 298px — 35% of the screen — before the first
+     photo. Trimmed to about 175px; the tally moved out entirely, it wrapped
+     to two lines and broke mid-word. */
+  .mast{padding:22px var(--gut) 16px}
+  .mast .kicker{margin-bottom:12px;font-size:9px}
+  .wm{font-size:10px;letter-spacing:.26em}
+  .mast .sub{margin-top:8px;font-size:23px}
+  .mast .tally{display:none}
+  .head{padding:18px 0 14px}
+  .head .h{font-size:15px}
+  /* One 48px line could not hold eight category tabs and four controls —
+     two and a half tabs were reachable. The tabs get their own line and the
+     controls get theirs; 40px more masthead buys back the whole navigation. */
+  .nav{flex-wrap:wrap;height:auto;gap:0;align-items:stretch}
+  .cats{order:1;flex:1 0 100%;height:48px;gap:17px}
+  .qbox{order:2}
+  .tools{order:3;flex:1 0 100%;height:42px;gap:0;justify-content:space-between;
+    border-top:1px solid var(--hair2)}
+  .tools button{flex:0 0 auto}
+  .nav.searching .cats{display:none}
+  .nav.searching .qbox{order:1;flex:1 0 100%;height:48px}
+  /* a 44vw search field could not hold a query; give it the row */
+  .qbox.on{width:100%}
+  .nav.searching .cats{display:none}
+  .panel{padding-top:22px}
+  .pgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}
+  .yrow{flex-wrap:wrap;gap:2px;max-width:none}
+  .yr{flex:0 0 calc(10% - 2px)}
+  .yr .bw{height:24px}
+  .dist .yv{margin-right:11px}
+  .dist .sep{margin:0 7px}
+  .kbd{display:none}
+  .qv h2{font-size:18px}
+  footer{padding-top:34px;padding-bottom:70px}
+}
+
+/* ─────────── tablet and under ─────────── */
+/* scoped away from the phone block above, which would otherwise be overridden
+   by this one purely because it comes later in the sheet */
+@media(min-width:768px) and (max-width:1023px){
+  .mast{padding-top:34px;padding-bottom:24px}
+  .mast .kicker{margin-bottom:18px}
+}
+/* shared by phone and tablet */
+@media(max-width:1023px){
+  /* the tab row scrolls. Fade its edge so a clipped word reads as more to
+     come rather than as a broken layout. */
+  .cats{mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent);
+    -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent)}
+  .cats.end{mask-image:none;-webkit-mask-image:none}
+  /* one column below a laptop: side by side, neither half is worth reading */
+  .qv{grid-template-columns:1fr;overflow-y:auto}
+  .qv .pic{max-height:48vh}
+  .qv .pic img{padding:18px}
+  .qv .info{border-left:0;border-top:1px solid var(--hair);padding:30px 26px 60px;overflow:visible}
+  .qv .cta{padding-top:30px}
+}
+/* the sticky panel hangs off the bar, and the bar is two rows on a phone */
+@media(max-width:767px){ .panel{top:90px;max-height:calc(100vh - 91px)} }
+@media(min-width:768px) and (max-width:1023px){
+  :root{--barh:48px}
+  .nav{height:48px}
+  .panel{top:48px;max-height:calc(100vh - 49px)}
+}
+
+/* ─────────── touch ───────────
+   Nothing here was reachable with a thumb: the smallest target measured
+   18px. These only apply where there is no mouse, so the desktop sheet
+   keeps its tight rhythm. */
+@media(hover:none),(max-width:1023px){
+  .cats button{min-height:48px;display:flex;align-items:center}
+  .tools button{min-height:44px;display:inline-flex;align-items:center}
+  .selwrap select{min-height:44px}
+  .opt{min-height:40px;padding:7px 0}
+  .yr{min-height:44px;justify-content:flex-end}
+  .save{opacity:1;width:44px;height:44px;top:0;right:0}
+  .prow button,.qvnav button,.more button,.applied .rst,.tok,.empty .drop button,
+  .empty .rst,.qvx,.top{min-height:44px;display:inline-flex;align-items:center}
+  .seek a{min-height:40px;display:inline-flex;align-items:center}
+  .sizein,.qbox input{min-height:40px}
+}
+
+/* ─────────── keyboard ───────────
+   There was no visible focus anywhere but the save mark, and the inputs and
+   selects had their ring removed outright. A hairline in ink instead of the
+   browser's blue, which would be the one saturated thing on the page. Only
+   :focus-visible, so a mouse click never draws it.                        */
+:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+.cats button:focus-visible,.tools button:focus-visible{outline-offset:-5px}
+.shot:focus-visible{outline:1px solid var(--ink);outline-offset:-1px}
+.save:focus-visible{outline-offset:-2px}
+.opt:focus-visible,.yr:focus-visible{outline-offset:1px}
+h3.t button:focus-visible{outline-offset:2px}
+.qbox input:focus-visible,.sizein:focus-visible{outline:0;
+  border-bottom-color:var(--ink);box-shadow:0 1px 0 0 var(--ink)}
+.selwrap select:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+.tok:focus-visible,.prow button:focus-visible,.qvnav button:focus-visible,
+.more button:focus-visible,.empty button:focus-visible{outline-offset:2px}
+
+/* ─────────── 찾는 물건 ───────────
+   A search the reader keeps. The bar under the navigation only appears when
+   one of them has something the reader has not been shown yet.          */
+.wbar{display:none;align-items:baseline;flex-wrap:wrap;gap:6px 18px;
+  padding-block:12px;padding-inline:max(var(--gut), calc((100% - var(--maxw))/2));
+  border-bottom:1px solid var(--hair2);font-size:11px;color:var(--mid)}
+.wbar.on{display:flex}
+.wbar .lbl{margin-right:2px}
+.wbar button{font-size:11px;color:var(--ink);border-bottom:1px solid var(--hair);padding-bottom:1px;
+  text-align:left;overflow-wrap:anywhere}
+.wbar button:hover{border-bottom-color:var(--ink)}
+.wbar b{font-weight:400;margin-left:7px;font-variant-numeric:tabular-nums;color:var(--mid)}
+.wbar .wx{font-size:10.5px;color:var(--soft)}
+/* a second group in the bar starts on its own line */
+.wbar .wbr{flex-basis:100%;height:0}
+.wbar .wz{border:0;color:var(--soft);font-size:12px;line-height:1;padding:0 2px}
+.wbar .wz:hover{color:var(--ink)}
+.watch .wk{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:10px 0 0;font-size:12px}
+.watch .wk .c{font-size:10px;color:var(--soft);font-variant-numeric:tabular-nums}
+.watch .wk button{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);
+  border-bottom:1px solid var(--hair);padding-bottom:2px;white-space:nowrap}
+.watch .wk button:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.applied .wsv{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);
+  border-bottom:1px solid var(--hair);padding-bottom:2px}
+.applied .wsv:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.applied .wsv[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.applied .wsv:disabled{color:var(--soft);border-bottom-color:transparent;cursor:default}
+.panel .watch{margin-bottom:30px;max-width:680px}
+.panel .watch>.lbl{display:block;margin-bottom:8px}
+.watch .wr{display:flex;align-items:baseline;gap:14px;padding:6px 0;border-bottom:1px solid var(--hair2);font-size:12px}
+.watch .wo{flex:1;min-width:0;text-align:left;color:var(--mid);overflow-wrap:anywhere}
+.watch .wo:hover{color:var(--ink)}
+.watch .c{font-size:10px;color:var(--soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+.watch .nw{font-size:10px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.watch .wd{font-size:12px;line-height:1;color:var(--soft);padding:0 2px}
+.watch .wd:hover{color:var(--ink)}
+.watch p,.mysz p,.snote{margin:10px 0 0;font-size:10.5px;color:var(--soft);line-height:1.6;font-weight:400}
+.head{gap:4px 16px}
+.head .hn{margin-left:12px;font-family:'Inter','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  font-size:10.5px;letter-spacing:.06em;color:var(--mid);font-variant-numeric:tabular-nums}
+
+/* ─────────── 내 사이즈 ─────────── */
+.mytog{display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mid);border-bottom:1px solid var(--hair);padding-bottom:2px}
+.mytog:hover,.mytog[aria-expanded="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.mysz{grid-column:1/-1}
+.mysz[hidden]{display:none}
+.mysz>.lbl{display:block;margin-bottom:6px}
+.mysz .row{display:flex;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--hair2)}
+.mysz .row>span{flex:0 0 92px;font-size:9.5px;letter-spacing:.16em;color:var(--soft)}
+.mysz .chips{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:6px}
+.szc{font-size:11px;color:var(--mid);border:1px solid var(--hair);padding:3px 8px;line-height:1.4;
+  font-variant-numeric:tabular-nums;transition:.12s}
+.szc i{font-style:normal;font-size:9.5px;color:var(--soft);margin-left:5px}
+.szc:hover{color:var(--ink);border-color:var(--line)}
+.szc[aria-pressed="true"]{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+.szc[aria-pressed="true"] i{color:var(--hair)}
+
+/* ─────────── 목록 보기 ───────────
+   The same card, laid out as a row: nothing in it is dropped, so the save
+   mark, the keyboard walk and the detail view work unchanged. */
+.grid.list{grid-template-columns:minmax(0,1fr);gap:0;border-top:1px solid var(--hair2)}
+.grid.list article{flex-direction:row;align-items:flex-start;gap:16px;padding:12px 0;
+  border-bottom:1px solid var(--hair2)}
+.grid.list .shot{flex:0 0 64px;width:64px}
+.grid.list .save{top:10px}
+.grid.list .cap{flex:1;min-width:0;padding:0 40px 0 0;display:grid;
+  grid-template-columns:minmax(0,1fr) auto;column-gap:26px;align-items:baseline}
+.grid.list .flags{grid-column:1;margin-bottom:4px;min-height:0}
+.grid.list h3.t{grid-column:1;min-height:0;margin:0 0 3px;-webkit-line-clamp:1}
+.grid.list .p{grid-column:2;grid-row:1/span 2;text-align:right;white-space:nowrap}
+.grid.list .p .alt,.grid.list .p .was{display:block;margin-left:0}
+.grid.list .sub{grid-column:1/-1;margin-top:2px}
+.grid.list article{scroll-margin-top:calc(var(--barh) + 4px)}
+
+/* ─────────── photos ─────────── */
+.qv .pic.multi{grid-template-rows:minmax(0,1fr) auto;place-items:stretch}
+.qv .pic.multi>img{min-height:0}
+.qv .ths{display:flex;gap:6px;padding:0 34px 22px;overflow-x:auto;scrollbar-width:none}
+.qv .ths::-webkit-scrollbar{display:none}
+.qv .ths button{flex:0 0 44px;height:55px;opacity:.55;transition:opacity .12s;background:var(--paper)}
+/* auto margins centre the strip while it fits and give way when it scrolls */
+.qv .ths button:first-child{margin-left:auto}
+.qv .ths button:last-child{margin-right:auto}
+.qv .ths button:hover,.qv .ths button[aria-current="true"]{opacity:1}
+.qv .ths button[aria-current="true"]{outline:1px solid var(--ink);outline-offset:1px}
+.qv .ths img{width:100%;height:100%;object-fit:cover;padding:0}
+.qv .pic .pn{position:absolute;top:14px;right:18px;font-size:9.5px;letter-spacing:.16em;color:var(--soft)}
+
+@media(max-width:767px){
+  .grid.list article{gap:12px;padding:11px 0}
+  .grid.list .shot{flex-basis:56px;width:56px}
+  .grid.list .cap{grid-template-columns:minmax(0,1fr);padding-right:34px}
+  .grid.list h3.t{-webkit-line-clamp:2;font-size:13px}
+  .grid.list .p{grid-column:1;grid-row:auto;text-align:left;white-space:normal}
+  .grid.list .p .alt,.grid.list .p .was{display:inline;margin-left:7px}
+  .mysz .row{flex-direction:column;gap:7px}
+  /* on a phone the note under a kept search's name gets its own line */
+  .head .hn{display:block;margin:5px 0 0}
+  .head .hn:empty{display:none}
+  .mysz .row>span{flex:none}
+  .qv .ths{padding:0 18px 14px}
+}
+/* one column below a laptop: the photo box has no height of its own, and a
+   strip under it left the photo a sliver. Given one, the photo takes the rest. */
+@media(max-width:1023px){ .qv .pic.multi{height:min(60vh,640px);max-height:none} }
+@media(hover:none),(max-width:1023px){
+  .szc{min-height:36px;display:inline-flex;align-items:center}
+  .mytog,.applied .wsv,.wbar button,.watch .wo,.watch .wd,.watch .wk button{min-height:40px;display:inline-flex;align-items:center}
+  .grid.list .save{top:0}
+  .qv .ths button{flex-basis:48px;height:60px}
+}
+
+.sub .mc,.qv .kv .mc{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--mid)}
+.qv .kv .mc{font-size:12px;color:var(--ink)}
+/* the underline hugs the words whatever height a touch target gives the box */
+.qv .kv .code{margin-left:12px;font-size:10.5px;letter-spacing:.06em;color:var(--mid);
+  text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;text-decoration-thickness:1px}
+.qv .kv .code:hover{color:var(--ink);text-decoration-color:var(--ink)}
+.dist,.qv .kv dd,.qv .hist>div,.seek .qq{font-variant-numeric:tabular-nums}
+.tok,.prow button,.more button,.applied .rst,.qvnav button,.qv .cta a,.qv .cta button,.top,.kbd,
+.cats button,.tools button,.tools label,.selwrap select,.qvx,.wsv,.mytog{font-family:var(--mono);letter-spacing:.04em}
+/* thirty-odd seasons do not wrap into a phone's width; they run in one row
+   that scrolls, each bar still a 30px target, the edge fading while there is more */
+@media(max-width:767px){
+  .yrow{flex-wrap:nowrap;overflow-x:auto;gap:2px;scrollbar-width:none;padding-bottom:2px;
+    mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 24px),transparent);
+    -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 24px),transparent)}
+  .yrow::-webkit-scrollbar{display:none}
+  .yr{flex:0 0 30px}
+}
+@media(hover:none),(max-width:1023px){ .qv .kv .code{min-height:40px;display:inline-flex;align-items:center} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;scroll-behavior:auto!important} }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="kicker" id="kicker">—</div>
+  <h1 class="wm">Archive Index</h1>
+  <div class="sub">Carol Christian Poell</div>
+  <div class="tally" id="tally"></div>
+</header>
+
+<div class="navwrap">
+  <nav class="nav">
+    <div class="cats" id="cats"></div>
+    <div class="qbox" id="qbox"><input id="q" type="search" placeholder="품목·연도·번호" autocomplete="off" aria-label="검색"></div>
+    <div class="tools">
+      <button id="qtog" aria-expanded="false" aria-controls="qbox" aria-label="검색">검색</button>
+      <button id="stog" aria-pressed="false">저장<span class="n" id="sn"></span></button>
+      <button id="ftog" aria-expanded="false">필터<span class="n" id="fn"></span></button>
+      <button id="vtog" aria-pressed="false">목록</button>
+      <div class="selwrap"><select id="sort" aria-label="정렬">
+        <option value="k-" selected>가격 높은 순</option>
+        <option value="k+">가격 낮은 순</option>
+        <option value="y+">연도 오래된 순</option>
+        <option value="y-">연도 최신 순</option>
+        <option value="new">신규 순</option>
+        <option value="drop">가격 내린 순</option>
+        <option value="age">오래 남은 순</option>
+        <option value="rel" hidden>관련도 순</option>
+      </select></div>
+    </div>
+  </nav>
+</div>
+
+<section class="panel" id="panel" hidden>
+  <div class="watch" id="pwatch" hidden></div>
+  <div class="pgrid">
+    <div class="pcol" style="grid-column:1/-1">
+      <span class="lbl">연도<span class="yread" id="yread"></span></span>
+      <div class="yrow" id="fyear"></div>
+      <div id="fnoyear" style="margin-top:12px"></div>
+    </div>
+    <div class="pcol wide"><span class="lbl">기법·모델</span><div id="fmotif"></div></div>
+    <div class="pcol"><span class="lbl">가격</span><div id="fprice"></div>
+      <span class="lbl" style="display:block;margin:22px 0 11px">사이즈</span>
+      <input class="sizein" id="fsize" type="text" placeholder="48 · 44/46 · 9" autocomplete="off">
+      <button class="mytog" id="mytog" aria-expanded="false" aria-controls="mysz">내 사이즈 설정</button></div>
+    <div class="pcol"><span class="lbl">판매처</span><div id="fsrc"></div><p class="snote" id="fsrcnote" hidden></p></div>
+    <div class="pcol"><span class="lbl">연도 근거</span><div id="fcert"></div>
+      <span class="lbl" style="display:block;margin:22px 0 11px">그 밖에</span><div id="fflag"></div></div>
+    <div class="pcol" id="fmarkcol" hidden><span class="lbl">소재·표기</span><div id="fmark"></div></div>
+    <div class="pcol mysz" id="mysz" hidden></div>
+  </div>
+  <div class="seek" id="pseek"></div>
+  <div class="prow">
+    <button id="clear">모두 해제</button>
+    <button class="apply" id="pdone">닫기</button>
+  </div>
+</section>
+
+<div class="wbar" id="kbar" role="status" aria-live="polite"></div>
+<div class="wbar" id="wbar" role="status" aria-live="polite"></div>
+<div class="applied" id="applied"></div>
+
+<main>
+  <div class="head"><span class="h"><span id="hlabel">전체</span><span class="hn" id="hnote"></span></span>
+    <!-- pressing a filter changed the page and announced nothing -->
+    <span class="n num" id="count" role="status" aria-live="polite" aria-atomic="true">—</span></div>
+  <div class="dist" id="dist" hidden></div>
+  <div class="grid" id="grid"></div>
+  <div class="more" id="more" hidden><button id="moreBtn">더 보기</button></div>
+  <div class="empty" id="empty" hidden><span class="lbl">결과 없음</span></div>
+  <div class="seek" id="seek" hidden></div>
+</main>
+
+<footer><div class="colo" id="colo"></div><div class="sig" id="sig"></div></footer>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true">
+  <div class="qvtop">
+    <span class="lbl" id="qvpos"></span>
+    <div class="qvnav">
+      <button id="qvprev">이전</button><button id="qvnext">다음</button>
+      <button class="qvx" id="qvclose">닫기</button>
+    </div>
+  </div>
+  <div class="qv" id="qv"></div>
+</div>
+
+<button class="top" id="top">맨 위로</button>
+<div class="kbd">/ 검색 · F 필터 · ← ↑ ↓ → 이동 · ENTER 열기 · ESC 닫기</div>
+
+<script type="application/json" id="__data">/*__DATA__*/</script>
+<script>
+(function(){
+'use strict';
+var D=null, view=[], shown=0, BATCH=48, ALLNEW=false, saved={}, qvIdx=-1, qvScroll=null;
+// 목록 보기 is how this reader likes to read, not what a link shows: kept here only
+var LISTV=false; try{ LISTV=localStorage.getItem('ccpx.view')==='list' }catch(e){}
+var $=function(i){return document.getElementById(i)};
+var won=function(n){return Number(n||0).toLocaleString('ko-KR')};
+var SYM={USD:'$',GBP:'£',EUR:'€',JPY:'¥',KRW:'₩',CAD:'CA$',AUD:'A$',NZD:'NZ$',HKD:'HK$',SGD:'S$',CNY:'CN¥',CHF:'CHF ',
+  SEK:'SEK ',DKK:'DKK ',NOK:'NOK ',PLN:'PLN ',CZK:'CZK ',HUF:'HUF ',THB:'THB ',MXN:'MX$',BRL:'R$',INR:'₹',TRY:'TRY '};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+
+// The house's own names for what it did and what it made, as sellers write
+// them in Japanese, Korean and English. Only words in the title, each one
+// seen on real listings (2026-09-27). The label is how the page says it.
+var MOTIF=[['drip','드립',/drip|ドリップ|드립/i],
+ ['objectdyed','오브젝트 다이드',/object[\s-]*dy(?:ed|e)|\bo\.d\.(?=\s|$|["'“”])|製品染め|オブジェクトダイ|오브젝트\s*다이/i],
+ ['overlock','오버록',/over[\s-]*lock|オーバーロック|오버록/i],
+ ['deadend','데드엔드',/dead[\s-]*end|デッドエンド|데드\s*[엔앤]드/i],
+ ['chainseam','체인 심',/chain[\s-]*(?:seam|stitch)|チェーン\s*(?:シーム|ステッチ)|체인\s*(?:심|스티치)/i],
+ ['scarstitch','스카 스티치',/scar[\s-]*stitch|スカー\s*ステッチ|스카\s*스티치/i],
+ ['seamless','심리스',/seamless|no[\s-]?seam|シームレス|심리스/i],
+ ['reversible','리버시블',/reversible|リバーシブル|리버시블/i],
+ ['spiral','스파이럴',/spiral|スパイラル|스파이럴/i],
+ ['inbetween','인비트윈',/in[\s-]*between|インビトウィーン|인비트윈/i],
+ ['prosthetic','프로스테틱',/prosthetic|プロステティック|프로스테틱/i],
+ ['tornado','토네이도',/tornado|トルネード|토네이도/i],
+ ['diagonalzip','다이애거널 지퍼',/diagonal[\s-]*zip|ダイアゴナル|다이[애아]고?[널날]/i],
+ ['usole','U솔',/(?<![a-z])u[\s-]*sole|uソール|u\s*솔/i],
+ ['paperdart','페이퍼 다트',/paper[\s-]*dart|ペーパーダート|페이퍼\s*다트/i],
+ ['goodyear','굿이어',/good[\s-]*year|グッドイヤー|굿이어/i],
+ ['officer','오피서',/officer|オフィサー|오피서/i],
+ ['highneck','하이넥',/high[\s-]*neck|ハイネック|하이넥/i],
+ ['vestbag','베스트 백',/vest[\s-]*bag|ベストバッグ|베스트\s*백/i],
+ ['sample','샘플·런웨이',/sample|runway|サンプル|ランウェイ|샘플|런웨이/i]];
+
+/* ── three vocabularies ───────────────────────────────────────────────
+   The same garment is sold under three names — a Japanese seller writes
+   ボンデージ, a Korean one 본디지, a Grailed listing bondage — and a search in
+   any one of them has to find all three. One row per concept; the first word
+   in each language is what an outside search is sent. A row with no word for
+   a language sends nothing there rather than something wrong.            */
+var LEX=[
+ {m:'drip',en:['drip'],ja:['ドリップ'],ko:['드립']},
+ {m:'objectdyed',en:['object dyed'],ja:['製品染め'],ko:['오브젝트 다이드']},
+ {m:'overlock',en:['overlock'],ja:['オーバーロック'],ko:['오버록']},
+ {m:'deadend',en:['dead end','deadend'],ja:['デッドエンド'],ko:['데드엔드']},
+ {m:'chainseam',en:['chain seam','chainseam'],ko:['체인 심']},
+ {m:'scarstitch',en:['scar stitch'],ko:['스카스티치']},
+ {m:'seamless',en:['seamless'],ja:['シームレス'],ko:['심리스']},
+ {m:'reversible',en:['reversible'],ja:['リバーシブル'],ko:['리버시블']},
+ {m:'spiral',en:['spiral'],ja:['スパイラル'],ko:['스파이럴']},
+ {m:'inbetween',en:['in-between'],ko:['인비트윈']},
+ {m:'prosthetic',en:['prosthetic'],ja:['プロステティック'],ko:['프로스테틱']},
+ {m:'tornado',en:['tornado'],ja:['トルネード'],ko:['토네이도']},
+ {m:'diagonalzip',en:['diagonal zip'],ja:['ダイアゴナル'],ko:['다이애거널']},
+ {m:'usole',en:['u-sole','u sole'],ja:['uソール'],ko:['u솔']},
+ {m:'paperdart',en:['paper dart','paperdart'],ja:['ペーパーダート'],ko:['페이퍼 다트']},
+ {m:'goodyear',en:['goodyear'],ja:['グッドイヤー'],ko:['굿이어']},
+ {m:'officer',en:['officer'],ja:['オフィサー'],ko:['오피서']},
+ {m:'highneck',en:['high neck','highneck'],ja:['ハイネック'],ko:['하이넥']},
+ {m:'vestbag',en:['vest bag'],ja:['ベストバッグ'],ko:['베스트백']},
+ {m:'sample',en:['sample','runway'],ja:['サンプル','ランウェイ'],ko:['샘플','런웨이']},
+ {c:'신발',en:['boots','boot'],ja:['ブーツ'],ko:['부츠']},
+ {c:'셔츠',en:['shirt'],ja:['シャツ'],ko:['셔츠']},
+ {c:'상의',en:['knit','sweater'],ja:['ニット','セーター'],ko:['니트','스웨터']},
+ {c:'아우터',en:['jacket'],ja:['ジャケット'],ko:['자켓','재킷']},
+ {c:'데님',en:['denim','jeans'],ja:['デニム','ジーンズ'],ko:['데님','청바지']},
+ {c:'팬츠',en:['pants','trousers'],ja:['パンツ','スラックス','トラウザー'],ko:['팬츠','바지','슬랙스','트라우저']},
+ {c:'테일러링',en:['tailored','blazer'],ja:['テーラード','ブレザー'],ko:['테일러드','블레이저']},
+ {c:'가방·소품',en:['bag'],ja:['バッグ'],ko:['가방']},
+ {c:'주얼리',en:['ring'],ja:['リング','指輪'],ko:['반지','링']},
+ {en:['sneakers','sneaker'],ja:['スニーカー'],ko:['스니커즈']},
+ {en:['derby','derbys','shoes'],ja:['ダービー','シューズ'],ko:['더비','구두']},
+ {en:['sandals'],ja:['サンダル'],ko:['샌들']},
+ {en:['coat'],ja:['コート'],ko:['코트']},
+ {en:['parka'],ja:['パーカ'],ko:['파카']},
+ {en:['vest','gilet'],ja:['ベスト','ジレ'],ko:['베스트','조끼']},
+ {en:['suit','setup'],ja:['スーツ','セットアップ'],ko:['수트','셋업']},
+ {en:['t-shirt','tee'],ja:['tシャツ','カットソー'],ko:['티셔츠','반팔']},
+ {en:['cardigan'],ja:['カーディガン'],ko:['가디건']},
+ {en:['hoodie'],ja:['フーディ','パーカー'],ko:['후드']},
+ {en:['necklace'],ja:['ネックレス'],ko:['목걸이']},
+ {en:['bracelet'],ja:['ブレスレット'],ko:['팔찌']},
+ {en:['belt'],ja:['ベルト'],ko:['벨트']},
+ {en:['gloves','glove'],ja:['グローブ','手袋'],ko:['장갑']},
+ {en:['wallet'],ja:['財布','ウォレット'],ko:['지갑']},
+ {en:['leather'],ja:['レザー','革'],ko:['레더','가죽']},
+ {en:['kangaroo'],ja:['カンガルー'],ko:['캥거루']},
+ {en:['horse'],ja:['ホース','馬革'],ko:['홀스']},
+ {en:['cordovan'],ja:['コードバン'],ko:['코도반']},
+ {en:['titanium'],ja:['チタン'],ko:['티타늄']},
+ {en:['silver'],ja:['シルバー'],ko:['실버']},
+ {en:['rubber'],ja:['ラバー'],ko:['러버']},
+ {en:['wool'],ja:['ウール'],ko:['울']},
+ {en:['cotton'],ja:['コットン'],ko:['코튼']},
+ {en:['linen'],ja:['リネン'],ko:['린넨']},
+ {en:['ramie'],ja:['ラミー'],ko:['라미']},
+ {en:['black'],ja:['ブラック','黒'],ko:['블랙']},
+ {en:['white'],ja:['ホワイト','白'],ko:['화이트']},
+ {en:['archive'],ja:['アーカイブ'],ko:['아카이브']},
+ {en:['vintage'],ja:['ヴィンテージ','ビンテージ','古着'],ko:['빈티지']},
+ {en:['90s'],ja:['90年代'],ko:['90년대']},
+ {en:['early'],ja:['初期'],ko:['초기']},
+ {en:['new'],ja:['新品','未使用'],ko:['새상품','미착용']},
+ {en:['italy'],ja:['イタリア製','イタリア'],ko:['이탈리아']}
+];
+// every listing here is Carol Christian Poell; a brand word can only ever
+// narrow a search to the titles that happen to repeat it
+var BRANDNOISE=['carol','christian','poell','poel','carolchristianpoell','ccp','c.c.p','c.c.p.','キャロル','クリスチャン','ポエル',
+  'キャロルクリスチャンポエル','캐롤','크리스찬','크리스챤','포엘','캐롤크리스찬포엘','캐롤크리스챤포엘'];
+// the house's model numbers, written the ways sellers write one number:
+// AM/2601L · AM2601L · am 2601 · 2601 all find it
+function codeForms(c){
+  var m=/^(?:([A-Z]{1,2})\/)?(\d{4})([A-Z]{0,2})$/.exec(String(c||'').toUpperCase()); if(!m) return '';
+  var p=(m[1]||'').toLowerCase(), n=m[2], x=(m[3]||'').toLowerCase(), out=[n, n+x];
+  if(p) out.push(p+'/'+n, p+n, p+'/'+n+x, p+n+x);
+  return out.join(' ');
+}
+function codeNum(c){ var m=/(\d{4})/.exec(c||''); return m?m[1]:'' }
+var MAXY=new Date().getFullYear()+1, YMIN=1995, YMAX=MAXY;
+function nrm(x){
+  x=String(x==null?'':x);
+  try{ x=x.normalize('NFKC') }catch(e){}
+  return x.toLowerCase().replace(/[\u2018\u2019'`]/g,'').replace(/\s+/g,' ').trim();
+}
+var LEXW={};   // normalised word -> rows it belongs to
+(function(){
+  for(var r=0;r<LEX.length;r++){ var row=LEX[r];
+    ['en','ja','ko'].forEach(function(L){ (row[L]||[]).forEach(function(w){
+      var k=nrm(w); (LEXW[k]=LEXW[k]||[]).push(row) }) });
+  }
+})();
+function alts(t){
+  var rows=Object.prototype.hasOwnProperty.call(LEXW,t)?LEXW[t]:null, out=[t];
+  if(rows) rows.forEach(function(row){ ['en','ja','ko'].forEach(function(L){
+    (row[L]||[]).forEach(function(w){ w=nrm(w); if(out.indexOf(w)<0) out.push(w) }) }) });
+  return out;
+}
+var PRICE=[['~50만',0,500000],['50–150만',500000,1500000],['150–300만',1500000,3000000],['300만~',3000000,Infinity]];
+var CERT={A:'연도 표기',B:'시기 표기',C:'연도 미확인'};
+var FLAGLBL={'new':'신규','drop':'가격 내림','multi':'여러 곳 등록','saved':'저장함','gone':'사라진 매물',
+  'since':'지난 방문 이후','sold':'판매 기록','mine':'내 사이즈'};
+var CATORDER=['아우터','테일러링','셔츠','상의','팬츠','데님','신발','가방·소품','주얼리','기타'];
+var F={y:{},cat:{},motif:{},price:{},src:{},cert:{},mark:{},flag:{},size:'',q:''};
+var GRP={y:'연도',cat:'분류',motif:'기법·모델',price:'가격',src:'판매처',cert:'연도 근거',mark:'소재·표기',flag:''};
+// every group whose value is a set of picked options, in the order a link writes them
+var FG=['cat','y','motif','price','src','cert','mark','flag'];
+
+/* ── what the title says it is made of, and whether it is new ─────────────
+   Only where the seller wrote it. 'new' is also taken from the platform's
+   own condition field where a platform keeps one (cn).                    */
+var MARK=[
+ ['kangaroo','캥거루',/kangaroo|garoo|カンガルー|캥거루/i],
+ ['horse','홀스',/horse|ホース\s*(?:レザー|ハイド)|馬革|홀스|말가죽/i],
+ ['cordovan','코도반',/cordovan|コードバン|코도반/i],
+ ['bison','바이슨',/bison|バイソン|바이슨/i],
+ ['titanium','티타늄',/titanium|チタン|티타늄/i],
+ ['new','새 상품',/新品(?!\s*同様|\s*に近い)|未使用(?!\s*に近い)|未着用|デッドストック|deadstock|\bbnwt\b|\bnwt\b|new\s*with\s*tags|unworn|새상품|새\s*상품|미착용/i],
+ ['italy','Made in Italy',/made\s*in\s*italy|\bitaly[\s-]*made\b|イタリア製|이탈리아\s*제|이태리\s*제/i]];
+var MARKLBL={}; MARK.forEach(function(m){ MARKLBL[m[0]]=m[1] });
+function marksOf(t,it){
+  var out=[];
+  for(var i=0;i<MARK.length;i++) if(MARK[i][2].test(t)) out.push(MARK[i][0]);
+  if(it && it.cn==='new' && out.indexOf('new')<0) out.push('new');
+  return out;
+}
+
+/* ── my size ─────────────────────────────────────────────────────────────
+   The reader's own sizes, kept in this browser. A size is read only as it was
+   written: M is never turned into 48 and a waist is never turned into a
+   letter. Only the writing is tidied — IT 44, 44 IT and EU 44 are the number
+   44; 48R, 48S and 48L are 48 in three lengths; a pair of trousers written
+   32 34, 32x34 or W32 L34 is a 32 waist. US, UK, FR and JP numbers are kept
+   apart: they are other scales, and a 38 in one is not a 38 in another.  */
+var SZGRP={'아우터':'top','테일러링':'top','셔츠':'top','상의':'top','팬츠':'bot','데님':'bot','신발':'shoe'};
+var SZNAME={top:'상의·아우터',bot:'하의',shoe:'신발'};
+var LETTERS=['XXXS','XXS','XS','S','M','L','XL','XXL','XXXL'];
+var MYSZ={top:[],bot:[],shoe:[]};
+function loadSize(){
+  MYSZ={top:[],bot:[],shoe:[]};
+  try{ var ms=JSON.parse(localStorage.getItem('ccpx.mysize')||'null');
+    if(ms && typeof ms==='object') ['top','bot','shoe'].forEach(function(g){
+      if(Array.isArray(ms[g])) MYSZ[g]=ms[g].filter(function(x){ return typeof x==='string' && x.length<24 }).slice(0,40) });
+  }catch(e){}
+}
+loadSize();
+function persistSize(){ try{ localStorage.setItem('ccpx.mysize',JSON.stringify(MYSZ)) }catch(e){} }
+function oneSize(p,bottoms){
+  var m;
+  if(LETTERS.indexOf(p)>=0) return p;
+  if(/^(?:ONE SIZE|ONESIZE|OS|FREE|F)$/.test(p)) return 'ONE SIZE';
+  if((m=/^(?:IT|EU)\s*(\d{1,2}(?:\.5)?)$/.exec(p)) || (m=/^(\d{1,2}(?:\.5)?)\s*(?:IT|EU)$/.exec(p))) return m[1];
+  if((m=/^(US|UK|FR|JP)\s*(\d{1,2}(?:\.5)?)$/.exec(p))) return m[1]+' '+m[2];
+  if((m=/^(\d{1,2}(?:\.5)?)\s*(US|UK|FR|JP)$/.exec(p))) return m[2]+' '+m[1];
+  if((m=/^(\d{2})\s*[SRL]$/.exec(p))) return m[1];
+  if(bottoms){
+    if((m=/^W\s*(\d{2})(?:\s*L\s*\d{2})?$/.exec(p)) || (m=/^(\d{2})\s*(?:[X×]\s*)?\d{2}$/.exec(p))) return m[1];
+  }
+  return p;
+}
+function sizeToks(it){
+  var z=it.z; if(!z) return [];
+  z=String(z); try{ z=z.normalize('NFKC') }catch(e){}
+  z=z.toUpperCase().replace(/\s+/g,' ').trim().replace(/\s*INTERNATIONAL$/,'');
+  var bottoms = SZGRP[it.s]==='bot' || it.s==='기타', out=[];
+  z.split(/\s*\/\s*/).forEach(function(p){ if(!p) return; var t=oneSize(p,bottoms); if(t && out.indexOf(t)<0) out.push(t) });
+  return out;
+}
+function mineAny(){ return !!(MYSZ.top.length||MYSZ.bot.length||MYSZ.shoe.length) }
+// 기타 holds dresses, skirts and whatever the reader could not place: any pick may apply
+function mineMatch(it){
+  var toks=it.__z; if(!toks||!toks.length) return false;
+  var g=SZGRP[it.s];
+  var pick = g ? MYSZ[g] : it.s==='기타' ? MYSZ.top.concat(MYSZ.bot,MYSZ.shoe) : null;
+  if(!pick || !pick.length) return false;
+  for(var i=0;i<toks.length;i++) if(pick.indexOf(toks[i])>=0) return true;
+  return false;
+}
+function sizeOrder(a,b){
+  var la=LETTERS.indexOf(a), lb=LETTERS.indexOf(b);
+  if(la>=0||lb>=0) return la<0?1:lb<0?-1:la-lb;
+  var na=/^\d/.test(a), nb=/^\d/.test(b);
+  if(na&&nb) return parseFloat(a)-parseFloat(b);
+  if(na!==nb) return na?-1:1;
+  var sa=a.split(' '), sb=b.split(' ');
+  if(sa[0]!==sb[0]) return sa[0]<sb[0]?-1:1;
+  return (parseFloat(sa[1])||0)-(parseFloat(sb[1])||0);
+}
+
+function loadSaved(){
+  var v=null; try{ v=JSON.parse(localStorage.getItem('ccpx.saved')||'{}') }catch(e){}
+  // a stored 'null' or a list took boot down and blamed the data for it
+  saved = v && typeof v==='object' && !Array.isArray(v) ? v : {};
+}
+loadSaved();
+function persist(){ try{ localStorage.setItem('ccpx.saved',JSON.stringify(saved)) }catch(e){} }
+/* A saved listing keeps what the reader last saw of it: the price in the
+   seller's own money when there is one, so a move in the exchange rate is
+   never taken for the seller cutting the price. Older saves held just 1;
+   they are given the price as it stands the first time this page opens. */
+function keepMark(it){ return {k:it.k||0, p:it.p||0, u:curOf(it.u), d:TODAY||'', g:it.x?1:0} }
+function curOf(u){ return u && u!=='KRW' ? String(u) : '' }
+function savedChange(it){
+  var b=saved[it.l]; if(!b || typeof b!=='object') return null;
+  if(it.x) return b.g ? null : {gone:true};
+  // a price in another currency than the one saved cannot be compared at all
+  var cu=curOf(it.u); if(curOf(b.u)!==cu) return null;
+  var was=cu?b.p:b.k, cur=cu?it.p:it.k;
+  if(!(was>0) || !(cur>0)) return null;
+  return cur<was ? {drop:true, was:was, cur:cur, u:cu} : null;
+}
+// what the reader has now seen of it, up or down, becomes the new baseline
+function ackSaved(it){
+  var b=saved[it.l]; if(!b) return false;
+  var m=keepMark(it);
+  if(typeof b==='object' && b.k===m.k && b.p===m.p && curOf(b.u)===m.u && !!b.g===!!m.g) return false;
+  saved[it.l]=m; persist(); return true;
+}
+
+/* ── time ──────────────────────────────────────────────
+   f  = first date this listing was seen by the sweep
+   ls = last date it was seen (only on ones that have since vanished)
+   h  = [[date, krw], …] price points, recorded only when the price moved
+   x  = 1 when it is no longer in the sweep
+   None of this is claimed to be the listing's own posting date — it is our
+   observation window, and nothing more.                                     */
+var TODAY=null;
+function dnum(s){ var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||''); 
+  return m? Date.UTC(+m[1],+m[2]-1,+m[3])/86400000 : null }
+function daysBetween(a,b){ var x=dnum(a),y=dnum(b); return (x==null||y==null)?null:y-x }
+function seenDays(it){                 // how long we have been watching it
+  var end = it.x&&it.ls ? it.ls : TODAY;
+  var n = daysBetween(it.f,end);
+  return n==null?null:n+1;
+}
+function seenText(it){
+  var n=seenDays(it); if(n==null) return '';
+  if(it.x) return n<2 ? '1일간 보임' : won(n)+'일간 보임';
+  return n<2 ? '' : won(n)+'일째';
+}
+
+/* ── since the last visit ──────────────────────────────────────────────
+   Someone who comes back after three days does not need "today's new" —
+   they need everything that arrived while they were away. Kept in this
+   browser only: the date of the build they saw last. A second visit on the
+   same day keeps the same baseline, so a reload does not wipe the mark.  */
+var SINCE=null;
+function initSince(today){
+  if(!today) return;
+  var st=null; try{ st=JSON.parse(localStorage.getItem('ccpx.visit')||'null') }catch(e){}
+  // an older build opened after a newer one (a cached copy, a saved file):
+  // leave the newer baseline alone and mark nothing
+  if(st && st.date && st.date>today) return;
+  var prev=null;
+  if(st && st.date===today) prev=st.prev||null;
+  else if(st && st.date && st.date<today) prev=st.date;
+  try{ localStorage.setItem('ccpx.visit',JSON.stringify({date:today,prev:prev})) }catch(e){}
+  // a day apart is just 신규 again; the mark earns its place only after a gap
+  var gap=prev?daysBetween(prev,today):null;
+  if(gap!=null && gap>=2) SINCE=prev;
+}
+function md(d){ var m=/^\d{4}-(\d{2})-(\d{2})/.exec(d||''); return m?(+m[1])+'/'+(+m[2]):'' }
+
+/* ── 찾는 물건 ──────────────────────────────────────────────────────────
+   A search the reader keeps, in this browser: the conditions as a link
+   writes them, and the build date it was last looked at. Whatever matches it
+   and was first seen by the sweep after that date is new to this reader.
+   There is no account and no server. Sending these by mail needs the list to
+   live in the repository and a sweep that reads it; that is later work.  */
+var WATCH=[], WMAX=20, WCNT=null, WNEW=null, PENDMINE=null;
+function loadWatch(){
+  var v=null; try{ v=JSON.parse(localStorage.getItem('ccpx.watch')||'[]') }catch(e){}
+  WATCH=(Array.isArray(v)?v:[]).filter(function(w){ return w && typeof w.qs==='string' && w.qs && w.qs.length<600 }).slice(0,WMAX)
+    .map(function(w){ return {qs:w.qs, label:String(w.label||w.qs).slice(0,80),
+      seen:/^\d{4}-\d{2}-\d{2}$/.test(w.seen||'')?w.seen:null, at:w.at||null} });
+  WCNT=null;
+}
+loadWatch();
+function persistWatch(){ WCNT=null; try{ localStorage.setItem('ccpx.watch',JSON.stringify(WATCH)) }catch(e){} }
+function watchAt(qs){ for(var i=0;i<WATCH.length;i++) if(WATCH[i].qs===qs) return i; return -1 }
+
+/* ── auctions and sale records ─────────────────────────────────────────
+   ab = bids at collection time, ae = end time (ISO, with offset).
+   so = the date a sale was recorded; sk = the platform's word for it.
+   A sale record is not a listing — it is off by default, like a vanished one. */
+// A search page that said 残り4日 knows the day, not the hour. With no aeq
+// the end is taken to be known only to the day.
+var AEQ={m:60000,h:3600000,d:86400000};
+function aucLeft(it){
+  if(!it.ae) return '';
+  var t=Date.parse(it.ae); if(isNaN(t)) return '';
+  var q=AEQ[it.aeq]?it.aeq:'d', unit=AEQ[q], ms=t-Date.now();
+  if(ms<=-unit || (q==='m' && ms<=0)) return '마감';
+  if(ms<=0) return '마감 무렵';
+  if(q==='d'){ var dd=Math.floor(ms/86400000); return dd>=1 ? won(dd)+'일 남음' : '하루 안에 마감' }
+  var h=Math.floor(ms/3600000);
+  if(h<1) return '1시간 안에 마감';
+  if(h<24) return won(h)+'시간 남음';
+  return won(Math.floor(h/24))+'일 남음';
+}
+function aucText(it){
+  var p=[];
+  if(typeof it.ab==='number' && it.ab>=0) p.push('입찰 '+won(it.ab));
+  var l=aucLeft(it); if(l) p.push(l);
+  return p.join(' · ');
+}
+// in the reader's own clock — Korea and Japan share one, so it reads as posted
+// aeq is how precisely the end is known: 'm' to the minute, 'h' the hour,
+// 'd' the day — a search page that only says 残り4日 does not give a clock time,
+// and the panel must not print one it was never told
+function endText(it){
+  var t=Date.parse(it.ae||''); if(isNaN(t)) return '';
+  var d=new Date(t), p=function(n){ return (n<10?'0':'')+n };
+  var day=(d.getMonth()+1)+'/'+d.getDate();
+  // a clock time only when the source gave one to the minute
+  if(it.aeq!=='m') return day+' 무렵';
+  return day+' '+p(d.getHours())+':'+p(d.getMinutes());
+}
+function buyeeUrl(u){
+  var m;
+  if((m=/^https?:\/\/(?:page\.)?auctions\.yahoo\.co\.jp\/jp\/auction\/([a-z]?\d+)/i.exec(u||'')))
+    return 'https://buyee.jp/item/jdirectitems/auction/'+m[1]+'?lang=ko';
+  if((m=/^https?:\/\/jp\.mercari\.com\/item\/(m\d+)/i.exec(u||'')))
+    return 'https://buyee.jp/mercari/item/'+m[1]+'?lang=ko';
+  return null;
+}
+function compsHtml(it){
+  var c=it.sc; if(!c || !(c.n>0) || !(c.md>0)) return '';
+  var nat=c.u && c.u!=='KRW', sym=SYM[c.u]||'';
+  var f=function(v){ return nat ? sym+Number(v).toLocaleString('en-US') : '₩'+won(v) };
+  return '<div class="sc"><span class="lbl">판매 기록</span><p>'+(c.b==='code'?'같은 번호 ':'같은 모델 ')+won(c.n)+'건 · 중앙값 '+f(c.md)+
+    (nat && c.k>0 ? ' (₩'+won(c.k)+')' : '')+
+    (c.lo>0 && c.hi>c.lo ? ' · '+f(c.lo)+'–'+f(c.hi) : '')+
+    (c.d ? ' · '+esc(c.d) : '')+'</p></div>';
+}
+
+/* ── how fresh each source is ──────────────────────────────────────────
+   last = the latest date a listing from this source was first seen by the
+   sweep; START = the first sweep on record. A source whose newest listing is
+   from the first sweep has sent nothing new since — which may be a quiet
+   shop or a collector that has stopped; the page says what it saw and no
+   more. When the pipeline sends sources[].seen (the last day that source
+   answered at all), that is said too.                                    */
+var SRCSTAT={}, START=null, MCOUNT={};
+function buildSrcStat(){
+  SRCSTAT={}; START=null;
+  for(var i=0;i<D.items.length;i++){ var it=D.items[i];
+    if(it.f && (!START || it.f<START)) START=it.f;
+    // a sale record is not a listing; a listing that has since gone was still
+    // new on the day it came in
+    if(it.so) continue;
+    var s=SRCSTAT[it.r]||(SRCSTAT[it.r]={n:0,last:null,seen:null});
+    if(!it.x) s.n++;
+    if(it.f && (!s.last || it.f>s.last)) s.last=it.f;
+  }
+  (D.sources||[]).forEach(function(x){
+    if(x && x.name && SRCSTAT[x.name] && /^\d{4}-\d{2}-\d{2}$/.test(x.seen||'')) SRCSTAT[x.name].seen=x.seen });
+}
+// nothing new for three builds' worth of days is worth saying; one quiet day is not
+function srcOrder(){ return Object.keys(SRCSTAT).sort(function(a,b){ return SRCSTAT[b].n-SRCSTAT[a].n }) }
+function srcStale(r){
+  var s=SRCSTAT[r]; if(!s || !s.last || !TODAY) return false;
+  var d=daysBetween(s.last,TODAY); return d!=null && d>=3;
+}
+function srcStopped(r){ var s=SRCSTAT[r]; return !!(s && s.seen && TODAY && s.seen<TODAY) }
+function srcFresh(r){
+  var s=SRCSTAT[r]; if(!s) return '';
+  var p=[];
+  if(srcStopped(r)) p.push(md(s.seen)+' 이후 수집 안 됨');
+  else if(srcStale(r)) p.push(md(s.last)+' 이후 신규 없음');
+  else if(s.last) p.push('최근 신규 '+md(s.last));
+  return p.join(' · ');
+}
+
+/* ── customs ────────────────────────────────────────────────────────────
+   관세청 특송물품 통관 안내 (customs.go.kr, read 2026-09-25):
+     personal-use goods of 물품가격 미화 150불 이하 (미국은 200불) clear on a
+     list and are not taxed; 물품가격 includes the tax, inland freight and
+     insurance inside the sending country, and leaves out international
+     freight where it is clearly separate; above 150불 the whole taxable value
+     is taxed, not the part over.
+   우편물 통관 안내: goods of 물품가격 미화 150불 이하 are duty-free.
+   The page compares the seller's price with those thresholds and says no
+   more: the duty rate depends on the heading and the origin, and the
+   customs rate of exchange is not the one this page uses.                */
+var DOMESTIC={'번개장터':1,'후루츠패밀리':1};
+function usdOf(it){
+  if(it.u==='USD' && it.p>0) return {v:it.p, exact:true};
+  var r=D.rates && D.rates.USD;
+  return r>0 && it.k>0 ? {v:it.k/r, exact:false} : null;
+}
+function dutyHtml(it){
+  if(it.so || it.x || DOMESTIC[it.r]) return '';
+  var u=usdOf(it); if(!u) return '';
+  var v=u.v, say, why;
+  // near a line the cents decide, so they are shown; elsewhere whole dollars
+  // (a seller's own price is shown as the seller wrote it)
+  var near=Math.abs(v-150)<1 || Math.abs(v-200)<1;
+  var amt='US$'+(u.exact ? v.toLocaleString('en-US',{maximumFractionDigits:2})
+                : near ? v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})
+                : Math.round(v).toLocaleString('en-US'))+(u.exact?'':' 상당');
+  if(v<=150){ say='면세 기준 이하'; why='판매가 기준' }
+  else if(v<=200){ say='미국발 특송만 면세'; why='판매가 기준' }
+  else { say='과세 대상'; why='면세 기준 US$150 · 미국발 특송 US$200' }
+  // a converted price within a few percent of a line can land on either side
+  if(!u.exact && (Math.abs(v-150)/150<0.05 || Math.abs(v-200)/200<0.05)) why+=' · 환율 따라 달라짐';
+  return '<dt>통관</dt><dd>'+amt+' · '+say+' <span class="basis">'+why+'</span></dd>';
+}
+
+/* ── derive ── */
+// A decade, a span or an approximate year the English reader copied out as a
+// single year: 'Vintage 1990s coat' arrives as e=1990, 'Trench 2001-2005' as
+// e=2001, 'c. 1997' as e=1997. The seller did not name a year, and the page says
+// what the seller said — in the words the new reader (classify_intl) uses, so the
+// card does not change when the pipeline starts sending them (q · qk).
+// Only when that number stands nowhere else in the title on its own
+// ('1990s … 1990 A/W' keeps its year); a span with its season word
+// (1997-98 A/W, AW 2000/2001) is that season.
+var QUAL={early:'초반',mid:'중반',late:'후반','前半':'초반','初頭':'초반','中頃':'중반','後半':'후반','末':'후반'};
+function yearClaim(it){
+  var e=it.e; if(!e || !/^(?:19|20)\d{2}$/.test(e)) return null;
+  var t=it.t||''; try{ t=t.normalize('NFKC') }catch(x){}
+  var AP="['’‘]?", S='\\s*'+AP+'\\s*s(?![a-z])(?!\\s*\\/\\s*s)';   // 90's · 90’s · 90s — not the first s of s/s
+  var got=null, at=-1, len=0, m;
+  // a span: 2001-2005 · 1998/99 · c.2001-2003
+  m=(new RegExp('(?:^|[^0-9])('+e+')\\s*[-–—~〜～/]\\s*((?:19|20)\\d{2}|\\d{2})(?![0-9])','i')).exec(t);
+  if(m){
+    var y1=+e, b=m[2], y2=b.length===4?+b:(Math.floor(y1/100)*100+(+b));
+    if(b.length===2 && y2<y1) y2+=100;
+    var st=m.index+m[0].indexOf(e), tail=t.slice(m.index+m[0].length), head=t.slice(0,st);
+    var season=/^\s*(?:a\/?w|f\/?w|秋冬|fall|winter)/i.test(tail) || /(?:a\/?w|f\/?w|秋冬|fall|winter)\s*$/i.test(head);
+    if(y2>y1 && y2<=MAXY && !season){ got={k:'rng', v:e+'–'+b}; at=st; len=m[0].length-(st-m.index) }
+  }
+  // a decade: 1990s · late 1990’s · 1990年代後半
+  if(!got && /0$/.test(e)){
+    m=(new RegExp('(?:\\b(early|mid|late)[\\s-]*)?(?:^|[^0-9])?('+e+')'+S,'i')).exec(t);
+    if(m){ got={k:'dec', v:e+'년대'+(m[1]?' '+QUAL[m[1].toLowerCase()]:'')}; at=m.index; len=m[0].length }
+    else if((m=(new RegExp(e+'\\s*(?:年代|년대)\\s*(前半|初頭|中頃|後半|末)?')).exec(t))){
+      got={k:'dec', v:e+'년대'+(m[1]?' '+QUAL[m[1]]:'')}; at=m.index; len=m[0].length }
+  }
+  // approximate: circa 2004 · c. 1997 · ca.1997 · early 2000
+  if(!got){
+    m=(new RegExp('(?:\\bcirca|\\bca\\.?|\\bc\\.|\\bearly|\\bmid|\\blate)[\\s-]*('+e+')(?![0-9])','i')).exec(t);
+    if(m){ got={k:'about', v:e+'년 무렵'}; at=m.index; len=m[0].length }
+  }
+  if(!got) return null;
+  // the same year written once more on its own is a year after all
+  var rest=t.slice(0,at)+' '+t.slice(at+len);
+  var bare=new RegExp('(?:^|[^0-9])'+e+'(?![0-9])(?!'+S+')(?!\\s*(?:年代|년대))(?!\\s*[-–—~〜～/]\\s*\\d)','i');
+  return bare.test(rest)?null:got;
+}
+// the words under the year in the detail view, by what the seller said
+var CLAIMBASIS={dec:'연대 표기', rng:'기간 표기', about:'대략적 연도 표기',
+  bought:'구입 연도 표기', y2k:'Y2K 표기', lang:'시기 표기', early:'시기 표기',
+  arch:'아카이브 표기', multi:'여러 연도 표기'};
+function yearOf(it){
+  var e=it.__e!==undefined?it.__e:it.e;
+  if(!e) return null;
+  var m=/^(\d{4})$/.exec(e); if(m) return +m[1];
+  var s=/^[A-Z]{2}(\d{2})$/.exec(e);
+  if(s){var n=+s[1]; return n>=90?1900+n:2000+n}
+  return null;
+}
+function priceBand(k){ for(var i=0;i<PRICE.length;i++) if(k>=PRICE[i][1]&&k<PRICE[i][2]) return PRICE[i][0];
+  return PRICE[0][0] }
+var own=Object.prototype.hasOwnProperty;
+function keys(o){ var a=[],k; for(k in o) if(own.call(o,k)&&o[k]) a.push(k); return a }
+function any(o){ for(var k in o) if(own.call(o,k)&&o[k]) return true; return false }
+function motifLbl(k){ for(var i=0;i<MOTIF.length;i++) if(MOTIF[i][0]===k) return MOTIF[i][1]; return k }
+
+/* ── search ────────────────────────────────────────────
+   Tokenised and order-independent: "jacket bondage" has to find what
+   "bondage jacket" finds. Every token must appear somewhere; where it appears
+   decides the rank. Deliberately plain — fast and predictable beats clever.  */
+var QT=[], QX=[];
+function setQuery(q){
+  F.q=q;
+  QT=q?nrm(q).split(' ').filter(function(t){ return t && BRANDNOISE.indexOf(t)<0 }):[];
+  QX=QT.map(alts);
+}
+function hit(it,t){
+  var p=it.__t.indexOf(t);
+  if(p>=0) return p===0?70:50;
+  if(it.__mw.indexOf(t)>=0) return 30;
+  if(it.__sec.indexOf(t)>=0) return 15;
+  if(it.__meta.indexOf(t)>=0) return 8;
+  return 0;
+}
+function score(it){
+  if(!QT.length) return 0;
+  var total=0;
+  for(var i=0;i<QT.length;i++){
+    // the word as typed, or the same thing in another of the three languages
+    var best=hit(it,QT[i]), a=QX[i];
+    for(var j=1;j<a.length;j++){ var tp=it.__t.indexOf(a[j]); if(tp>=0){ var h=tp===0?70:50; if(h>best) best=h } }
+    if(!best) return 0;            // every token has to land somewhere
+    total+=best;
+  }
+  // the whole phrase sitting in the title, in order, is the strongest signal
+  if(QT.length>1 && it.__t.indexOf(QT.join(' '))>=0) total+=60;
+  return total;
+}
+function matchedIn(it){
+  var f={};
+  for(var i=0;i<QT.length;i++){
+    var best=hit(it,QT[i]), a=QX[i];
+    for(var j=1;j<a.length;j++) if(it.__t.indexOf(a[j])>=0 && best<50) best=50;
+    if(best>=50) f['상품명']=1;
+    else if(best===30) f['기법·모델']=1;
+    else if(best===15) f['분류']=1;
+    else if(best===8) f['연도·판매처·사이즈·번호']=1;
+  }
+  return Object.keys(f);
+}
+
+/* ── elsewhere ─────────────────────────────────────────────────────────
+   Every platform this label trades on, one tap away with the current search
+   put into that platform's language. The collected ones are here too: the
+   page may be a day behind, the platform never is. A search with nothing but
+   the brand opens the brand's own page where the platform has one.       */
+var SEEK=[
+ ['일본','야후옥션','ja',function(q){return 'https://auctions.yahoo.co.jp/search/search?p='+encodeURIComponent(q)}],
+ ['일본','야후옥션','ja',function(q){return 'https://auctions.yahoo.co.jp/closedsearch/closedsearch?p='+encodeURIComponent(q)},'낙찰가'],
+ ['일본','메루카리','ja',function(q){return 'https://jp.mercari.com/search?keyword='+encodeURIComponent(q)}],
+ ['일본','라쿠마','ja',function(q){return 'https://fril.jp/s?query='+encodeURIComponent(q)}],
+ ['일본','2nd STREET','en',function(q){return 'https://www.2ndstreet.jp/search?keyword='+encodeURIComponent(q)}],
+ ['일본','Buyee','ja',function(q){return 'https://buyee.jp/item/search/query/'+encodeURIComponent(q)+'?lang=ko'},'구매대행'],
+ ['한국','후루츠패밀리','ko',function(q,bare){return bare?'https://fruitsfamily.com/brand/Carol%20Christian%20Poell':'https://fruitsfamily.com/search/'+encodeURIComponent(q)}],
+ ['한국','번개장터','ko',function(q){return 'https://m.bunjang.co.kr/search/products?q='+encodeURIComponent(q)}],
+ ['해외','Grailed','en',function(q,bare){return bare?'https://www.grailed.com/designers/carol-christian-poell':'https://www.grailed.com/shop?query='+encodeURIComponent(q)}],
+ ['해외','eBay','en',function(q){return 'https://www.ebay.com/sch/i.html?_nkw='+encodeURIComponent(q)}],
+ ['해외','eBay','en',function(q){return 'https://www.ebay.com/sch/i.html?_nkw='+encodeURIComponent(q)+'&LH_Sold=1&LH_Complete=1'},'판매 완료'],
+ ['해외','Depop','en',function(q){return 'https://www.depop.com/search/?q='+encodeURIComponent(q)}],
+ ['해외','Vinted','en',function(q){return 'https://www.vinted.fr/catalog?search_text='+encodeURIComponent(q)},'유럽'],
+ ['해외','Vinted','en',function(q){return 'https://www.vinted.com/catalog?search_text='+encodeURIComponent(q)},'미국'],
+ ['해외','Vestiaire','en',function(q){return 'https://www.vestiairecollective.com/search/?q='+encodeURIComponent(q)}]
+];
+var SEEKBRAND={en:'carol christian poell',ja:'carol christian poell',ko:'캐롤크리스찬포엘'};
+var HANGUL=/[\uac00-\ud7a3]/, KANA=/[\u3040-\u30ff\u4e00-\u9fff]/;
+function lexRow(pred){ for(var i=0;i<LEX.length;i++) if(pred(LEX[i])) return LEX[i]; return null }
+function word(row,L){ return row && row[L] && row[L].length ? row[L][0] : null }
+// the concepts in play right now: typed words, and a single motif / category
+// / year if exactly one is picked (two motifs are an OR no outside search can say)
+function seekParts(){
+  var parts=[];
+  for(var i=0;i<QT.length;i++){
+    var rows=Object.prototype.hasOwnProperty.call(LEXW,QT[i])?LEXW[QT[i]]:null;
+    parts.push(rows?{row:rows[0],typed:QT[i]}:{raw:QT[i]});
+  }
+  var mo=keys(F.motif); if(mo.length===1){ var r=lexRow(function(x){return x.m===mo[0]}); if(r) parts.push({row:r}) }
+  var ca=keys(F.cat); if(ca.length===1){ var rc=lexRow(function(x){return x.c===ca[0]}); if(rc) parts.push({row:rc}) }
+  var ys=keys(F.y).filter(function(y){return y!=='none'}); if(ys.length===1) parts.push({raw:ys[0]});
+  return parts;
+}
+function seekQuery(parts,L){
+  var w=[SEEKBRAND[L]];
+  parts.forEach(function(p){
+    // the typed word itself when it belongs to this language (suit stays suit,
+    // it does not become blazer); the row's first word only to translate
+    var inL = p.typed && p.row[L] && p.row[L].some(function(w){ return nrm(w)===p.typed });
+    var t = inL ? p.typed : p.row ? word(p.row,L) : p.raw;
+    if(!t) return;
+    // a word in one script sent to a platform that reads another finds nothing
+    if(!p.row){ if(HANGUL.test(t) && L!=='ko') return; if(KANA.test(t) && L!=='ja') return; }
+    if(w.indexOf(t)<0) w.push(t);
+  });
+  return w.join(' ');
+}
+function seekHtml(){
+  var parts=seekParts();
+  // a motif picked and the same word typed are one condition, said once
+  var shown=[], rowsSeen=[];
+  parts.forEach(function(p){
+    if(p.row){ if(rowsSeen.indexOf(p.row)>=0) return; rowsSeen.push(p.row) }
+    var w = p.typed || (p.row ? (word(p.row,'ko')||word(p.row,'en')||word(p.row,'ja')) : p.raw);
+    if(shown.indexOf(w)<0) shown.push(w);
+  });
+  var h='<span class="lbl">다른 곳에서 찾기</span>'+
+    '<span class="qq">'+(shown.length?'캐롤 크리스찬 포엘 · '+esc(shown.join(' · ')):'캐롤 크리스찬 포엘 전체')+'</span>';
+  var mk=null;
+  SEEK.forEach(function(sk){
+    if(sk[0]!==mk){ if(mk) h+='</div></div>'; mk=sk[0]; h+='<div class="mkt"><span>'+esc(mk)+'</span><div class="ls">' }
+    var q=seekQuery(parts,sk[2]);
+    h+='<a href="'+esc(sk[3](q,q===SEEKBRAND[sk[2]]))+'" target="_blank" rel="noopener" title="'+esc(q)+'">'+esc(sk[1])+
+       (sk[4]?'<i>'+esc(sk[4])+'</i>':'')+'</a>';
+  });
+  return h+'</div></div>';
+}
+function buildSeek(){
+  var h=seekHtml();
+  $('pseek').innerHTML=h;
+  $('seek').innerHTML=h;
+}
+
+/* ── filter + sort ── */
+var GROUPS=['y','cat','price','src','cert','motif','mark','flag','size','q'];
+/* The flag group is the one that AND-s inside itself: picking 신규 and
+   여러 곳 등록 means both, where picking two motifs means either. Kept as one
+   predicate so the facet count and the click that follows it cannot drift. */
+var FLAGV=['new','drop','multi','saved','gone','since','sold','mine'];
+function flagPass(it,fl){
+  if(!fl.gone && it.x) return false;          // vanished ones are opt-in
+  if(fl.gone && !it.x) return false;
+  if(!fl.sold && it.so) return false;         // and so are sale records
+  if(fl.sold && !it.so) return false;
+  if(fl.since && !(SINCE && it.f && it.f>SINCE)) return false;
+  if(fl['new'] && !it.n) return false;
+  if(fl.drop && !(it.w&&it.w>it.k)) return false;
+  if(fl.saved && !saved[it.l]) return false;
+  if(fl.multi && !(it.g>1)) return false;
+  if(fl.mine && !mineMatch(it)) return false;
+  return true;
+}
+function passes(g,it){
+  switch(g){
+    case 'y':     return !any(F.y)   || !!F.y[it.__yk];
+    case 'cat':   return !any(F.cat) || !!F.cat[it.s];
+    case 'price': return !any(F.price)|| !!F.price[priceBand(it.k)];
+    case 'src':   return !any(F.src) || !!F.src[it.r];
+    case 'cert':  return !any(F.cert)|| !!F.cert[it.__c];
+    case 'motif':
+      if(!any(F.motif)) return true;
+      for(var i=0;i<it.__m.length;i++) if(F.motif[it.__m[i]]) return true;
+      return false;
+    case 'mark':
+      if(!any(F.mark)) return true;
+      for(var j=0;j<it.__mk.length;j++) if(F.mark[it.__mk[j]]) return true;
+      return false;
+    case 'flag':  return flagPass(it,F.flag);
+    case 'size':  return !F.size || (!!it.z && it.z.toLowerCase().indexOf(F.size)>=0);
+    case 'q':     return !QT.length || score(it)>0;
+  }
+  return true;
+}
+function match(it){
+  for(var i=0;i<GROUPS.length;i++) if(!passes(GROUPS[i],it)) return false;
+  return true;
+}
+function sortView(){
+  var s=$('sort').value;
+  if(s==='rel' && !QT.length) s='k-';
+  view.sort(function(a,b){
+    if(s==='rel') return score(b)-score(a)||b.k-a.k;
+    if(s==='k-') return b.k-a.k;
+    if(s==='k+') return a.k-b.k;
+    if(s==='y+') return (a.__y||9999)-(b.__y||9999)||b.k-a.k;
+    if(s==='y-') return (b.__y||0)-(a.__y||0)||b.k-a.k;
+    if(s==='drop') return ((b.w?b.w-b.k:0)-(a.w?a.w-a.k:0))||b.k-a.k;
+    if(s==='age') return ((seenDays(b)||0)-(seenDays(a)||0))||b.k-a.k;
+    // this build's new ones, then whatever the sweep saw first most recently —
+    // so a search opened after a few days away leads with what came in meanwhile
+    return (b.n||0)-(a.n||0)||(a.f===b.f?0:(b.f||'')>(a.f||'')?1:-1)||b.k-a.k;
+  });
+  for(var i=0;i<view.length;i++) view[i].__v=i;
+}
+
+/* ── cards ── */
+function flagsHtml(it){
+  var h='';
+  // A without a value: the seller wrote the season (a shop's tag, a form the
+  // English reader certified but did not copy out) — it is not 연도 미확인
+  if(it.__e) h+='<span>'+esc(it.__e)+'</span>';
+  else if(it.__yc) h+='<span class="d">'+esc(it.__yc.k==='arch'?'아카이브 표기':it.__yc.v)+'</span>';
+  else if(it.c==='A') h+='<span>연도 표기</span>';
+  else if(it.c==='B') h+='<span class="d">시기 표기</span>';
+  else h+='<span class="s">연도 미확인</span>';
+  if(it.so) h+='<span class="d">'+esc(it.sk||'판매 완료')+'</span>';
+  if(it.n && !ALLNEW) h+='<span>신규</span>';
+  if(it.w && it.w>it.k) h+='<span class="d">가격 내림</span>';
+  return h;
+}
+function priceHtml(it,big){
+  var alt=(it.u&&it.p>0)?'<span class="alt">'+(SYM[it.u]||'')+Number(it.p).toLocaleString('en-US')+'</span>':'';
+  var was=(it.w&&it.w>it.k)?'<span class="was">₩'+won(it.w)+'</span>':'';
+  return '<div class="'+(big?'big':'p')+'">₩'+won(it.k)+alt+was+'</div>';
+}
+function card(it){
+  var i=it.__i, on=saved[it.l]?' on':'';
+  return '<article>'+
+    '<button class="shot" data-open="'+i+'" aria-label="크게 보기">'+
+      imgTag(it.i,LISTV?160:600)+'</button>'+
+    '<button class="save'+on+'" data-save="'+i+'" aria-label="저장"><span></span></button>'+
+    '<div class="cap">'+
+      '<div class="flags">'+flagsHtml(it)+'</div>'+
+      '<h3 class="t"><button data-open="'+i+'">'+esc(it.t)+'</button></h3>'+
+      priceHtml(it,false)+
+      // '사이즈 미표기' was taking a line on a third of the cards to say
+      // nothing. A missing size is simply left out; the detail panel still
+      // states it plainly for anyone who goes looking.
+      '<div class="sub">'+[
+        it.z?esc(it.z):'',
+        it.mc?'<span class="mc">'+esc(it.mc)+'</span>':'',
+        esc(it.r),
+        it.g>1?'<span class="g">같은 상품명 '+it.g+'곳</span>':'',
+        aucText(it)?'<span class="ab">'+aucText(it)+'</span>':'',
+        it.so?'<span class="age">'+esc(md(it.so))+'</span>':
+          (seenText(it)?'<span class="age">'+seenText(it)+'</span>':'')
+      ].filter(Boolean).join(' · ')+'</div>'+
+    '</div></article>';
+}
+/* ── photo sizes ───────────────────────────────────────────────────────
+   The sweep records whatever URL the listing gives, which is the full-size
+   photo. A card draws it at 173–285px and was pulling 181KB for it; the
+   first screen came to 2.4MB. Each host was tested by hand for what it
+   actually answers to (2026-09-22):
+
+     Grailed   ?w=600         181KB -> 10.6KB
+     Shopify   &width=600      44KB -> 10.1KB
+     eBay      s-l140 is 105x140, too soft on any recent phone — s-l400
+               costs more and is the one case where the right call is to
+               spend bytes rather than save them
+     Depop     ignores every form tried; left alone
+     Vestiaire refuses a plain request either way; asked smaller regardless
+
+   A CDN can stop honouring any of this without telling us, so the element
+   carries the original and falls back to it on error before giving up. */
+function thumb(u,w){
+  if(!u) return u;
+  try{
+    if(u.indexOf('media-assets.grailed.com')>=0) return u+(u.indexOf('?')<0?'?':'&')+'w='+w;
+    if(u.indexOf('cdn.shopify.com')>=0)          return u+(u.indexOf('?')<0?'?':'&')+'width='+w;
+    if(u.indexOf('i.ebayimg.com')>=0)            return u.replace(/\/s-l\d+\.(jpg|png|webp)/i,
+      '/s-l'+(w<=160?225:w<=400?400:w<=800?500:1600)+'.$1');
+    if(u.indexOf('images.vestiairecollective.com')>=0) return u.replace(/\bw=\d+/, 'w='+w);
+  }catch(e){}
+  return u;
+}
+function imgTag(u,w,extra){
+  if(!u) return '';
+  var t=thumb(u,w);
+  return '<img loading="lazy" decoding="async" src="'+esc(t)+'"'+
+    (t!==u?' data-full="'+esc(u)+'"':'')+' alt=""'+(extra||'')+'>';
+}
+/* ── more than one photo ────────────────────────────────────────────────
+   im = every photo the listing carries, in the seller's order, when the sweep
+   collects them; i stays the first. Until a source sends im the detail view
+   shows the one photo it always has.                                      */
+function photosOf(it){
+  var a=[];
+  if(it.i) a.push(it.i);
+  if(Array.isArray(it.im)) it.im.forEach(function(u){
+    if(typeof u==='string' && /^https?:\/\//.test(u) && a.indexOf(u)<0) a.push(u) });
+  return a.slice(0,12);
+}
+function showPhoto(k){
+  var it=qvIdx>=0?view[qvIdx]:(qvKey?D.items[byKey(qvKey)]:null); if(!it) return;
+  var ph=photosOf(it), u=ph[k]; if(!u) return;
+  var im=$('qvimg'); if(!im) return;
+  var t=thumb(u,1200);
+  if(t!==u) im.setAttribute('data-full',u); else im.removeAttribute('data-full');
+  im.src=t;
+  var bs=$('qv').querySelectorAll('.ths button');
+  for(var i=0;i<bs.length;i++){ if(i===k) bs[i].setAttribute('aria-current','true'); else bs[i].removeAttribute('aria-current') }
+  var pn=$('qvpn'); if(pn) pn.textContent=(k+1)+' / '+ph.length;
+}
+function bindImgs(root){
+  var ims=root.querySelectorAll('.shot img:not([data-b])');
+  for(var i=0;i<ims.length;i++){(function(im){
+    im.setAttribute('data-b','1');
+    if(im.complete&&im.naturalWidth>0){im.classList.add('on');return}
+    im.addEventListener('load',function(){im.classList.add('on')});
+    im.addEventListener('error',function(){
+      // one retry at the size the listing gave us, then we admit there is
+      // no photo rather than leaving a broken element behind
+      var full=im.getAttribute('data-full');
+      if(full && im.src!==full){ im.removeAttribute('data-full'); im.src=full; return }
+      var p=im.parentNode; im.remove(); p.classList.add('dead');
+    });
+  })(ims[i])}
+}
+function preload(from,n){
+  for(var i=from;i<Math.min(from+n,view.length);i++){
+    if(view[i].i){ var im=new Image(); im.src=thumb(view[i].i,LISTV?160:600) }
+  }
+}
+// how many would be left if this one condition were lifted
+function countWithout(g,v){
+  var save;
+  if(g==='size'){ save=F.size; F.size='' }
+  else if(g==='q'){ save=F.q; setQuery('') }
+  else { save=F[g][v]; delete F[g][v] }
+  var n=0; for(var i=0;i<D.items.length;i++) if(match(D.items[i])) n++;
+  if(g==='size') F.size=save; else if(g==='q') setQuery(save); else F[g][v]=save;
+  return n;
+}
+function buildEmpty(){
+  var rows=[],g,ks,i;
+  ['y','cat','motif','price','src','cert','mark','flag'].forEach(function(gg){
+    ks=keys(F[gg]);
+    for(i=0;i<ks.length;i++) rows.push([gg,ks[i],tokLabel(gg,ks[i])]);
+  });
+  if(F.size) rows.push(['size','','사이즈 '+F.size]);
+  if(F.q && QT.length) rows.push(['q','','“'+F.q+'”']);
+  if(!rows.length){ $('empty').innerHTML='<span class="lbl">결과 없음</span>'; return }
+  // only offer a condition whose removal actually brings something back
+  var useful=rows.map(function(r){ return { g:r[0], v:r[1], lab:r[2], n:countWithout(r[0],r[1]) } })
+                 .filter(function(r){ return r.n>0 })
+                 .sort(function(a,b){ return b.n-a.n });
+  var h='<span class="lbl">결과 없음</span>';
+  if(useful.length){
+    h+='<div class="drop">';
+    useful.forEach(function(r){
+      h+='<button data-off="'+r.g+'" data-v="'+esc(r.v)+'">'+esc(r.lab)+
+         ' 빼기<span>'+won(r.n)+'건</span></button>';
+    });
+    h+='</div>';
+  }
+  h+='<button class="rst" id="emptyclear">모두 해제</button>';
+  $('empty').innerHTML=h;
+}
+function paint(reset){
+  var g=$('grid');
+  if(reset){g.innerHTML='';shown=0}
+  var html='',end=Math.min(shown+BATCH,view.length);
+  for(var i=shown;i<end;i++) html+=card(view[i]);
+  var tmp=document.createElement('div'); tmp.innerHTML=html;
+  while(tmp.firstChild) g.appendChild(tmp.firstChild);
+  shown=end;
+  $('more').hidden=shown>=view.length;
+  // at the end of what is here — or when nothing is — offer the rest of the market
+  $('seek').hidden=shown<view.length;
+  $('empty').hidden=view.length>0;
+  bindImgs(g);
+  preload(shown,12);
+}
+function apply(keepScroll,pushHist){
+  var y=keepScroll?window.scrollY:0;
+  view=D.items.filter(match);
+  sortView();
+  var n=view.length;
+  // out of the same kind of thing: live listings, or vanished ones, or sale
+  // records — not all three added together
+  var base=0, bf={gone:F.flag.gone, sold:F.flag.sold};
+  for(var bi=0;bi<D.items.length;bi++) if(flagPass(D.items[bi],bf)) base++;
+  $('count').textContent=won(n)+(n!==base?' / '+won(base):'')+'건';
+  var act=keys(F.y).length+keys(F.cat).length+keys(F.motif).length+keys(F.price).length+
+          keys(F.src).length+keys(F.cert).length+keys(F.mark).length+keys(F.flag).length+(F.size?1:0)+(QT.length?1:0);
+  $('fn').textContent=act?' '+act:'';
+  var cat=keys(F.cat);
+  // a view that is one of the reader's kept searches is named as that
+  var fq=filterQs(), wi=fq?watchAt(fq):-1;
+  $('hlabel').textContent = wi>=0 ? WATCH[wi].label : cat.length===1?cat[0] : (F.flag.saved?'저장함':'전체');
+  if(WNEW && WNEW.qs!==fq) WNEW=null;
+  // by a reload, Back, a bookmark or the tabs — not only through the bar —
+  // the view says what arrived since, before it counts as seen
+  if(wi>=0 && !WNEW){ var wc=watchCounts()[wi]; if(wc && wc.nw) WNEW={qs:fq, since:WATCH[wi].seen, n:wc.nw} }
+  $('hnote').textContent = wi<0 ? '' : WNEW && WNEW.n ? '저장한 검색 · '+(WNEW.since?md(WNEW.since)+' 이후 ':'')+'신규 '+won(WNEW.n)+'건' : '저장한 검색';
+  if(wi>=0) touchWatch(wi);
+  syncSaved();
+  buildApplied();
+  buildWatch();
+  buildPanel();
+  buildDist();
+  if(!view.length) buildEmpty();
+  buildSeek();
+  paint(true);
+  writeUrl(pushHist);
+  if(keepScroll) window.scrollTo(0,y);
+}
+
+function syncSaved(){
+  var n=0; for(var i=0;i<D.items.length;i++) if(saved[D.items[i].l]) n++;
+  $('sn').textContent = n?' '+won(n):'';
+  $('stog').setAttribute('aria-pressed',F.flag.saved?'true':'false');
+}
+
+/* ── applied tokens ── */
+function tokLabel(g,v){
+  if(g==='y') return v==='none'?'연도 미표기':v;
+  if(g==='motif') return motifLbl(v);
+  if(g==='cert') return own.call(CERT,v)?CERT[v]:v;
+  if(g==='mark') return own.call(MARKLBL,v)?MARKLBL[v]:v;
+  if(g==='flag') return own.call(FLAGLBL,v)?FLAGLBL[v]:v;
+  return v;
+}
+function buildApplied(){
+  var h='',g,ks,i;
+  var groups=['y','cat','motif','price','src','cert','mark','flag'];
+  for(var gi=0;gi<groups.length;gi++){
+    g=groups[gi]; ks=keys(F[g]);
+    for(i=0;i<ks.length;i++){
+      var v=ks[i];
+      h+='<button class="tok" data-off="'+g+'" data-v="'+esc(v)+'">'+esc(tokLabel(g,v))+'<i>×</i></button>';
+    }
+  }
+  if(F.size) h+='<button class="tok" data-off="size" data-v="">사이즈 '+esc(F.size)+'<i>×</i></button>';
+  // a query of nothing but the brand's name is not a condition on anything
+  if(F.q && QT.length) h+='<button class="tok" data-off="q" data-v="">“'+esc(F.q)+'”<i>×</i></button>';
+  if(h){
+    // keep this set of conditions as a search to come back to
+    var fq=filterQs(), wi=fq?watchAt(fq):-1;
+    if(fq) h+= wi>=0
+      ? '<button class="wsv" id="wsv" aria-pressed="true">저장된 검색</button>'
+      : WATCH.length>=WMAX
+        ? '<button class="wsv" id="wsv" disabled>검색 저장 최대 '+WMAX+'개</button>'
+        : '<button class="wsv" id="wsv" aria-pressed="false">검색 저장</button>';
+    h+='<button class="rst" id="rst">모두 해제</button>';
+  }
+  $('applied').innerHTML=h;
+  $('applied').classList.toggle('on',!!h);
+}
+
+/* ── 찾는 물건: reading and keeping ── */
+// the conditions alone, in one spelling: two clicks in another order are the
+// same search, and the sort is how it is read, not what it finds
+function filterQs(){
+  var p=[];
+  FG.forEach(function(g){
+    var k=keys(F[g]).filter(function(v){ return !(g==='flag' && v==='since') }); if(!k.length) return;
+    var vals = g==='y' ? packYears(k) : k.map(function(v){return slugFor(g,v)}).sort();
+    p.push(PARAM[g]+'='+vals.map(encodeURIComponent).join(','));
+  });
+  if(F.size) p.push('size='+encodeURIComponent(F.size));
+  if(F.q && QT.length) p.push('q='+encodeURIComponent(F.q));
+  return p.join('&');
+}
+function stateLabel(){
+  var p=[];
+  keys(F.cat).forEach(function(v){ p.push(v) });
+  var ys=keys(F.y); if(ys.length) p.push(packYears(ys).map(function(y){ return y==='none'?'연도 미표기':y }).join(', '));
+  ['motif','price','src','cert','mark','flag'].forEach(function(g){ keys(F[g]).forEach(function(v){
+    if(!(g==='flag'&&v==='since')) p.push(tokLabel(g,v)) }) });
+  if(F.size) p.push('사이즈 '+F.size);
+  if(F.q && QT.length) p.push('“'+F.q+'”');
+  var s=p.join(' · ');
+  return s.length>60 ? s.slice(0,58)+'…' : s;
+}
+// the other searches are read with the same code as the page's own, by
+// lending them the filter state for the length of one count
+function withState(st,fn){
+  var kF=F, kQ=F.q, kT=QT, kX=QX;
+  F={y:st.g.y,cat:st.g.cat,motif:st.g.motif,price:st.g.price,src:st.g.src,cert:st.g.cert,
+     mark:st.g.mark,flag:st.g.flag,size:st.size,q:''};
+  try{ setQuery(st.q); return fn() }
+  finally{ F=kF; F.q=kQ; QT=kT; QX=kX }
+}
+function watchCounts(){
+  if(WCNT) return WCNT;
+  WCNT=WATCH.map(function(w){
+    var st=parseQs(w.qs);
+    // it asks for the reader's sizes and none are kept: there is nothing to
+    // count it by, and announcing the whole archive under its name would lie
+    if(st.g.flag.mine && !mineAny()) return {n:0, nw:0, needSize:true};
+    return withState(st,function(){
+      var n=0, nw=0;
+      for(var i=0;i<D.items.length;i++){ var it=D.items[i];
+        if(!match(it)) continue; n++;
+        if(w.seen && it.f && it.f>w.seen && !it.x && !it.so) nw++ }
+      return {n:n, nw:nw};
+    });
+  });
+  return WCNT;
+}
+function touchWatch(i){
+  var w=WATCH[i]; if(!w || !TODAY) return;
+  if(!w.seen || w.seen<TODAY){ w.seen=TODAY; persistWatch() }
+}
+function toggleWatch(){
+  var fq=filterQs(); if(!fq) return;
+  var wi=watchAt(fq);
+  if(wi>=0) WATCH.splice(wi,1);
+  else if(WATCH.length<WMAX) WATCH.unshift({qs:fq, label:stateLabel(), seen:TODAY, at:TODAY});
+  WNEW=null; persistWatch();
+  var cat=keys(F.cat), wj=watchAt(fq);
+  $('hlabel').textContent = wj>=0 ? WATCH[wj].label : cat.length===1?cat[0] : (F.flag.saved?'저장함':'전체');
+  $('hnote').textContent = wj>=0 ? '저장한 검색' : '';
+  buildApplied(); buildWatch();
+  var b=$('wsv'); if(b) try{ b.focus({preventScroll:true}) }catch(e){}
+}
+function buildWatch(){
+  var cs=watchCounts(), fq=filterQs(), bar='', list='', fresh=0;
+  WATCH.forEach(function(w,i){
+    var c=cs[i]||{n:0,nw:0};
+    list+='<div class="wr"><button class="wo" data-wopen="'+i+'">'+esc(w.label)+'</button>'+
+      (c.needSize?'<span class="c">사이즈 설정 필요</span>':'<span class="c">'+won(c.n)+'건</span>')+
+      (c.nw?'<span class="nw">신규 '+won(c.nw)+'</span>':'')+
+      '<button class="wd" data-wdel="'+i+'" aria-label="'+esc(w.label)+' 삭제">×</button></div>';
+    if(c.nw && w.qs!==fq){ fresh++;
+      if(fresh<=4) bar+='<button data-wopen="'+i+'">'+esc(w.label)+'<b>신규 '+won(c.nw)+'</b></button>' }
+  });
+  if(fresh>4) bar+='<span class="wx">외 '+won(fresh-4)+'개</span>';
+  // saved listings whose price fell, or that left the list, since last seen
+  var ch=[], nsaved=0;
+  for(var si=0;si<D.items.length;si++){ var sit=D.items[si]; if(!saved[sit.l]) continue;
+    if(!sit.so) nsaved++;
+    var c2=savedChange(sit); if(c2) ch.push([sit,c2]) }
+  ch.sort(function(a,b){ return (b[1].gone?2:(b[1].was-b[1].cur)/b[1].was)-(a[1].gone?2:(a[1].was-a[1].cur)/a[1].was) });
+  var kb='';
+  ch.slice(0,3).forEach(function(x){
+    var it=x[0], c=x[1], t=String(it.t||''), sym=c.u?(SYM[c.u]||''):'₩';
+    var fmt=function(v){ return c.u ? sym+Number(v).toLocaleString('en-US') : '₩'+won(v) };
+    kb+='<button data-kopen="'+it.__i+'">'+esc(t.length>26?t.slice(0,25)+'…':t)+
+      '<b>'+(c.gone?'목록에서 사라짐':fmt(c.was)+' → '+fmt(c.cur))+'</b></button>';
+  });
+  if(ch.length>3) kb+='<span class="wx">외 '+won(ch.length-3)+'건</span>';
+  if(kb) kb='<span class="lbl">저장한 매물</span>'+kb+'<button class="wz" data-kack="1" aria-label="저장한 매물 알림 지우기">×</button>';
+  // the bar is a live region: rewrite it only when what it says has changed,
+  // or a screen reader hears the same line again on every filter click
+  var bh = (bar ? '<span class="lbl">저장한 검색</span>'+bar : '')+(bar&&kb?'<span class="wbr"></span>':'')+kb;
+  if($('wbar').innerHTML!==bh) $('wbar').innerHTML=bh;
+  $('wbar').classList.toggle('on',!!bh);
+  // the panel: kept searches, and the way to take everything kept to another device
+  var pw=$('pwatch'), nz=MYSZ.top.length+MYSZ.bot.length+MYSZ.shoe.length;
+  var kept=nsaved||WATCH.length||nz;
+  if(kept){
+    pw.innerHTML=(WATCH.length?'<span class="lbl">저장한 검색 '+won(WATCH.length)+'</span>'+list:'')+
+      '<div class="wk"><span class="c">저장한 매물 '+won(nsaved)+' · 검색 '+won(WATCH.length)+' · 사이즈 '+won(nz)+'</span>'+
+      '<button id="kexp" data-kexp="1">다른 기기로 옮기기</button></div>';
+    pw.hidden=false;
+  } else { pw.innerHTML=''; pw.hidden=true }
+}
+function openWatch(i){
+  var w=WATCH[i]; if(!w) return;
+  var c=watchCounts()[i]||{nw:0};
+  WNEW = c.nw ? {qs:w.qs, since:w.seen, n:c.nw} : null;
+  urlLock=true; try{ applyQuery(w.qs) } finally { urlLock=false }
+  // what came in since last time leads
+  if(c.nw) $('sort').value='new';
+  if(c.needSize){
+    // a search for the reader's sizes, with none kept: the rest of it applies,
+    // and the size picker opens so the missing part can be given
+    buildCats(); buildPanel(); apply(false,true);
+    PENDMINE=filterQs();   // the first size picked here completes the search
+    if(!$('panel').classList.contains('on')) $('ftog').click();
+    if($('mysz').hidden) $('mytog').click();
+    var z=$('mysz').querySelector('.szc'); if(z) try{ z.focus({preventScroll:true}) }catch(e){}
+    return;
+  }
+  if($('panel').classList.contains('on')) $('pdone').click();
+  buildCats(); buildPanel(); apply(false,true);
+  window.scrollTo({top:0,behavior:'auto'});
+  // the button pressed has just been redrawn or hidden; land on the first result
+  var f=document.querySelector('#grid .shot')||$('ftog');
+  if(f) try{ f.focus({preventScroll:true}) }catch(e){}
+}
+
+// One quiet line of what the current slice actually contains — the research
+// readout. No separate page, no mode: it just describes what is on screen.
+function buildDist(){
+  var el=$('dist');
+  var narrowed = any(F.y)||any(F.motif)||any(F.cat)||any(F.cert)||any(F.src)||any(F.mark)||
+                 any(F.price)||QT.length||F.size||F.flag.saved||F.flag.multi||F.flag.mine;
+  if(!narrowed || view.length<2){ el.hidden=true; el.innerHTML=''; return }
+  var lo=9999,hi=0,dated=0,sec={},yc={},i,it;
+  for(i=0;i<view.length;i++){
+    it=view[i];
+    if(it.__y){ dated++; yc[it.__y]=(yc[it.__y]||0)+1; if(it.__y<lo)lo=it.__y; if(it.__y>hi)hi=it.__y }
+    sec[it.s]=(sec[it.s]||0)+1;
+  }
+  var rows=[];
+  if(dated){
+    var ys=Object.keys(yc).map(Number).sort(function(a,b){return a-b});
+    var line='<b>'+(lo===hi?lo:lo+'—'+hi)+'</b>';
+    // the year shape of THIS slice, in order, so a pattern is visible at a glance
+    if(ys.length>1) line+='<span class="sep">·</span>'+ys.map(function(y){
+      return '<span class="yv">'+y+' <span class="q">'+won(yc[y])+'</span></span>' }).join('');
+    if(dated<view.length) line+='<span class="sep">·</span><span class="q">연도 미표기 '+won(view.length-dated)+'</span>';
+    rows.push(line);
+  }
+  var order=CATORDER.filter(function(c){return sec[c]});
+  if(order.length>1) rows.push(order.map(function(c){
+    return '<span class="yv">'+esc(c)+' <span class="q">'+won(sec[c])+'</span></span>' }).join(''));
+
+  // Which motifs keep turning up on the same garment as the one being looked at.
+  // Only when exactly one motif is selected — with two or more the question is
+  // no longer "what goes with this".
+  var mk=keys(F.motif);
+  if(mk.length===1){
+    var co={},j;
+    for(i=0;i<view.length;i++){ var mm=view[i].__m;
+      for(j=0;j<mm.length;j++) if(mm[j]!==mk[0]) co[mm[j]]=(co[mm[j]]||0)+1 }
+    var cl=Object.keys(co).sort(function(a,b){return co[b]-co[a]});
+    if(cl.length) rows.push('<span class="lead">함께 나온 기법·모델</span>'+cl.map(function(k){
+      return '<span class="yv">'+esc(motifLbl(k))+' <span class="q">'+won(co[k])+'</span></span>' }).join(''));
+  }
+  // what the offers on screen cost: every listing of a model is an offer of its
+  // own, so a card that stands for three shops brings three prices
+  var ks=[];
+  for(i=0;i<view.length;i++){ it=view[i];
+    if(it.v && it.v.length) it.v.forEach(function(v){ if(v.k>0 && offerPasses(it,v)) ks.push(v.k) });
+    else if(it.k>0) ks.push(it.k) }
+  if(ks.length>=3){
+    ks.sort(function(a,b){return a-b});
+    rows.push('<span class="lead">'+(F.flag.sold?'판매 기록':'가격')+'</span><b>₩'+won(ks[0])+'—₩'+won(ks[ks.length-1])+'</b>'+
+      '<span class="sep">·</span>중앙값 <b>₩'+won(medianOf(ks))+'</b>');
+  }
+  // and what the same conditions sold for, where sale records exist
+  if(!F.flag.sold){
+    var tf={}, kf; for(kf in F.flag) if(own.call(F.flag,kf)&&F.flag[kf]) tf[kf]=1;
+    delete tf.gone; tf.sold=1;
+    var sk=[];
+    for(i=0;i<D.items.length;i++){ it=D.items[i]; if(!it.so || !(it.k>0)) continue;
+      var ok=true;
+      for(var gi=0;gi<GROUPS.length;gi++){ var gg=GROUPS[gi];
+        if(gg==='flag' ? !flagPass(it,tf) : !passes(gg,it)){ ok=false; break } }
+      if(ok) sk.push(it.k) }
+    if(sk.length>=2){ sk.sort(function(a,b){return a-b});
+      rows.push('<span class="lead">판매 기록</span>중앙값 <b>₩'+won(medianOf(sk))+'</b><span class="sep">·</span>'+won(sk.length)+'건') }
+  }
+  if(!rows.length){ el.hidden=true; el.innerHTML=''; return }
+  el.innerHTML=rows.map(function(x){return '<div>'+x+'</div>'}).join('');
+  el.hidden=false;
+}
+// another shop's listing of the same model shares its year, kind and model
+// words, but not its price, shop or size — those filters are asked again
+function offerPasses(it,v){
+  if(any(F.price) && !F.price[priceBand(v.k)]) return false;
+  if(any(F.src) && !F.src[v.r]) return false;
+  if(F.size && !(v.z && String(v.z).toLowerCase().indexOf(F.size)>=0)) return false;
+  if(F.flag.mine){ var o={z:v.z, s:it.s}; o.__z=sizeToks(o); if(!mineMatch(o)) return false }
+  return true;
+}
+function medianOf(a){ var m=a.length>>1; return a.length%2 ? a[m] : Math.round((a[m-1]+a[m])/2) }
+
+// Price moves, oldest first. Only real recorded points — no interpolation.
+/* A price point is [date, krw, sellerPrice?]. The movement is read off the
+   seller's own number when we have it, because the won figure also moves with
+   the exchange rate: on 2026-09-22 a seller cut ¥3,413,000 to ¥3,349,000, a
+   1.9% drop, and the won view called it '오름 8,725 · 0%'. The rows still lead
+   with won, the way the cards do, with the seller's price beside it. */
+function histHtml(it){
+  if(!it.h||it.h.length<2) return '';
+  var cur=it.u||'', sym=cur&&cur!=='KRW'?(SYM[cur]||cur+' '):'';
+  var nat=function(pt){ return pt.length>2 && pt[2]>0 ? pt[2] : null };
+  var haveNat=it.h.every(function(pt){ return nat(pt)!=null });
+  // For a listing priced in another currency, the won figure alone cannot say
+  // whether the seller moved: the rate moves it too. Points recorded before
+  // the seller's price was kept carry only won, and for those we show the
+  // dates and what we converted, and say nothing about direction.
+  var krwIsSeller = !cur || cur==='KRW';
+  var canJudge = haveNat || krwIsSeller;
+  var rows=it.h.map(function(pt,i){
+    var d=pt[0], v=pt[1], p=nat(pt);
+    var pv=i>0?it.h[i-1]:null;
+    // compare like with like: seller's number if both ends have one
+    var a = haveNat&&pv ? nat(pv) : (pv?pv[1]:null);
+    var b = haveNat ? p : v;
+    var delta='';
+    if(canJudge && a!=null && b!==a) delta='<em class="'+(b<a?'dn':'up')+'">'+
+      (b<a?'−':'+')+(haveNat?sym+Number(Math.abs(b-a)).toLocaleString('en-US'):won(Math.abs(b-a)))+'</em>';
+    var alt = (haveNat && sym) ? '<span class="alt">'+sym+Number(p).toLocaleString('en-US')+'</span>' : '';
+    return '<div><span>'+esc(d)+'</span><b>₩'+won(v)+alt+delta+'</b></div>';
+  }).join('');
+  var f0=it.h[0], l0=it.h[it.h.length-1];
+  var first = haveNat ? nat(f0) : f0[1], last = haveNat ? nat(l0) : l0[1];
+  var net='';
+  if(!canJudge){
+    net='<div class="net">원화 환산가만 기록됨</div>';
+  } else if(first!==last && first>0){
+    var amt = haveNat ? sym+Number(Math.abs(last-first)).toLocaleString('en-US') : won(Math.abs(last-first));
+    net='<div class="net">'+(last<first?'내림 ':'오름 ')+amt+' · '+
+      (Math.abs(last-first)/first*100).toFixed(1).replace(/\.0$/,'')+'%</div>';
+  }
+  return '<div class="hist"><span class="lbl">가격 변동</span>'+rows+net+'</div>';
+}
+
+/* ── quick view ── */
+/* The overlay says aria-modal, so a reader is told the page behind is gone.
+   Focus never moved into it, which made that a lie: Tab walked the grid
+   underneath and the reader read it out. Focus goes in on open, comes back
+   to the card on close, and stays inside while it is up.                  */
+var qvReturn=null, qvPushed=false, qvKey='', SITETITLE='';
+function openQV(i,fromUrl){
+  var it=D.items[i];
+  qvIdx = (it.__v!=null && view[it.__v]===it) ? it.__v : -1;
+  renderQV(it);
+  qvScroll=window.scrollY;
+  qvKey=keyOf(it);
+  // a history entry of its own, so the back gesture closes the panel
+  qvPushed=false;
+  if(!fromUrl && histOK){
+    try{
+      var qs=stripItem(location.search);
+      history.pushState(null,'',location.pathname+'?'+(qs?qs+'&':'')+'item='+qvKey);
+      qvPushed=true;
+    }catch(e){ histOK=false }
+  }
+  qvReturn=document.activeElement;
+  // the tab, and every history entry, should say which garment
+  if(!SITETITLE) SITETITLE=document.title;
+  document.title = (it.t||'').slice(0,70)+' — Archive Index CCP';
+  $('ov').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.body.classList.add('noqv');
+  var f=$('qvclose'); if(f) f.focus();
+}
+function qvFocusables(){
+  return [].slice.call($('ov').querySelectorAll(
+    'button:not([disabled]),a[href],input,select,[tabindex]:not([tabindex="-1"])'
+  )).filter(function(e){ return e.offsetWidth||e.offsetHeight||e.getClientRects().length });
+}
+function renderQV(it){
+  // a saved listing that changed has now been seen
+  if(ackSaved(it)) setTimeout(buildWatch,0);
+  var tags=it.__m.map(function(k){return '<span>'+esc(motifLbl(k))+'</span>'}).join('');
+  var cmp='';
+  if(it.g>1 && it.v){
+    var ks=it.v.map(function(v){return v.k});
+    var lo=Math.min.apply(null,ks), hi=Math.max.apply(null,ks);
+    var spread = hi>lo;   // all the same price is not a "lowest"
+    var gap = spread ? '<div class="gap">가격 차 ₩'+won(hi-lo)+'</div>' : '';
+    var sorted=it.v.slice().sort(function(a,b){return a.k-b.k});
+    cmp='<div class="cmp"><span class="lbl">같은 상품명 '+it.g+'곳</span>'+
+      sorted.map(function(v){return '<a href="'+esc(v.l)+'" target="_blank" rel="noopener"'+
+        (spread&&v.k===lo?' class="lo"':'')+'>'+
+        (v.i?imgTag(v.i,160):'<span class="noimg"></span>')+
+        '<span class="w">'+esc(v.r)+(v.z?' · '+esc(v.z):'')+(spread&&v.k===lo?'<i>최저가</i>':'')+'</span>'+
+        '<b>₩'+won(v.k)+(v.u&&v.p>0?'<em>'+(SYM[v.u]||'')+Number(v.p).toLocaleString('en-US')+'</em>':'')+
+        '</b></a>'}).join('')+ gap +
+      '</div>';
+  }
+  var ph=photosOf(it);
+  $('qv').innerHTML=
+    // the detail view shows the photo large, so it asks for a large one
+    '<div class="pic'+(ph.length>1?' multi':'')+'">'+(ph.length?imgTag(ph[0],1200,' id="qvimg"'):'')+
+      (ph.length>1?'<span class="pn" id="qvpn">1 / '+ph.length+'</span><div class="ths">'+ph.map(function(u,k){
+        return '<button data-ph="'+k+'" aria-label="사진 '+(k+1)+'"'+(k===0?' aria-current="true"':'')+'>'+imgTag(u,160)+'</button>' }).join('')+'</div>':'')+
+    '</div>'+
+    '<div class="info">'+
+      '<div class="flags">'+flagsHtml(it)+'</div>'+
+      '<h2>'+esc(it.t)+'</h2>'+
+      priceHtml(it,true)+
+      '<dl class="kv">'+
+        '<dt>사이즈</dt><dd>'+(it.z?esc(it.z):'미표기')+'</dd>'+
+        '<dt>분류</dt><dd>'+esc(it.s)+'</dd>'+
+        (it.mc?'<dt>번호</dt><dd><span class="mc">'+esc(it.mc)+'</span>'+
+          ((MCOUNT[codeNum(it.mc)]||0)>1?'<button class="code" data-code="'+esc(codeNum(it.mc))+'">같은 번호 '+won(MCOUNT[codeNum(it.mc)])+'건</button>':'')+
+          ' <span class="basis">상품명</span></dd>':'')+
+        '<dt>연도</dt><dd>'+(it.__e?esc(it.__e)+' <span class="basis">판매자 표기</span>'
+          :it.__yc?(it.__yc.k==='arch'?'연도 미상':esc(it.__yc.v))+' <span class="basis">'+(CLAIMBASIS[it.__yc.k]||CLAIMBASIS.arch)+'</span>'
+          :(it.c==='A'?'연도 표기 <span class="basis">판매 페이지 확인</span>'
+          :(it.c==='B'?'연도 미상 <span class="basis">아카이브 표기</span>'
+                      :'연도 미확인 <span class="basis">표기 없음</span>')))+'</dd>'+
+        (it.__mk.length?'<dt>표기</dt><dd>'+it.__mk.map(function(k){ return esc(MARKLBL[k]) }).join(' · ')+
+          ' <span class="basis">상품명</span></dd>':'')+
+        '<dt>판매처</dt><dd>'+esc(it.r)+'</dd>'+
+        dutyHtml(it)+
+        (aucText(it)?'<dt>경매</dt><dd>'+aucText(it)+
+          (endText(it)?' <span class="basis">'+esc(endText(it))+' 마감 · 수집 시점 기준</span>':'')+'</dd>':'')+
+        (it.so?'<dt>'+esc(it.sk||'판매 완료')+'</dt><dd>'+esc(it.so)+
+          ' <span class="basis">구매 불가 · '+esc(it.r)+' 판매 기록</span></dd>':'')+
+        (it.f&&!it.so?'<dt>관측</dt><dd>'+
+          (it.x&&it.ls
+            ? esc(it.f)+' — '+esc(it.ls)+
+              ' <span class="basis">'+seenText(it)+' · 목록에서 사라짐</span>'
+            : srcStopped(it.r)
+              // the source stopped answering: say when it was last seen, not how long
+              ? esc(it.f)+' — '+esc(SRCSTAT[it.r].seen)+' <span class="basis">'+esc(md(SRCSTAT[it.r].seen))+' 이후 수집 안 됨</span>'
+              : esc(it.f)+'부터'+(seenText(it)?' <span class="basis">'+seenText(it)+'</span>':''))+
+          '</dd>':'')+
+      '</dl>'+
+      histHtml(it)+ compsHtml(it)+
+      (tags?'<div class="tags">'+tags+'</div>':'')+
+      (QT.length && matchedIn(it).length ? '<div class="why">검색어 일치 · '+
+         esc(matchedIn(it).join(', '))+'</div>' : '')+ cmp +
+      // The listing now has an address of its own; on a phone there is no
+      // address bar to copy it from, so the panel hands it over.
+      // Yahoo and Mercari sellers mostly ship inside Japan only; the proxy's
+      // page for the same listing is the route a buyer in Korea actually takes
+      '<div class="cta"><a href="'+esc(it.l)+'" target="_blank" rel="noopener">'+(it.so?'기록 보기':'판매 페이지')+'</a>'+
+        (!it.so && buyeeUrl(it.l)?'<a href="'+esc(buyeeUrl(it.l))+'" target="_blank" rel="noopener">구매대행</a>':'')+
+        '<button data-save="'+it.__i+'">'+(saved[it.l]?'저장 해제':'저장')+'</button>'+
+        '<button id="qvlink">링크 복사</button></div>'+
+    '</div>';
+  $('qvpos').textContent = qvIdx>=0 ? (qvIdx+1)+' / '+won(view.length) : '';
+  $('qvprev').disabled = qvIdx<=0;
+  $('qvnext').disabled = qvIdx<0 || qvIdx>=view.length-1;
+  if(qvIdx>=0){ preload(qvIdx+1,2); }
+  var ip=$('qv').querySelector('.info'); if(ip) ip.scrollTop=0;
+}
+function stepQV(d){
+  if(qvIdx<0) return;
+  var n=qvIdx+d; if(n<0||n>=view.length) return;
+  qvIdx=n; renderQV(view[n]);
+  // replace rather than push: walking the panel should not fill the history
+  qvKey=keyOf(view[n]);
+  document.title=(view[n].t||'').slice(0,70)+' — Archive Index CCP';
+  if(histOK){ try{ var qs=stripItem(location.search);
+    history.replaceState(null,'',location.pathname+'?'+(qs?qs+'&':'')+'item='+qvKey) }catch(e){} }
+  if(n>=shown-6 && !$('more').hidden) paint(false);
+}
+function closeQV(fromPop){
+  // when we put an entry on the stack, going back is what closes the panel —
+  // the same gesture a phone user already makes
+  if(!fromPop && qvPushed){ qvPushed=false; try{ history.back(); return }catch(e){} }
+  if(!fromPop && !qvPushed && histOK){ try{ var qs=stripItem(location.search);
+    history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')) }catch(e){} }
+  qvPushed=false; qvKey='';
+  if(SITETITLE) document.title=SITETITLE;
+  $('ov').classList.remove('open'); document.body.style.overflow='';
+  document.body.classList.remove('noqv'); qvIdx=-1;
+  if(qvReturn && document.contains(qvReturn)){ try{ qvReturn.focus({preventScroll:true}) }catch(e){} }
+  qvReturn=null;
+  if(qvScroll!=null){
+    var y=qvScroll; qvScroll=null;
+    window.scrollTo(0,y);
+    requestAnimationFrame(function(){ window.scrollTo(0,y) });
+  }
+}
+
+function toggleSave(i){
+  var it=D.items[i];
+  if(saved[it.l]) delete saved[it.l]; else saved[it.l]=keepMark(it);
+  persist(); WCNT=null;
+  var btns=document.querySelectorAll('[data-save="'+i+'"]');
+  for(var k=0;k<btns.length;k++){
+    if(btns[k].classList.contains('save')) btns[k].classList.toggle('on',!!saved[it.l]);
+    else btns[k].textContent=saved[it.l]?'저장 해제':'저장';
+  }
+  // the count beside 저장함 is computed in buildFacets, not in buildFlags —
+  // without this the panel sat at 저장함 0 while the nav bar above it said 3
+  buildFacets(); buildFlags(); syncSaved(); buildWatch();
+  if(F.flag.saved){
+    apply(true,false);
+    // apply() rebuilt view; the open listing's position in it moved with it.
+    // Left alone the header kept saying 2 / 3 and 다음 stayed enabled and dead.
+    if($('ov').classList.contains('open')){
+      // unsaved from inside the panel, under the 저장함 filter: the listing has
+      // left the slice it was being read in, so the panel closes onto the grid
+      if(it.__v!=null && view[it.__v]===it){ qvIdx=it.__v; renderQV(it) }
+      else closeQV();
+    }
+  }
+}
+
+/* ── panel builders ── */
+// Facet counts describe the CURRENT slice, not the whole archive. For each
+// group we count the items that satisfy every OTHER condition — so a number
+// is "how many of these are in what I am looking at", and the options stay
+// switchable. The groups OR inside themselves, so picking a second value in a
+// group you have already used WIDENS the result rather than landing on it —
+// and for 모티프, where one listing can carry several, the two sets overlap,
+// so the total comes out below the sum of the two numbers.
+// One pass: an item failing 0 groups counts everywhere, failing exactly 1 counts
+// only there, failing 2+ counts nowhere.
+var FACET={};
+var TRIAL={};
+function buildFacets(){
+  var G=['y','cat','price','src','cert','motif','mark','flag'];
+  var f={}; G.forEach(function(g){f[g]={}});
+  // Flags AND each other, so each one is counted against the selection it
+  // describes: for an unpressed flag that is the selection plus it — what
+  // pressing would give — and for a pressed one it is the selection as it
+  // stands, which is the slice on screen. Toggling it off here instead
+  // printed the complement: 사라진 매물 read 4,336 under a header saying 300.
+  TRIAL={};
+  for(var t=0;t<FLAGV.length;t++){
+    var v=FLAGV[t], trial={}, kk;
+    for(kk in F.flag) if(own.call(F.flag,kk)&&F.flag[kk]) trial[kk]=1;
+    trial[v]=1;
+    TRIAL[v]=trial;
+  }
+  for(var i=0;i<D.items.length;i++){
+    var it=D.items[i], bad=null, nbad=0, j;
+    for(j=0;j<GROUPS.length;j++){
+      if(!passes(GROUPS[j],it)){ nbad++; bad=GROUPS[j]; if(nbad>1) break }
+    }
+    if(nbad>1) continue;
+    if(nbad===1 && G.indexOf(bad)<0) continue;   // failed size/q — counts nowhere
+    var only = nbad===1 ? bad : null;
+    if(!only||only==='y'){ var k=it.__yk; f.y[k]=(f.y[k]||0)+1 }
+    if(!only||only==='cat'){ f.cat[it.s]=(f.cat[it.s]||0)+1 }
+    if(!only||only==='price'){ var b=priceBand(it.k); f.price[b]=(f.price[b]||0)+1 }
+    if(!only||only==='src'){ f.src[it.r]=(f.src[it.r]||0)+1 }
+    if(!only||only==='cert'){ f.cert[it.__c]=(f.cert[it.__c]||0)+1 }
+    if(!only||only==='motif'){ for(j=0;j<it.__m.length;j++) f.motif[it.__m[j]]=(f.motif[it.__m[j]]||0)+1 }
+    if(!only||only==='mark'){ for(j=0;j<it.__mk.length;j++) f.mark[it.__mk[j]]=(f.mark[it.__mk[j]]||0)+1 }
+    if(!only||only==='flag'){
+      // Every other group OR-s inside itself, so "passes everything but this
+      // group" is the right thing to count. Flags AND, and counting them that
+      // way lied: with 여러 곳 등록 on, 신규 read 61 and clicking it gave 1.
+      for(j=0;j<FLAGV.length;j++){
+        var fv=FLAGV[j];
+        if(flagPass(it,TRIAL[fv])) f.flag[fv]=(f.flag[fv]||0)+1;
+      }
+    }
+  }
+  FACET=f;
+}
+function tally(fn){ var m={},i,k; for(i=0;i<D.items.length;i++){ k=fn(D.items[i]);
+  if(k==null)continue; if(k.push){for(var j=0;j<k.length;j++)m[k[j]]=(m[k[j]]||0)+1} else m[k]=(m[k]||0)+1 }
+  return m }
+function opt(g,v,label,n){
+  return '<button class="opt'+(n===0&&!F[g][v]?' zero':'')+'" data-g="'+g+'" data-v="'+esc(v)+
+    '" aria-pressed="'+(F[g][v]?'true':'false')+'"><span class="mk"></span>'+esc(label)+
+    (n!=null?'<span class="c">'+won(n)+'</span>':'')+'</button>';
+}
+function buildFlags(){
+  var f=FACET.flag||{}, h='';
+  var anySaved=0; for(var i=0;i<D.items.length;i++) if(saved[D.items[i].l]) anySaved++;
+  // a selected option stays put at zero, the way opt() already intends —
+  // otherwise it disappears while still filtering and only the token row
+  // can turn it off
+  if(!ALLNEW && (f['new']||F.flag['new'])) h+=opt('flag','new','신규',f['new']||0);
+  if(f.drop||F.flag.drop) h+=opt('flag','drop','가격 내림',f.drop||0);
+  h+=opt('flag','multi','여러 곳 등록',f.multi||0);
+  if(anySaved||F.flag.saved) h+=opt('flag','saved','저장함',f.saved||0);
+  if(f.gone||F.flag.gone) h+=opt('flag','gone','사라진 매물',f.gone||0);
+  if(SINCE && (f.since||F.flag.since)) h+=opt('flag','since','지난 방문('+md(SINCE)+') 이후',f.since||0);
+  if(f.sold||F.flag.sold) h+=opt('flag','sold','판매 기록',f.sold||0);
+  // shown once the reader has said what their sizes are
+  if(mineAny()||F.flag.mine) h+=opt('flag','mine','내 사이즈',f.mine||0);
+  $('fflag').innerHTML=h;
+}
+/* The picker lists only sizes that are actually written on a listing in
+   that kind of garment, with how many; a bag has no size to pick. */
+function buildMySize(){
+  var box=$('mysz'); if(box.hidden) return;
+  var cnt={top:{},bot:{},shoe:{}};
+  for(var i=0;i<D.items.length;i++){ var it=D.items[i]; if(it.x||it.so) continue;
+    var g=SZGRP[it.s]; if(!g) continue;
+    it.__z.forEach(function(t){ cnt[g][t]=(cnt[g][t]||0)+1 }) }
+  var h='<span class="lbl">내 사이즈</span>';
+  ['top','bot','shoe'].forEach(function(g){
+    var ks=Object.keys(cnt[g]);
+    MYSZ[g].forEach(function(t){ if(ks.indexOf(t)<0) ks.push(t) });   // a pick with no listing today stays pickable
+    ks.sort(sizeOrder);
+    h+='<div class="row"><span>'+esc(SZNAME[g])+'</span><div class="chips">'+ks.map(function(t){
+      return '<button class="szc" data-szg="'+g+'" data-szv="'+esc(t)+'" aria-pressed="'+(MYSZ[g].indexOf(t)>=0?'true':'false')+'">'+
+        esc(t)+'<i>'+won(cnt[g][t]||0)+'</i></button>' }).join('')+'</div></div>';
+  });
+  box.innerHTML=h;
+}
+function pickSize(g,v){
+  var a=MYSZ[g], k=a.indexOf(v);
+  if(k>=0) a.splice(k,1); else if(a.length<40) a.push(v);
+  persistSize(); WCNT=null;
+  var bs=$('mysz').querySelectorAll('.szc');
+  for(var bi=0;bi<bs.length;bi++) if(bs[bi].dataset.szg===g && bs[bi].dataset.szv===v)
+    bs[bi].setAttribute('aria-pressed',a.indexOf(v)>=0?'true':'false');
+  // with nothing picked there is nothing to filter by; the condition goes with it
+  if(!mineAny() && F.flag.mine) delete F.flag.mine;
+  // opened from a kept 내 사이즈 search that had no sizes to go on: now it has
+  if(PENDMINE!==null && mineAny()){ if(PENDMINE===filterQs()) F.flag.mine=1; PENDMINE=null }
+  if(F.flag.mine || !mineAny()) apply(true,false);
+  else { buildFacets(); buildFlags(); buildWatch() }
+}
+function buildCats(){
+  var cats=tally(function(it){return it.s});
+  var h='<button data-cat="" aria-pressed="'+(any(F.cat)?'false':'true')+'">전체</button>';
+  h+=CATORDER.filter(function(c){return cats[c]}).map(function(c){
+    return '<button data-cat="'+esc(c)+'" aria-pressed="'+(F.cat[c]?'true':'false')+'">'+esc(c)+'</button>'}).join('');
+  $('cats').innerHTML=h;
+  if(CATSEND) CATSEND();
+}
+var ORDER={motif:[],src:[],mark:[],markN:{}};
+function buildOrder(){
+  var mo=tally(function(it){return it.__m}), sr=tally(function(it){return it.r});
+  ORDER.motif=MOTIF.filter(function(m){return mo[m[0]]}).sort(function(a,b){return mo[b[0]]-mo[a[0]]});
+  ORDER.src=Object.keys(sr).sort(function(a,b){return sr[b]-sr[a]});
+  // a label on one or two listings is noise in a filter; search still finds them
+  var mk=tally(function(it){return it.__mk});
+  ORDER.markN=mk;
+  ORDER.mark=MARK.filter(function(m){return mk[m[0]]}).sort(function(a,b){return mk[b[0]]-mk[a[0]]});
+}
+function buildPanel(){
+  // This once bailed out whenever anything in the panel had focus, to protect
+  // the size field from being re-rendered under someone typing. A browser
+  // focuses a button when you click it, so from a user's first click the
+  // counts stopped moving: the one thing the panel exists to say. The field
+  // never needed protecting — nothing below rewrites the column it sits in —
+  // and narrowing the bail to INPUT only moved the freeze onto the field:
+  // typing 48 left every number in the panel describing all 4,636 items.
+  var ae=document.activeElement;
+  var refocus=null;
+  if(ae && $('panel').contains(ae) && ae.dataset && ae.dataset.g)
+    refocus=[ae.dataset.g, ae.dataset.v];
+  buildFacets();
+  var mo=FACET.motif;
+  $('fmotif').innerHTML=ORDER.motif.map(function(m){return opt('motif',m[0],m[1],mo[m[0]]||0)}).join('');
+
+  var pr=FACET.price;
+  $('fprice').innerHTML=PRICE.map(function(b){return opt('price',b[0],b[0],pr[b[0]]||0)}).join('');
+
+  var sr=FACET.src;
+  $('fsrc').innerHTML=ORDER.src.map(function(k){return opt('src',k,k,sr[k]||0)}).join('');
+  // where nothing new has come in for days, say so where the source is picked
+  var stop=ORDER.src.filter(srcStopped), stale=ORDER.src.filter(function(r){ return srcStale(r) && !srcStopped(r) });
+  var sn=[];
+  if(stop.length) sn.push('수집 중단 · '+stop.map(function(r){ return esc(r)+'('+md(SRCSTAT[r].seen)+')' }).join(' · '));
+  if(stale.length){
+    var byLast={}; stale.forEach(function(r){ var l=SRCSTAT[r].last; (byLast[l]=byLast[l]||[]).push(r) });
+    Object.keys(byLast).sort().forEach(function(l){
+      sn.push(md(l)+' 이후 신규 없음 · '+byLast[l].map(esc).join(' · ')) });
+  }
+  $('fsrcnote').innerHTML=sn.join('<br>'); $('fsrcnote').hidden=!sn.length;
+
+  var mk=FACET.mark, anyMark=false;
+  $('fmark').innerHTML=ORDER.mark.map(function(m){
+    if(!(ORDER.markN[m[0]]>=3) && !F.mark[m[0]]) return '';
+    anyMark=true; return opt('mark',m[0],m[1],mk[m[0]]||0) }).join('');
+  $('fmarkcol').hidden=!anyMark;
+
+  var ce=FACET.cert;
+  $('fcert').innerHTML=['A','B','C'].map(function(k){return opt('cert',k,CERT[k],ce[k]||0)}).join('');
+
+  buildFlags();
+
+  var yr=FACET.y;
+  var max=1,y; for(y=YMIN;y<=YMAX;y++) if(yr[String(y)]>max) max=yr[String(y)];
+  var h='';
+  for(y=YMIN;y<=YMAX;y++){
+    var k=String(y), n=yr[k]||0, ht=n?Math.max(2,Math.round(n/max*36)):1;
+    h+='<button class="yr" data-g="y" data-v="'+k+'" aria-pressed="'+(F.y[k]?'true':'false')+
+      '" title="'+k+' · '+won(n)+'건"><span class="bw"><span class="v" style="height:'+ht+'px"></span></span>'+
+      '<span class="y">'+String(y).slice(2)+'</span></button>';
+  }
+  $('fyear').innerHTML=h;
+  $('fyear').onmouseover=function(e){
+    var b=e.target.closest('.yr'); if(!b) return;
+    $('yread').textContent = b.dataset.v+' · '+won(yr[b.dataset.v]||0)+'건';
+  };
+  $('fyear').onmouseleave=function(){ $('yread').textContent='' };
+  $('fnoyear').innerHTML = (yr['none'] || F.y['none']) ? opt('y','none','연도 미표기',yr['none']||0) : '';
+  if(refocus){
+    var back=$('panel').querySelector('[data-g="'+refocus[0]+'"][data-v="'+
+      String(refocus[1]).replace(/"/g,'\\"')+'"]');
+    // un-pressing the last flag at zero removes the button from under the
+    // focus ring; without somewhere to land, Tab restarted at the top of the
+    // document and the arrow keys jumped to the first card
+    if(!back) back=$('panel').querySelector('[data-g="'+refocus[0]+'"]')||$('pdone');
+    if(back) try{ back.focus({preventScroll:true}) }catch(e){}
+  }
+}
+var CATSEND=null;
+function syncPanel(){
+  var bs=$('panel').querySelectorAll('[data-g]');
+  for(var i=0;i<bs.length;i++){
+    var b=bs[i]; b.setAttribute('aria-pressed', F[b.dataset.g][b.dataset.v]?'true':'false');
+  }
+  $('fsize').value=F.size;
+  buildCats();
+}
+
+/* ── url state ──────────────────────────────────────────
+   Readable query params, so a link says what it shows and can be hand-edited:
+     ?category=outer&year=1998-2003&motif=bondage&source=Grailed
+   Every user-initiated change pushes a history entry, so browser back undoes
+   one filter instead of leaving the page. Falls back silently on file://,
+   where the History API throws.                                          */
+var urlLock=false, histOK=true;
+
+/* ── one address per listing ───────────────────────────────────────────
+   Every collection catalogue worth the name gives each object its own
+   address — the Rijksmuseum, the V&A. This one gave none: opening a listing
+   changed nothing in the bar, so it could not be sent to anyone, a reload
+   lost it, and on a phone the back gesture left the site instead of closing
+   the panel.
+
+   The key is a 32-bit FNV-1a of the listing's own URL in base 36 — seven
+   characters, stable for as long as the seller's link is, and unique across
+   all 4,636 listings as built. Not an index: the order changes every day. */
+function keyOf(it){
+  if(it.__k) return it.__k;
+  var h=0x811c9dc5, u=it.l||'';
+  for(var i=0;i<u.length;i++){ h^=u.charCodeAt(i); h=Math.imul(h,0x01000193)>>>0 }
+  return (it.__k=h.toString(36));
+}
+var KEYMAP=null;
+function byKey(k){
+  if(!KEYMAP){ KEYMAP={};
+    // first one wins; two listings sharing a key would be the same garment
+    for(var i=D.items.length-1;i>=0;i--) KEYMAP[keyOf(D.items[i])]=i }
+  return KEYMAP.hasOwnProperty(k) ? KEYMAP[k] : -1;
+}
+// decodeURIComponent throws on a lone % — a truncated link from a chat client
+// is enough. Unescaped, the raw text is still a usable value; a thrown one
+// took boot down and blamed the data for it.
+function dec(x){ try{ return decodeURIComponent(x) }catch(e){ return x } }
+function paramOf(qs,name){
+  var m=(qs||'').replace(/^[?#]/,'').split('&');
+  for(var i=0;i<m.length;i++){ var j=m[i].indexOf('=');
+    if(j>0 && m[i].slice(0,j)===name) return dec(m[i].slice(j+1)) }
+  return '';
+}
+function stripItem(qs){
+  return (qs||'').replace(/^[?#]/,'').split('&')
+    .filter(function(kv){ return kv && kv.indexOf('item=')!==0 }).join('&');
+}
+var CATSLUG={'아우터':'outer','테일러링':'tailoring','셔츠':'shirts','상의':'tops','팬츠':'pants',
+  '데님':'denim','신발':'shoes','가방·소품':'bags','주얼리':'jewelry','기타':'other'};
+var PRICESLUG={'~50만':'under-500k','50–150만':'500k-1.5m','150–300만':'1.5m-3m','300만~':'over-3m'};
+var CERTSLUG={A:'confirmed',B:'archive',C:'unknown'};
+function unslug(map,v){ for(var k in map) if(map[k]===v) return k; return v }
+var PARAM={y:'year',cat:'category',motif:'motif',price:'price',src:'source',cert:'year-basis',mark:'label',flag:'show'};
+function slugFor(g,v){
+  if(g==='cat') return CATSLUG[v]||v;
+  if(g==='price') return PRICESLUG[v]||v;
+  if(g==='cert') return CERTSLUG[v]||v;
+  return v;
+}
+function unslugFor(g,v){
+  if(g==='cat') return unslug(CATSLUG,v);
+  if(g==='price') return unslug(PRICESLUG,v);
+  if(g==='cert') return unslug(CERTSLUG,v);
+  return v;
+}
+// contiguous years collapse to 1998-2003; everything else stays a comma list
+function packYears(ks){
+  var ns=ks.filter(function(k){return /^\d{4}$/.test(k)}).map(Number).sort(function(a,b){return a-b});
+  var rest=ks.filter(function(k){return !/^\d{4}$/.test(k)});
+  var out=[],i=0;
+  while(i<ns.length){
+    var j=i; while(j+1<ns.length && ns[j+1]===ns[j]+1) j++;
+    out.push(j>i?ns[i]+'-'+ns[j]:String(ns[i])); i=j+1;
+  }
+  return out.concat(rest);
+}
+function unpackYears(parts){
+  var out=[];
+  parts.forEach(function(p){
+    var m=/^(\d{4})-(\d{4})$/.exec(p);
+    if(m){ var a=+m[1],b=+m[2]; if(b<a){var t=a;a=b;b=t}
+      for(var y=Math.max(a,YMIN);y<=Math.min(b,YMAX);y++) out.push(String(y)); }
+    else out.push(p);
+  });
+  return out;
+}
+function buildQuery(){
+  var p=[];
+  FG.forEach(function(g){
+    // 지난 방문 이후 means this browser's last visit; a link that carried it
+    // would open, for anyone else, on a filter they cannot see or turn off
+    var k=keys(F[g]).filter(function(v){ return !(g==='flag' && v==='since') }); if(!k.length) return;
+    var vals = g==='y' ? packYears(k) : k.map(function(v){return slugFor(g,v)});
+    p.push(PARAM[g]+'='+vals.map(encodeURIComponent).join(','));
+  });
+  if(F.size) p.push('size='+encodeURIComponent(F.size));
+  if(F.q) p.push('q='+encodeURIComponent(F.q));
+  var s=$('sort').value; if(s!=='k-') p.push('sort='+encodeURIComponent(s));
+  return p.join('&');
+}
+function writeUrl(push){
+  if(urlLock||!histOK) return;
+  var qs=buildQuery();
+  // buildQuery only knows about filters. An apply() that runs while a listing
+  // is open — toggling 저장 from inside the panel does exactly that — used to
+  // drop item= from the address, so the copied link opened nothing.
+  if(qvKey && $('ov').classList.contains('open')) qs=(qs?qs+'&':'')+'item='+qvKey;
+  var url=location.pathname+(qs?'?'+qs:'');
+  try{
+    if(push && url!==location.pathname+location.search) history.pushState(null,'',url);
+    else history.replaceState(null,'',url);
+    // popstate compares against this to decide whether a filter actually
+    // moved; leaving it stale made the first Back a no-op
+    lastFilterQs=stripItem(qs);
+  }catch(e){ histOK=false; }
+}
+// A link read into filter state without touching the page — applyQuery uses
+// it for the address, and 찾는 물건 uses it to count a kept search.
+function parseQs(qs){
+  var st={g:{}, size:'', q:'', sort:null};
+  FG.forEach(function(g){ st.g[g]={} });
+  if(qs){
+    qs.replace(/^[?#]/,'').split('&').forEach(function(kv){
+      var i=kv.indexOf('='); if(i<0) return;
+      var k=kv.slice(0,i), raw=kv.slice(i+1);
+      var v=dec(raw.replace(/\+/g,' '));
+      if(k==='size'){st.size=v.toLowerCase();return}
+      if(k==='q'){st.q=v.toLowerCase().trim();return}
+      if(k==='sort'){
+        // Read from the RAW parameter, not from v: two of the eight sort
+        // values end in a plus (k+, y+) and the form-encoding substitution
+        // above turns that into a space, so 가격 낮은 순 and 연도 오래된 순
+        // silently came back as 가격 높은 순 on reload and on Back.
+        st.sort=dec(raw);
+        return;
+      }
+      var g=null; for(var gk in PARAM) if(PARAM[gk]===k) g=gk;
+      // own properties only: ?__proto__=x reached Object.prototype, and then
+      // every group read as active and nothing matched anything, for good
+      if(!g && Object.prototype.hasOwnProperty.call(st.g,k)) g=k;
+      if(!g) return;
+      var parts=v.split(',').filter(Boolean);
+      if(g==='y') parts=unpackYears(parts);
+      parts.forEach(function(x){
+        var val=unslugFor(g,x);
+        // ?show=constructor drew a chip reading "function Object() { [native
+        // code] }" and filtered nothing. These groups have a closed set of
+        // values; anything else is dropped rather than shown as a condition.
+        if(g==='flag' && FLAGV.indexOf(val)<0) return;
+        if(g==='flag' && val==='since' && !SINCE) return;
+        if(g==='cert' && !own.call(CERT,val)) return;
+        if(g==='mark' && !own.call(MARKLBL,val)) return;
+        st.g[g][val]=1;
+      });
+    });
+  }
+  return st;
+}
+function applyQuery(qs){
+  // The address now says what is being shown, so a keystroke still waiting out
+  // its 170ms is stale. Left running, a Back pressed mid-typing landed ~170ms
+  // later as a search the field no longer shows, and wrote it over the entry
+  // the user had just returned to.
+  clearTimeout(qt);
+  var st=parseQs(qs);
+  FG.forEach(function(g){ F[g]=st.g[g] });
+  // 내 사이즈 in a link means the sizes of whoever opens it; with none kept
+  // here it would filter everything away, so it is left off
+  if(F.flag.mine && !mineAny()) delete F.flag.mine;
+  F.size=st.size; setQuery(st.q);
+  var sortWanted=st.sort;
+  $('q').value=F.q;
+  // This could only ever OPEN the search. Going back out of a search left the
+  // field open and empty, and on a phone the open field takes the whole row,
+  // so the category tabs stayed hidden with nothing being searched.
+  var nv=document.querySelector('.nav');
+  if(F.q){ $('qbox').classList.add('on'); $('qtog').setAttribute('aria-expanded','true');
+    if(nv) nv.classList.add('searching') }
+  else {
+    // the field is about to become visibility:hidden, which drops focus to the
+    // document; hand it to the button that reopens it instead
+    if(document.activeElement===$('q')) try{ $('qtog').focus({preventScroll:true}) }catch(e){}
+    $('qbox').classList.remove('on'); $('qtog').setAttribute('aria-expanded','false');
+    if(nv) nv.classList.remove('searching') }
+  // An entry carrying no sort= is the default one. Leaving the select where it
+  // was meant Back from a sorted view kept the sort, and apply() then wrote it
+  // into the entry it had just returned to — the default was gone for good.
+  var want=sortWanted||'k-', okSort=false, so=$('sort').options;
+  for(var oi=0;oi<so.length;oi++) if(so[oi].value===want){ okSort=true; break }
+  $('sort').value = okSort ? want : 'k-';
+  // 관련도 순 exists only while there is something to be relevant to. A link
+  // the page itself writes carries sort=rel, and the option stayed hidden:
+  // the select read 관련도 순 but the list it dropped down did not contain it.
+  var rl=$('sort').querySelector('[value="rel"]');
+  if(rl){ rl.hidden=!QT.length;
+    if(!QT.length && $('sort').value==='rel') $('sort').value='k-'; }
+  $('fsize').value=F.size;
+}
+function readUrl(){
+  // accept both ?query and a legacy #hash link
+  var qs=location.search||location.hash;
+  urlLock=true; try{ applyQuery(qs) } finally { urlLock=false }
+}
+var lastFilterQs=null;
+function syncItemFromUrl(want){
+  if(want===undefined) want=paramOf(location.search,'item');
+  var open=$('ov').classList.contains('open');
+  if(want){
+    if(!open || qvKey!==want){
+      var i=byKey(want);
+      if(i>=0){ openQV(i,true); if(histOK) try{ writeUrl(false) }catch(e){} }
+      else {
+        // a link to something that has since left the listing: close, and take
+        // the dead key out of the address rather than leaving it to mislead
+        if(open) closeQV(true);
+        if(histOK) try{ var q=stripItem(location.search);
+          history.replaceState(null,'',location.pathname+(q?'?'+q:'')) }catch(e){}
+      }
+    }
+  } else if(open) closeQV(true);
+}
+window.addEventListener('popstate',function(){
+  // read the listing first: apply() calls writeUrl, which rewrites the entry
+  var want=paramOf(location.search,'item');
+  var qs=stripItem(location.search);
+  // Jumping back past both entries at once lands here with the panel still
+  // open. apply() calls writeUrl, which would write the open listing into
+  // THIS entry — and going forward and back again re-opened it by itself.
+  if(!want && $('ov').classList.contains('open')) closeQV(true);
+  if(qs!==lastFilterQs){
+    lastFilterQs=qs;
+    urlLock=true; try{ applyQuery(location.search) } finally { urlLock=false }
+    buildCats(); buildPanel(); apply();
+  }
+  // otherwise only the listing changed, and repainting the grid would throw
+  // away the scroll position the panel is supposed to come back to
+  syncItemFromUrl(want);
+});
+
+/* ── boot ── */
+var BOOTITEM='';
+function boot(d){
+  D=d;
+  TODAY=d.today||null;
+  var i,it;
+  for(i=0;i<D.items.length;i++){
+    it=D.items[i]; it.__i=i;
+    // PREP-TIER — the page's reading of the year evidence. The pipeline's e and c
+    // are left as written; the card, the detail, the filters and the tally all read these.
+    //  · a decade or a span turned into a year (1990s → 1990, 2001-2005 → 2001) is shown
+    //    as the seller wrote it and filed as 아카이브 표기: no single year was named
+    //  · a season or year copied out of the title is 연도 표기, whatever tier was stored
+    var ycE=yearClaim(it);
+    it.__yc=ycE || (it.q ? {k:it.qk||'arch', v:it.q} : null);
+    it.__e=ycE?null:(it.e||null);
+    it.__c=ycE?'B':(it.__e?'A':it.c);
+    // END-TIER
+    it.__y=yearOf(it);
+    it.__yk=it.__y?String(it.__y):'none';
+    it.__m=[]; var mw='';
+    var tk=it.t||''; try{ tk=tk.normalize('NFKC') }catch(e){}
+    for(var j=0;j<MOTIF.length;j++) if(MOTIF[j][2].test(tk)){ it.__m.push(MOTIF[j][0]); mw+=' '+MOTIF[j][0]+' '+MOTIF[j][1] }
+    it.__mk=marksOf(tk,it);
+    it.__z=sizeToks(it);
+    // fields kept apart so a hit can say which one it came from, and rank by it
+    it.__t=nrm(it.t);
+    it.__mw=nrm(mw);
+    it.__sec=nrm(it.s);
+    it.__meta=nrm((it.e||'')+' '+(it.r||'')+' '+(it.z||'')+' '+codeForms(it.mc));
+    it.__s=it.__t+' '+it.__mw+' '+it.__sec+' '+it.__meta;
+  }
+  // saves from before prices were kept get today's price as their baseline;
+  // one that came back after it left is ready to be missed again; one whose
+  // seller changed currency starts over in the new one
+  // the years the bars run over, and how many live listings carry each model number
+  MCOUNT={}; YMAX=Math.max(YMIN, TODAY?+TODAY.slice(0,4):YMAX);
+  for(i=0;i<D.items.length;i++){ it=D.items[i]; if(it.__y && it.__y>YMAX && it.__y<=MAXY) YMAX=it.__y;
+    // one per card: the button's search finds cards, and a cross-posted card is one garment
+    if(it.mc && !it.x && !it.so){ var cn=codeNum(it.mc); MCOUNT[cn]=(MCOUNT[cn]||0)+1 } }
+  var up=0; for(i=0;i<D.items.length;i++){ it=D.items[i]; var sb=saved[it.l];
+    if(!sb) continue;
+    if(typeof sb!=='object' || (!it.x && curOf(sb.u)!==curOf(it.u))){ saved[it.l]=keepMark(it); up++ }
+    else if(!it.x && sb.g){ sb.g=0; up++ } }
+  if(up) persist();
+  var c=d.counts;
+  ALLNEW = c.fresh >= c.items;
+  initSince(TODAY);
+  buildSrcStat();
+  $('kicker').textContent = d.issueLabel+' · '+d.date;
+  // counted here, by the reading the filters use, so the masthead and the filters
+  // cannot disagree about a listing; same-model duplicates count, as the pipeline counts them
+  var tn={A:0,B:0,C:0}, tall=0;
+  for(i=0;i<D.items.length;i++){ it=D.items[i]; if(it.x||it.so) continue;
+    var mult=it.v&&it.v.length?it.v.length:1; tall+=mult; if(own.call(tn,it.__c)) tn[it.__c]+=mult }
+  var t=['매물 <b>'+won(tall)+'</b>','연도 표기 <b>'+won(tn.A)+'</b>',
+         '시기 표기 <b>'+won(tn.B)+'</b>','연도 미확인 <b>'+won(tn.C)+'</b>'];
+  if(c.fresh&&!ALLNEW) t.push('신규 <b>'+won(c.fresh)+'</b>');
+  if(c.changed) t.push('가격 변동 <b>'+won(c.changed)+'</b>');
+  if(SINCE){ var ns=0; for(i=0;i<D.items.length;i++){ it=D.items[i];
+      if(!it.x && !it.so && it.f && it.f>SINCE) ns++ }
+    if(ns) t.push('지난 방문 이후 <b>'+won(ns)+'</b>') }
+  $('tally').innerHTML=t.join(' &nbsp;·&nbsp; ');
+  // a build that says where it looked replaces the fixed sentence below
+  var srcNote = d.sources && d.sources.length ? d.sources.map(function(x){
+      return esc(x.name)+(x.how?' ('+esc(x.how)+')':'') }).join(' · ') : null;
+  $('colo').innerHTML=
+    '<div><span class="lbl">수집</span><p>'+(srcNote||'야후옥션 · 메루카리 · 라쿠마 · 후루츠패밀리 · Grailed · eBay')+
+      '<br>상품명이나 판매처 표기가 캐롤 크리스찬 포엘인 매물만</p></div>'+
+    '<div><span class="lbl">연도</span><p>연도 표기 · 상품명에 연도·시즌 있음<br>시기 표기 · 연대·기간·초기·아카이브 표기만 있음<br>연도 미확인 · 표기 없음<br>연도 추정 없음</p></div>'+
+    '<div><span class="lbl">기법·모델</span><p>상품명 기준</p></div>'+
+    '<div><span class="lbl">번호</span><p>상품명의 모델 번호 · AM/2601L · PM1278 · 2687P</p></div>'+
+    '<div><span class="lbl">가격</span><p>1달러 ₩'+won(d.rates.USD)+
+      ' · 1파운드 ₩'+won(d.rates.GBP)+' · 1유로 ₩'+won(d.rates.EUR)+' · 100엔 ₩'+won(d.rates.JPY)+
+      (d.rates.date?'<br>ECB 기준환율 · '+esc(md(d.rates.date)):'')+'<br>가격 변동 · 판매처 통화 기준</p></div>'+
+    '<div><span class="lbl">같은 상품명</span><p>판매처가 다른 같은 제목 · 한 카드</p></div>'+
+    '<div><span class="lbl">판매 기록</span><p>야후옥션 낙찰 · 같은 번호 기준</p></div>'+
+    // per source: how many are up now, and the last day anything new came in
+    '<div><span class="lbl">판매처별</span><p>'+srcOrder().map(function(r){
+      return esc(r)+' '+won(SRCSTAT[r].n)+' · '+esc(srcFresh(r)) }).join('<br>')+
+      '<br>날짜는 수집 기준</p></div>'+
+    '<div><span class="lbl">소재·표기</span><p>상품명의 소재 · 새 상품 · Made in 표기</p></div>'+
+    '<div><span class="lbl">통관</span><p>면세 기준 물품가격 US$150 이하 · 미국발 특송 US$200 이하<br>초과 시 전액 과세 · 세액은 계산하지 않음<br>관세청 특송·우편물 통관 안내 · 2026-09-25 확인</p></div>'+
+    '<div><span class="lbl">저장</span><p>저장한 매물 · 저장한 검색 · 내 사이즈는 이 기기 브라우저에만 저장</p></div>';
+  $('sig').textContent='Archive Index · Carol Christian Poell · '+d.issueLabel+' · '+d.dateKo;
+  $('grid').classList.toggle('list',LISTV);
+  $('vtog').setAttribute('aria-pressed',LISTV?'true':'false');
+  readUrl();
+  buildOrder(); buildCats(); buildPanel();
+  apply();
+  showKeepBar();
+  lastFilterQs=stripItem(location.search);
+  if(BOOTITEM){
+    // apply() has already rewritten the address from the filters, which drops
+    // the listing; put it back, then open it
+    var bi=byKey(BOOTITEM);
+    if(bi>=0){
+      if(histOK){ try{ var q0=stripItem(location.search);
+        history.replaceState(null,'',location.pathname+'?'+(q0?q0+'&':'')+'item='+BOOTITEM) }catch(e){} }
+      openQV(bi,true);
+    }
+    BOOTITEM='';
+  }
+}
+
+/* ── events ── */
+$('cats').addEventListener('click',function(e){
+  var b=e.target.closest('[data-cat]'); if(!b) return;
+  var v=b.dataset.cat;
+  F.cat = v?(F.cat[v]?{}:(function(o){o[v]=1;return o})({})):{};
+  buildCats(); syncPanel(); apply(false,true);
+  window.scrollTo({top:0,behavior:'auto'});
+});
+$('panel').addEventListener('click',function(e){
+  var b=e.target.closest('[data-g]'); if(!b) return;
+  var g=b.dataset.g, v=b.dataset.v;
+  if(F[g][v]) delete F[g][v]; else F[g][v]=1;
+  b.setAttribute('aria-pressed',F[g][v]?'true':'false');
+  if(g==='cat') buildCats();
+  apply(false,true);
+});
+/* A search ends in three places — the token, 모두 해제, and the 검색 button —
+   and each used to undo a different part of it. The button left the sort on
+   관련도 with sort=rel leaking into every link afterwards, and both the token
+   and 모두 해제 left the field open, which on a phone hides the tab row. */
+function endSearch(){
+  $('qtog').setAttribute('aria-expanded','false');
+  // the field debounces by 170ms; closing it inside that window used to let
+  // the keystroke land afterwards, filtering the grid from a box that was
+  // already shut and empty
+  clearTimeout(qt);
+  setQuery(''); $('q').value='';
+  var rl=$('sort').querySelector('[value="rel"]');
+  if($('sort').value==='rel'){ $('sort').value=sortBeforeQ||'k-' }
+  sortBeforeQ=null;
+  if(rl) rl.hidden=true;
+  $('qbox').classList.remove('on');
+  var nv=document.querySelector('.nav'); if(nv) nv.classList.remove('searching');
+}
+function offClick(e){
+  if(e.target.closest('#rst')||e.target.closest('#emptyclear')){ clearAll(); return }
+  var b=e.target.closest('[data-off]'); if(!b) return;
+  var g=b.dataset.off;
+  if(g==='size'){F.size='';$('fsize').value=''}
+  else if(g==='q') endSearch();
+  else delete F[g][b.dataset.v];
+  syncPanel(); apply(true,true);
+}
+$('applied').addEventListener('click',offClick);
+$('empty').addEventListener('click',offClick);
+$('applied').addEventListener('click',function(e){ if(e.target.closest('#wsv')) toggleWatch() });
+function watchClick(e){
+  var k=e.target.closest('[data-kopen]'); if(k){ openQV(+k.dataset.kopen); return }
+  if(e.target.closest('[data-kack]')){
+    for(var ai=0;ai<D.items.length;ai++){ var ait=D.items[ai]; if(saved[ait.l] && savedChange(ait)) saved[ait.l]=keepMark(ait) }
+    persist(); buildWatch(); return }
+  var x=e.target.closest('[data-kexp]'); if(x){ shareKeep(x); return }
+  var o=e.target.closest('[data-wopen]'); if(o){ openWatch(+o.dataset.wopen); return }
+  var d=e.target.closest('[data-wdel]');
+  if(d){ var i=+d.dataset.wdel; if(WATCH[i]){ WATCH.splice(i,1); WNEW=null; persistWatch();
+    buildApplied(); buildWatch();
+    var fq=filterQs(); if(watchAt(fq)<0){ var cat=keys(F.cat);
+      $('hlabel').textContent = cat.length===1?cat[0] : (F.flag.saved?'저장함':'전체'); $('hnote').textContent='' }
+    // focus stays in the list, on the next row or the panel's close button
+    var nx=$('pwatch').querySelector('[data-wdel="'+Math.min(i,WATCH.length-1)+'"]')||$('pdone');
+    if(nx) try{ nx.focus({preventScroll:true}) }catch(err){} } }
+}
+$('wbar').addEventListener('click',watchClick);
+$('pwatch').addEventListener('click',watchClick);
+$('mytog').addEventListener('click',function(){
+  var box=$('mysz'), on=box.hidden;
+  box.hidden=!on; this.setAttribute('aria-expanded',on?'true':'false');
+  if(on){ buildMySize();
+    try{ box.scrollIntoView({block:'nearest'}) }catch(e){} }
+});
+$('mysz').addEventListener('click',function(e){
+  var b=e.target.closest('[data-szg]'); if(b) pickSize(b.dataset.szg,b.dataset.szv);
+});
+function setListView(on){
+  // keep the reader on the garment they were looking at
+  var anchor=-1, cards=$('grid').children, top=(document.querySelector('.navwrap')||{offsetHeight:0}).offsetHeight;
+  for(var i=0;i<cards.length;i++){ var r=cards[i].getBoundingClientRect(); if(r.bottom>top+4){ anchor=i; break } }
+  LISTV=!!on;
+  try{ localStorage.setItem('ccpx.view',LISTV?'list':'grid') }catch(e){}
+  $('grid').classList.toggle('list',LISTV);
+  $('vtog').setAttribute('aria-pressed',LISTV?'true':'false');
+  var n=shown; paint(true); while(shown<n && shown<view.length) paint(false);
+  if(anchor>0 && $('grid').children[anchor]) $('grid').children[anchor].scrollIntoView({block:'start'});
+}
+$('vtog').addEventListener('click',function(){ setListView(!LISTV) });
+window.addEventListener('storage',function(e){
+  if(!D) return;
+  if(e.key==='ccpx.watch' || e.key===null){ loadWatch(); WNEW=null }
+  if(e.key==='ccpx.mysize' || e.key===null){ loadSize(); WCNT=null;
+    if(!mineAny() && F.flag.mine) delete F.flag.mine;
+    if(!$('mysz').hidden) buildMySize() }
+  if(e.key==='ccpx.saved' || e.key===null){ loadSaved(); WCNT=null;
+    var bs=document.querySelectorAll('#grid .save[data-save]');
+    for(var i=0;i<bs.length;i++) bs[i].classList.toggle('on',!!saved[D.items[+bs[i].dataset.save].l]) }
+  if(e.key==='ccpx.watch' || e.key==='ccpx.mysize' || e.key==='ccpx.saved' || e.key===null) apply(true,false);
+});
+function clearAll(){
+  FG.forEach(function(g){F[g]={}});
+  F.size=''; $('fsize').value='';
+  endSearch();
+  buildCats(); buildPanel(); apply(false,true);
+}
+$('clear').addEventListener('click',clearAll);
+$('ftog').addEventListener('click',function(){
+  var on=$('panel').classList.toggle('on');
+  $('panel').hidden=!on;
+  this.setAttribute('aria-expanded',on?'true':'false');
+});
+$('pdone').addEventListener('click',function(){
+  $('panel').classList.remove('on'); $('panel').hidden=true;
+  $('ftog').setAttribute('aria-expanded','false');
+});
+$('stog').addEventListener('click',function(){
+  if(F.flag.saved) delete F.flag.saved; else F.flag.saved=1;
+  syncPanel(); apply(false,true);
+});
+$('qtog').addEventListener('click',function(){
+  if($('qbox').classList.contains('on')){
+    var had=!!F.q;
+    endSearch();
+    if(had) apply(true,false);
+  } else {
+    $('qbox').classList.add('on');
+    this.setAttribute('aria-expanded','true');
+    // on a phone the field needs the whole row, so the tab row steps aside
+    document.querySelector('.nav').classList.add('searching');
+    $('q').focus();
+  }
+});
+/* The tab row scrolls when it does not fit. A word clipped at the edge reads
+   as a broken layout, so the edge is faded — and the fade is dropped once
+   there is nothing more to scroll to, which is the only honest state for it. */
+(function(){
+  var c=$('cats');
+  function endp(){
+    var atEnd = c.scrollLeft + c.clientWidth >= c.scrollWidth - 2;
+    c.classList.toggle('end', atEnd);
+  }
+  c.addEventListener('scroll',endp,{passive:true});
+  window.addEventListener('resize',endp);
+  CATSEND=endp; endp();
+})();
+$('fsize').addEventListener('input',function(){F.size=this.value.trim().toLowerCase();apply(true,false)});
+var qt,sortBeforeQ=null;
+$('q').addEventListener('input',function(){
+  var v=this.value.trim().toLowerCase();
+  clearTimeout(qt);qt=setTimeout(function(){
+    var had=QT.length;
+    setQuery(v);
+    var rel=$('sort').querySelector('[value="rel"]');
+    if(QT.length && !had){ sortBeforeQ=$('sort').value; rel.hidden=false; $('sort').value='rel' }
+    // only if the search is what put it on 관련도. Restoring unconditionally
+    // threw away a sort the user chose while searching — and a deep link like
+    // ?q=coat&sort=k%2B flipped to the opposite price order on clearing.
+    else if(!QT.length && had){
+      if($('sort').value==='rel') $('sort').value=sortBeforeQ||'k-';
+      rel.hidden=true; sortBeforeQ=null }
+    apply(true,false);
+  },170);
+});
+$('sort').addEventListener('change',function(){sortView();paint(true);writeUrl(false)});
+$('grid').addEventListener('click',function(e){
+  var s=e.target.closest('[data-save]'); if(s){ toggleSave(+s.dataset.save); return }
+  var o=e.target.closest('[data-open]'); if(o) openQV(+o.dataset.open);
+});
+$('qv').addEventListener('click',function(e){
+  var s=e.target.closest('[data-save]'); if(s){ toggleSave(+s.dataset.save); return }
+  var p=e.target.closest('[data-ph]'); if(p){ showPhoto(+p.dataset.ph); return }
+  var l=e.target.closest('#qvlink'); if(l){ copyLink(l); return }
+  var c=e.target.closest('[data-code]'); if(c) searchCode(c.dataset.code);
+});
+function searchCode(n){
+  if(!n) return;
+  // the panel closes where it stands: its history entry stays behind, so Back
+  // from the search returns to the listing it was opened from
+  qvPushed=false; closeQV(true);
+  $('q').value=n; setQuery(n);
+  $('qbox').classList.add('on'); $('qtog').setAttribute('aria-expanded','true');
+  var nv=document.querySelector('.nav'); if(nv) nv.classList.add('searching');
+  var rel=$('sort').querySelector('[value="rel"]');
+  if(rel && $('sort').value!=='rel'){ sortBeforeQ=$('sort').value; rel.hidden=false; $('sort').value='rel' }
+  apply(false,true); window.scrollTo({top:0,behavior:'auto'});
+  var f=document.querySelector('#grid .shot'); if(f) try{ f.focus({preventScroll:true}) }catch(e){}
+}
+function copyLink(btn){ copyText(location.href, btn, '링크 복사') }
+function copyText(url, btn, label){
+  var settled=false;
+  var done=function(ok){
+    if(settled) return; settled=true;
+    btn.textContent = ok ? '복사됨' : '복사 실패';
+    setTimeout(function(){ if(btn.isConnected) btn.textContent=label },1600);
+  };
+  var legacy=function(){
+    // older browsers, anything opened from a file:// path, and the case
+    // where the clipboard promise simply never answers
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=url; ta.setAttribute('readonly','');
+      ta.style.cssText='position:fixed;top:-100px;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta); done(ok);
+    }catch(e){ done(false) }
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    // a button that says nothing back is worse than one that failed out loud
+    setTimeout(function(){ if(!settled) legacy() },900);
+    try{ navigator.clipboard.writeText(url).then(function(){done(true)},function(){ if(!settled) legacy() }) }
+    catch(e){ legacy() }
+    return;
+  }
+  legacy();
+}
+/* ── to another device ────────────────────────────────────────────────
+   Everything kept here travels in one link: the saved listings by their
+   key, the kept searches, the sizes. It rides in the part of the address
+   after #, which the browser never sends to the server. Opening the link
+   on the other device asks before adding anything, and only ever adds. */
+function b64u(t){ return btoa(unescape(encodeURIComponent(t))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'') }
+function unb64u(t){ t=String(t).replace(/-/g,'+').replace(/_/g,'/'); while(t.length%4) t+='=';
+  return decodeURIComponent(escape(atob(t))) }
+// the long, common starts of listing addresses, written short in the link
+var KPRE=[['g','https://www.grailed.com/listings/'],['e','https://www.ebay.com/itm/'],['y','https://auctions.yahoo.co.jp/jp/auction/'],
+  ['c','https://jp.mercari.com/item/'],['s','https://jp.mercari.com/shops/product/'],['r','https://item.fril.jp/'],
+  ['f','https://fruitsfamily.com/product/']];
+function shortUrl(u){ for(var i=0;i<KPRE.length;i++) if(u.indexOf(KPRE[i][1])===0) return KPRE[i][0]+':'+u.slice(KPRE[i][1].length); return u }
+function longUrl(t){
+  var m=/^([a-z]):(.*)$/.exec(t);
+  if(m){ for(var i=0;i<KPRE.length;i++) if(KPRE[i][0]===m[1]) return KPRE[i][1]+m[2]; return null }
+  return t;
+}
+function keepUrl(){
+  // every saved address travels, including ones this issue no longer lists
+  var sv=[], k; for(k in saved) if(own.call(saved,k) && saved[k] && /^https?:\/\//.test(k)) sv.push(shortUrl(k));
+  var o={v:1, s:sv, w:WATCH.map(function(w){ return [w.qs, w.label, w.seen||''] }), z:[MYSZ.top, MYSZ.bot, MYSZ.shoe]};
+  return location.origin+location.pathname+'#keep='+b64u(JSON.stringify(o));
+}
+function shareKeep(btn){
+  var url=keepUrl();
+  // a phone hands it to the share sheet; anything else copies it
+  if(navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent||'')){
+    // a closed share sheet is the reader's choice; any other refusal falls back to copying
+    try{ navigator.share({title:'Archive Index CCP', url:url}).catch(function(err){
+      if(!err || err.name!=='AbortError') copyText(url,btn,'다른 기기로 옮기기') }) }catch(e){ copyText(url,btn,'다른 기기로 옮기기') }
+    return;
+  }
+  copyText(url, btn, '다른 기기로 옮기기');
+}
+var KEEPIN=null;
+function readKeep(hash){
+  var m=/^#keep=([A-Za-z0-9_-]{1,60000})$/.exec(hash||''); if(!m) return null;
+  var o=null; try{ o=JSON.parse(unb64u(m[1])) }catch(e){ return null }
+  if(!o || typeof o!=='object' || o.v!==1) return null;
+  var z={top:[],bot:[],shoe:[]};
+  // a size is a short line of printable text; nothing else is taken
+  if(Array.isArray(o.z)) ['top','bot','shoe'].forEach(function(g,gi){ var a=o.z[gi];
+    if(Array.isArray(a)) z[g]=a.filter(function(t){ return typeof t==='string' && /^[^\u0000-\u001f\u007f<>"]{1,23}$/.test(t) }).slice(0,40) });
+  return {
+    s:(Array.isArray(o.s)?o.s:[]).map(function(t){ return typeof t==='string' ? longUrl(t) : null })
+        .filter(function(u){ return u && /^https?:\/\/[^\s"<>]{3,400}$/.test(u) }).slice(0,5000),
+    w:(Array.isArray(o.w)?o.w:[]).filter(function(x){ return Array.isArray(x) && typeof x[0]==='string' && x[0] && x[0].length<600 })
+        .slice(0,WMAX).map(function(x){ return {qs:x[0], label:String(x[1]||x[0]).slice(0,80),
+          seen:/^\d{4}-\d{2}-\d{2}$/.test(x[2]||'')?x[2]:null} }),
+    z:z };
+}
+// what would actually be added: repeats in the link counted once, and no more
+// searches or sizes than there is room for
+function keepNew(k){
+  var r={s:0,w:0,z:0}, su={}, sq={}, room=Math.max(0,WMAX-WATCH.length);
+  k.s.forEach(function(u){ if(su[u]) return; su[u]=1; if(!saved[u]) r.s++ });
+  k.w.forEach(function(x){ if(sq[x.qs]) return; sq[x.qs]=1; if(watchAt(x.qs)<0 && r.w<room) r.w++ });
+  ['top','bot','shoe'].forEach(function(g){ var sz={}, n2=0, room2=Math.max(0,40-MYSZ[g].length);
+    k.z[g].forEach(function(t){ if(sz[t]) return; sz[t]=1; if(MYSZ[g].indexOf(t)<0 && n2<room2) n2++ }); r.z+=n2 });
+  return r;
+}
+function idxOfUrl(u){ var i=byKey(keyOf({l:u})); return i>=0 && D.items[i].l===u ? i : -1 }
+function showKeepBar(){
+  var b=$('kbar');
+  if(!KEEPIN){ b.innerHTML=''; b.classList.remove('on'); return }
+  var r=keepNew(KEEPIN), any1=r.s||r.w||r.z;
+  b.innerHTML='<span class="lbl">저장 가져오기</span>'+
+    (any1 ? '<span>매물 '+won(r.s)+' · 검색 '+won(r.w)+' · 사이즈 '+won(r.z)+'</span><button id="kyes">가져오기</button>'
+          : '<span>추가할 것 없음</span>')+
+    '<button id="kno">닫기</button>';
+  b.classList.add('on');
+}
+function importKeep(){
+  var k=KEEPIN; if(!k) return;
+  // read what is kept here afresh, so adding never writes over a change made
+  // since this page loaded (another tab, another window)
+  loadSaved(); loadWatch(); loadSize();
+  // a listing this issue has gets its price now; one it does not is kept as
+  // saved and given its price the day it is seen
+  k.s.forEach(function(u){ if(saved[u]) return; var i=idxOfUrl(u); saved[u]= i>=0 ? keepMark(D.items[i]) : 1 });
+  k.w.forEach(function(x){ if(watchAt(x.qs)<0 && WATCH.length<WMAX)
+    WATCH.push({qs:x.qs, label:x.label, seen:x.seen||TODAY, at:TODAY}) });
+  ['top','bot','shoe'].forEach(function(g){ k.z[g].forEach(function(t){
+    if(MYSZ[g].indexOf(t)<0 && MYSZ[g].length<40) MYSZ[g].push(t) }) });
+  persist(); persistWatch(); persistSize(); WCNT=null; KEEPIN=null;
+  $('kbar').innerHTML='<span class="lbl">저장 가져오기</span><span>가져옴</span>';
+  setTimeout(function(){ if(!KEEPIN){ $('kbar').innerHTML=''; $('kbar').classList.remove('on') } },2500);
+  buildOrder(); buildPanel(); apply(true,false);
+}
+// the link pasted into a tab that already has the page open arrives as a
+// change of the # part, not a new load
+window.addEventListener('hashchange',function(){
+  var k=null; try{ k=readKeep(location.hash) }catch(e){}
+  if(!k || !D) return;
+  KEEPIN=k; showKeepBar();
+  // pasting added an entry to the history; stepping back over it removes the
+  // # part and leaves Back working at once
+  try{ history.back() }catch(e){ if(histOK) try{ history.replaceState(null,'',location.pathname+location.search) }catch(e2){} }
+});
+$('kbar').addEventListener('click',function(e){
+  if(e.target.closest('#kyes')){ importKeep(); return }
+  if(e.target.closest('#kno')){ KEEPIN=null; showKeepBar() }
+});
+// not `addEventListener('click', closeQV)`: the click event would arrive as
+// the fromPop argument and the address would keep the listing in it
+$('qvclose').addEventListener('click',function(){ closeQV() });
+$('qvprev').addEventListener('click',function(){stepQV(-1)});
+$('qvnext').addEventListener('click',function(){stepQV(1)});
+document.addEventListener('keydown',function(e){
+  var tag=(e.target.tagName||'').toLowerCase();
+  var typing = tag==='input'||tag==='select'||tag==='textarea';
+  if(e.key==='Escape'){
+    if($('ov').classList.contains('open')) closeQV();
+    else if($('panel').classList.contains('on')) $('pdone').click();
+    else if(typing) e.target.blur();
+    return;
+  }
+  // Cmd/Ctrl/Alt belong to the browser — Alt+← is Back, Ctrl+F is find. Taking
+  // them stepped the open listing to the previous one and rewrote the address
+  // while the Back navigation fired underneath, and opened the filter panel on
+  // top of the find bar. The one exception is Shift, which Tab needs.
+  if(e.ctrlKey||e.metaKey||e.altKey) return;
+  if($('ov').classList.contains('open')){
+    if(e.key==='Tab'){
+      var f=qvFocusables(); if(!f.length) return;
+      var first=f[0], last=f[f.length-1];
+      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus() }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus() }
+      else if(f.indexOf(document.activeElement)<0){ e.preventDefault(); first.focus() }
+      return;
+    }
+    if(typing) return;
+    if(e.key==='ArrowLeft') stepQV(-1);
+    if(e.key==='ArrowRight') stepQV(1);
+    return;
+  }
+  if(typing) return;
+  if(e.key==='/'){ e.preventDefault(); $('qbox').classList.add('on');
+    $('qtog').setAttribute('aria-expanded','true');
+    var nv=document.querySelector('.nav'); if(nv) nv.classList.add('searching'); $('q').focus() }
+  if(e.key==='f'||e.key==='F') $('ftog').click();
+  /* Arrow keys worked inside the panel but not on the grid, so a keyboard
+     reader had to Tab past every save button to reach the next garment.
+     Up and down move by a row, which means asking the layout how many
+     columns it is drawing rather than assuming. */
+  if(e.key.indexOf('Arrow')===0){
+    // one per card: the photo. The title carries a second [data-open] and
+    // walking both makes every step half a card.
+    var cards=[].slice.call(document.querySelectorAll('#grid .shot[data-open]'));
+    if(!cards.length) return;
+    // resolve through the card, not the focused control: from the title
+    // button or the save button, closest('[data-open]') found something that
+    // is not in cards, and every arrow key threw focus back to card 1
+    var ae=document.activeElement;
+    var host=ae&&ae.closest?ae.closest('article'):null;
+    var at=host?cards.indexOf(host.querySelector('.shot[data-open]')):-1;
+    if(at<0 && !(ae&&ae.closest&&ae.closest('#grid'))) return;
+    var cols=1, g=$('grid');
+    try{ cols=getComputedStyle(g).gridTemplateColumns.split(' ').filter(Boolean).length }catch(err){}
+    var step = e.key==='ArrowRight'?1 : e.key==='ArrowLeft'?-1 :
+               e.key==='ArrowDown'?cols : e.key==='ArrowUp'?-cols : 0;
+    if(!step) return;
+    e.preventDefault();
+    var n = at<0 ? 0 : at+step;
+    if(n<0) n=0;
+    if(n>=cards.length){
+      // walking off the end loads the next batch rather than stopping dead
+      if(!$('more').hidden){ paint(false);
+        cards=[].slice.call(document.querySelectorAll('#grid .shot[data-open]')) }
+      if(n>=cards.length) n=cards.length-1;
+    }
+    cards[n].focus({preventScroll:false});
+  }
+});
+$('moreBtn').addEventListener('click',function(){paint(false)});
+var kbd=document.querySelector('.kbd'); if(kbd) kbd.classList.add('show');
+window.addEventListener('scroll',function(){
+  $('top').classList.toggle('show',window.scrollY>1400);
+  if(kbd) kbd.classList.toggle('show',window.scrollY<240);
+  if($('more').hidden) return;
+  if($('more').getBoundingClientRect().top<window.innerHeight+900) paint(false);
+},{passive:true});
+$('top').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+/* ── data ── */
+function fail(msg){
+  $('grid').innerHTML='';
+  $('empty').hidden=false;
+  $('empty').innerHTML='<span class="lbl">불러오기 실패</span><span style="color:var(--soft)">'+esc(msg)+'</span>';
+}
+(function load(){
+  // read before boot: apply() rewrites the address from the filters
+  try{ BOOTITEM=paramOf(location.search,'item') }catch(e){}
+  try{ KEEPIN=readKeep(location.hash) }catch(e){ KEEPIN=null }
+  var el=document.getElementById('__data');
+  var txt=el?el.textContent.trim():'';
+  if(txt && txt.charAt(0)==='{'){
+    var parsed=null;
+    try{ parsed=JSON.parse(txt) }catch(e){ fail('데이터 손상: '+e.message); return }
+    if(parsed && parsed.items){
+      // boot dereferences d.counts and d.rates; if either is missing the throw
+      // used to escape and leave a masthead over nothing, with no explanation
+      try{ boot(parsed) }catch(e){ fail('데이터 형식 오류: '+e.message) }
+      return;
+    }
+  }
+  fetch('archive.json').then(function(r){return r.json()}).then(boot)
+    .catch(function(err){ fail(err.message) });
+})();
+})();
+</script>
+</body>
+</html>

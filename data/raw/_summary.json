@@ -1,5 +1,5 @@
 {
- "startedAt": "2026-09-28T00:52:54.771Z",
+ "startedAt": "2026-09-28T01:18:44.305Z",
  "day": "2026-09-28",
  "sources": {
   "yahoo_auctions": {
@@ -18,15 +18,10 @@
    "pages": 4,
    "sec": 10
   },
-  "mercari_jp": {
-   "ok": false,
-   "refused": false,
-   "error": "first page yielded no listings — markup changed or the page is blocked (see _diag.json)"
-  },
   "rakuma": {
    "ok": true,
-   "read": 837,
-   "kept": 837,
+   "read": 839,
+   "kept": 839,
    "complete": true,
    "pages": 22,
    "sec": 54
@@ -39,17 +34,25 @@
    "pages": 1,
    "sec": 4
   },
+  "mercari_jp": {
+   "ok": true,
+   "read": 350,
+   "kept": 350,
+   "complete": true,
+   "pages": 7,
+   "sec": 91
+  },
   "ff_new": {
    "ok": true,
-   "kept": 2,
-   "candidates": 3,
-   "read": 3,
-   "notBrand": 1,
-   "pages": 29,
+   "kept": 0,
+   "candidates": 0,
+   "read": 0,
+   "notBrand": 0,
+   "pages": 1,
    "reached": true,
-   "newest": "2026-09-27T20:00:08.000Z",
+   "newest": "2026-09-27T19:58:20.000Z",
    "complete": false,
-   "sec": 79
+   "sec": 2
   },
   "ff_check": {
    "ok": true,
@@ -67,5 +70,5 @@
    "skipped": "EBAY_CLIENT_ID / EBAY_CLIENT_SECRET not set"
   }
  },
- "finishedAt": "2026-09-28T00:55:35.089Z"
+ "finishedAt": "2026-09-28T01:21:33.566Z"
 }

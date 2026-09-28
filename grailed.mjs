@@ -11,6 +11,10 @@
 // (it answers 404: no rules), one honest User-Agent, 2.5 s between requests, and a 403
 // or 429 stops it for the day. Nothing about the seller is kept.
 //
+// grailed.com's own robots.txt keeps crawlers off its /search page; this asks the service
+// behind that page directly, as the Helmut Lang index does (its standard of 2026-09-23,
+// §3, names this). ROK chose this way on 2026-09-29. Fifteen or so searches a day, nothing hidden.
+//
 // A search answers at most 1,000 hits, so the stock is read in price bands, each split
 // in two until it fits. Complete = every band came back whole.
 
@@ -23,21 +27,37 @@ export const DESIGNER = 'Carol Christian Poell';
 const HOST = 'https://' + APP.toLowerCase() + '-dsn.algolia.net';
 const EDGES = [0, 100, 200, 300, 400, 500, 650, 800, 1000, 1250, 1500, 2000, 3000, 5000, 10000];
 
-// what Grailed filed it under, in words classify.mjs reads (the title comes first there;
-// this is used only when the title does not say what the thing is)
+// what Grailed filed it under (category_path, e.g. footwear.boots · womens_tops.blouses), as a
+// word classify.mjs reads. The title comes first there: this decides only when the title does
+// not say what the thing is. accessories.misc says nothing, so it gives nothing.
+// (the paths are the ones Grailed answered for this designer on 2026-09-29)
+const CAT = [
+  [/^(?:womens_)?footwear\./, 'shoes'],
+  [/^(?:womens_)?outerwear\.blazers$/, 'blazer'],
+  [/^(?:womens_)?outerwear\./, 'jacket'],
+  [/^tailoring\.formal_trousers$/, 'trousers'],
+  [/^tailoring\.formal_shirting$/, 'shirt'],
+  [/^tailoring\.suits$/, 'suit'],
+  [/^tailoring\./, 'blazer'],
+  [/^(?:womens_)?bottoms\.(?:denim|jeans)$/, 'jeans'],
+  [/^(?:womens_)?bottoms\.\w*skirts$/, 'skirt'],
+  [/^(?:womens_)?bottoms\.shorts$/, 'shorts'],
+  [/^(?:womens_)?bottoms\.jumpsuits$/, ''],
+  [/^(?:womens_)?bottoms\./, 'pants'],
+  [/^(?:womens_)?tops\.(?:button_ups|blouses)$/, 'shirt'],
+  [/^(?:womens_)?tops\./, 'top'],
+  [/^womens_dresses\./, 'dress'],
+  [/jewel/, 'ring'],
+  [/bags_luggage/, 'bag'],
+  [/wallets/, 'wallet'],
+  [/belts/, 'belt'],
+  [/gloves|scarves/, 'gloves'],
+  [/ties_pocketsquares/, 'tie'],
+  [/hats/, 'hat'],
+];
 export function catOf(path) {
   const p = String(path || '').toLowerCase();
-  if (/jewel/.test(p)) return 'ring';
-  if (/bags|luggage/.test(p)) return 'bag';
-  if (/footwear/.test(p)) return 'shoes';
-  if (/outerwear/.test(p)) return 'jacket';
-  if (/tailoring|suits|blazers/.test(p)) return 'suit';
-  if (/dresses/.test(p)) return 'dress';
-  if (/skirts/.test(p)) return 'skirt';
-  if (/bottoms/.test(p)) return /denim|jeans/.test(p) ? 'jeans' : 'pants';
-  if (/button_ups/.test(p)) return 'button up shirt';
-  if (/tops/.test(p)) return 't-shirt';
-  if (/accessories/.test(p)) return 'belt';
+  for (const [re, w] of CAT) if (re.test(p)) return w;
   return '';
 }
 const COND_NEW = new Set(['is_new']);

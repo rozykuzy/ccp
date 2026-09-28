@@ -11,6 +11,7 @@ import { mkdtempSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { SOURCES, collect, mdToDate, leftToEnd } from './sources.mjs';
 import { parseSitemap, productOf, isCCP, discover, SLUG_RE } from './fruitsfamily.mjs';
 import { hitOf, catOf, collectGrailed } from './grailed.mjs';
@@ -195,9 +196,14 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   assert.equal(hitOf({ id: 1, title: 'x', price_i: 0 }), null);                       // no price: not a listing
   const h = hitOf({ id: 2, title: 'x', price_i: 100, size: 'one size', condition: 'is_new', cover_photo: { url: 'data:x' } });
   assert.deepEqual([h.size, h.cond, h.img, h.cat], [undefined, 'new', null, undefined]);
-  assert.deepEqual(['outerwear.leather_jackets', 'bottoms.denim', 'bottoms.casual_pants', 'tops.button_ups', 'tops.sweaters_knitwear',
-    'tailoring.blazers', 'accessories.jewelry_watches', 'accessories.bags_luggage', 'accessories.belts', 'womens_dresses.mini', ''].map(catOf),
-    ['jacket', 'jeans', 'pants', 'button up shirt', 't-shirt', 'suit', 'ring', 'bag', 'belt', 'dress', '']);
+  const paths = { 'outerwear.leather_jackets': '아우터', 'outerwear.denim_jackets': '아우터', 'womens_outerwear.blazers': '테일러링', 'footwear.boots': '신발',
+    'womens_footwear.flats': '신발', 'bottoms.denim': '데님', 'bottoms.casual_pants': '팬츠', 'bottoms.shorts': '팬츠', 'womens_bottoms.mini_skirts': '기타',
+    'tops.button_ups': '셔츠', 'womens_tops.blouses': '셔츠', 'tops.sweaters_knitwear': '상의', 'tops.long_sleeve_shirts': '상의', 'tops.sleeveless': '상의',
+    'tailoring.blazers': '테일러링', 'tailoring.suits': '테일러링', 'tailoring.formal_trousers': '팬츠', 'tailoring.formal_shirting': '셔츠',
+    'accessories.jewelry_watches': '주얼리', 'womens_jewelry.rings': '주얼리', 'accessories.bags_luggage': '가방·소품', 'accessories.wallets': '가방·소품',
+    'accessories.belts': '가방·소품', 'accessories.gloves_scarves': '가방·소품', 'accessories.ties_pocketsquares': '가방·소품', 'womens_dresses.midi': '기타' };
+  for (const [p, sec] of Object.entries(paths)) assert.equal(section(catOf(p), []), sec, p);
+  for (const p of ['accessories.misc', 'womens_accessories.miscellaneous', 'bottoms.jumpsuits', '']) assert.equal(catOf(p), '', p);
   // what Grailed filed it under decides only when the title says nothing
   assert.equal(classify({ title: 'Carol Christian Poell', cat: 'shoes' }).section, '신발');
   assert.equal(classify({ title: 'Carol Christian Poell leather jacket', cat: 'shoes' }).section, '아우터');
@@ -450,7 +456,7 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   const dir = mkdtempSync(join(tmpdir(), 'ccp-')), data = join(dir, 'data'), raw = join(data, 'raw');
   mkdirSync(raw, { recursive: true });
   writeFileSync(join(data, 'rates.json'), JSON.stringify({ USD: 1370, GBP: 1852, EUR: 1587, JPY: 873, more: { CAD: 1000 }, date: '2026-09-26' }));
-  const run = (day) => JSON.parse(execFileSync(process.execPath, [new URL('./build.mjs', import.meta.url).pathname], {
+  const run = (day) => JSON.parse(execFileSync(process.execPath, [fileURLToPath(new URL('./build.mjs', import.meta.url))], {
     env: { ...process.env, CCP_OFFLINE: '1', CCP_TODAY: day, CCP_DATA: data, CCP_SITE: join(dir, 'site') }, encoding: 'utf8', stdio: 'pipe' }).trim().split('\n').pop());
   const put = (files, sum) => { for (const [f, items] of Object.entries(files)) writeFileSync(join(raw, f + '.json'), JSON.stringify({ items }));
     writeFileSync(join(raw, '_summary.json'), JSON.stringify({ sources: sum })); };
@@ -539,7 +545,7 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   const dir = mkdtempSync(join(tmpdir(), 'ccp-')), data = join(dir, 'data'), raw = join(data, 'raw');
   mkdirSync(raw, { recursive: true });
   writeFileSync(join(data, 'rates.json'), JSON.stringify({ USD: 1370, GBP: 1852, EUR: 1587, JPY: 873, date: '2026-09-26' }));
-  const run = (day) => execFileSync(process.execPath, [new URL('./build.mjs', import.meta.url).pathname], {
+  const run = (day) => execFileSync(process.execPath, [fileURLToPath(new URL('./build.mjs', import.meta.url))], {
     env: { ...process.env, CCP_OFFLINE: '1', CCP_TODAY: day, CCP_DATA: data, CCP_SITE: join(dir, 'site') }, encoding: 'utf8', stdio: 'pipe' });
   const Y = (n) => Array.from({ length: n }, (_, i) => ({ id: 'yahoo:z' + i, url: 'https://auctions.yahoo.co.jp/jp/auction/z' + i, title: 'CAROL CHRISTIAN POELL シャツ #' + i, price: 1000, cur: 'JPY' }));
   // day 1: every source failed — nothing to send, and the first mail waits for a day with listings
@@ -625,7 +631,8 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   assert.equal(o.w, toKRW(298000, 'JPY', rates), 'the cut is measured from the corrected figure');
   // filed under the label by a seller: another house named in the title, or nothing said at all
   for (const t of ['HED MAYNER ヘドメイナー 25SS SLEEVELESS T-SHIRT XS', 'ISHINN calf leather blouson jacket イシン', 'ルーメンエトウンブラ パンツ 春夏',
-                   'VALENTINO ヴァレンティノ LOGO TEE L WHITE'])
+                   'VALENTINO ヴァレンティノ LOGO TEE L WHITE', 'Vintage Luciano Soprani Donna Black Leather Gloves', 'Thom Browne Classic Striped Jogger Pants for Men.',
+                   'AW/91-92" Yoshiyuki konishi ficce python jeans', 'Christian Louboutin Gray Boots', 'By Walid Washed Vintage Linen Photographer Jacket'])
     assert.equal(classify({ title: t, brandTagged: true }).exclude, 'other-brand', t);
   assert.equal(classify({ title: 'LP Chanson De Paris 35 EOS40010PROMO ODEON プロモ', brandTagged: true }).exclude, 'no-brand');
   for (const t of ['LOW CROTCH DEADEND FLY TROUSERS', 'Paper Dart Combat Boots', 'Object Dyed Drip Rubber', 'Unlined Meltlocked 1 Button Jacket',

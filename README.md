@@ -7,10 +7,10 @@ https://rozykuzy.github.io/ccp/
 | 파일 | 하는 일 |
 |---|---|
 | `collect.mjs` | 모든 수집기를 돌려 `data/raw/` 에 쓴다 |
-| `sources.mjs` | 야후옥션(진행·낙찰) · 메루카리 · 라쿠마 · 후루츠패밀리 브랜드 페이지 |
+| `sources.mjs` | 야후옥션(진행·낙찰) · 메루카리 · 라쿠마 · 후루츠패밀리 브랜드 페이지 · 야후 플리마 · 세컨드스트리트 |
 | `mercari.mjs` | 메루카리 검색 페이지를 브라우저로 그려 읽는다 |
 | `fruitsfamily.mjs` | 후루츠패밀리 신규 등록(사이트맵)과 매물 페이지 재확인 |
-| `grailed.mjs` · `ebay.mjs` | Grailed 디자이너 페이지 · eBay 공식 API(키가 있을 때만) |
+| `grailed.mjs` · `ebay.mjs` | Grailed 검색 서비스(디자이너 = Carol Christian Poell) · eBay 공식 API(키가 있을 때만) |
 | `lib.mjs` | robots.txt 준수 · 요청 간격 · 이름을 밝힌 UA · 페이지 읽기 |
 | `classify.mjs` | 상품명 읽기 — 연도·시즌, 분류, 사이즈, 모델 번호, 제외 |
 | `build.mjs` | 대장(`data/ledger.json`) 갱신 → `site/index.html` · `data/mail.html` |

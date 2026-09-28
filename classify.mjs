@@ -68,6 +68,8 @@ const OTHER = new RegExp('(?:' + [
   // found under Rakuma's Carol Christian Poell label on the first live reading (2026-09-28)
   'preamita', 'caroll(?![\\s._\\-]*ch)', 'hed\\s*mayner', 'ヘドメイナー', 'ishinn', 'イシン', 'lumen\\s*et\\s*umbra', 'ルーメン\\s*エト\\s*ウンブラ', 'valentino', 'ヴァレンティノ',
   'helmut\\s*lang', 'ヘルムート\\s*ラング', 'raf\\s*simons', 'ラフ\\s*シモンズ', 'haider\\s*ackermann', 'ハイダー\\s*アッカーマン',
+  // filed under Grailed's Carol Christian Poell tag on the first search reading (2026-09-29)
+  'luciano\\s*soprani', 'thom\\s*browne', 'yoshiyuki\\s*konishi', 'louboutin', '(?<![a-z])by\\s*walid',
 ].join('|') + ')', 'i');
 // "like new" and "type-2" are not "in the style of"; "Style AM/2601L" is a style number
 const STYLE_OF = new RegExp(BRANDW + '\\s*(?:の)?\\s*(?:風|系|っぽい|ライク|好き|スタイル|st\\b|스타일|느낌|풍(?!성)|[\\s-]*(?:inspired|esque)\\b' +

@@ -23,16 +23,17 @@
 | 파일 | 하는 일 |
 |---|---|
 | `collect.mjs` | 모든 수집기 → `data/raw/*.json`. 한 곳이 실패해도 나머지는 돈다. 전부 실패하면 종료 코드 1 |
-| `sources.mjs` | 야후옥션(진행 · 180일 낙찰, 영·일 두 검색어) · 라쿠마 · 후루츠패밀리 브랜드 페이지. 메루카리의 경로와 매물 형식도 여기 있다 |
+| `sources.mjs` | 야후옥션(진행 · 180일 낙찰, 영·일 두 검색어) · 라쿠마 · 후루츠패밀리 브랜드 페이지 · 야후 플리마(검색 페이지의 내장 JSON) · 세컨드스트리트 온라인 스토어. 메루카리의 경로와 매물 형식도 여기 있다 |
 | `mercari.mjs` | 메루카리 검색 페이지를 브라우저로 그려 읽는다(HTML에는 매물이 없다). 자기 `次へ` 링크로 넘기고, 없으면 마지막 페이지. 사진·글꼴은 받지 않는다 |
 | `fruitsfamily.mjs` | 후루츠패밀리 제품 사이트맵(최신순, 제목 슬러그)으로 신규 발견 → 매물 페이지의 `product:brand` 로 확인. 알고 있는 매물은 하루 40건씩 다시 본다(3일 간격) |
-| `grailed.mjs` | `/designers/carol-christian-poell` 을 브라우저로 스크롤. 페이지가 밝힌 총수에 95% 닿았을 때만 '끝까지 읽음' |
+| `grailed.mjs` | Grailed의 검색 서비스(Algolia)에 디자이너 = Carol Christian Poell 을 묻는다. 한 번에 1,000건까지라 가격 구간으로 나눠 읽고, 모든 구간이 다 돌아왔을 때만 '끝까지 읽음' |
+| `tools/grailed_pc.mjs` | 같은 읽기를 PC에서 손으로. 러너가 막히는 날에만(예약 없음) |
 | `ebay.mjs` | Browse API. 판매자 통화(`convertedFrom*`) 그대로 |
 | `lib.mjs` | robots.txt(리다이렉트마다 다시 확인) · 호스트당 2.5초 · 이름을 밝힌 UA · 403/429면 멈춤 · 페이지 읽기 두 방식(내장 JSON · 매물 링크 주변) |
 | `classify.mjs` | 상품명 읽기: 제외 · 연도/시즌 · 분류 · 사이즈 · 모델 번호 |
 | `build.mjs` | 대장 갱신 → `site/index.html` · `data/archive.json` · `data/mail.html` · `data/mail_meta.json` · `data/status.json` |
 | `template.html` | 사이트 원본 (헬무트 랭 r8 엔진의 CCP판). `/*__DATA__*/` 자리에 데이터 |
-| `test.mjs` | 수집 전에 도는 시험 15묶음. 실패하면 그날 발행하지 않고 어제 사이트가 그대로 있다 |
+| `test.mjs` | 수집 전에 도는 시험 18묶음. 실패하면 그날 발행하지 않고 어제 사이트가 그대로 있다 |
 | `test_corpus.json` | 실제 매물 제목 354건 (2026-09-27, 판매자 정보 없음, 구매 예약자 이름은 ○○) |
 
 `data/ledger.json`(대장)과 `data/sold.json`(판매 기록)은 **지우지 않는다.** 읽을 수 없거나, 지난 빌드(`status.json`)보다
@@ -48,10 +49,12 @@ Actions 실행의 아티팩트(`data`, 14일)로 남는다.
 | 메루카리 | `/search?keyword=&status=on_sale` | 자동 수집 (브라우저) | 첫 페이지 약 120 (절반은 설명에만 이름이 있는 다른 브랜드) |
 | 라쿠마 | `/s?query=` | 자동 수집 | 약 800 (다른 브랜드·판매 완료 다수) |
 | 후루츠패밀리 | `/brand/Carol Christian Poell` · `/sitemap.product.xml?page=` · `/product/{id}/` | 자동 수집 (`*` 허용, AI 학습 크롤러 그룹은 우리 규칙이 아니다) | 브랜드 페이지 669건 표기, 정적 40건(트렌드순) |
-| Grailed | `/designers/…` (`/search` `/sold` 금지) | **막힘** — 2026-09-28 헤드리스 브라우저에 403. 우회하지 않는다 | 바로가기만 남는다 |
+| Grailed | 검색 서비스 `mnrwefss2q-dsn.algolia.net` (robots.txt 404 — 규칙 없음). grailed.com의 `/search` 페이지는 열지 않는다 | 자동 수집 (2026-09-29부터, ROK 결정). 디자이너 페이지는 2026-09-28 헤드리스 브라우저에 403 | 1,764건 (2026-09-29) |
+| 야후 플리마 | `/search/{검색어}` · `page=` | 자동 수집 (2026-09-28부터) | — |
+| 세컨드스트리트 | `/search?keyword=` · `page=` | 자동 수집 (2026-09-28부터) | — |
 | eBay | Browse API (`/sch/` 금지) | 키가 있을 때 | — |
 | RAGTAG | — | 취급 없음 | 0 |
-| 2nd STREET · 번개장터 · Depop · Vinted · Vestiaire | — | 바로가기만 (다른 곳에서 찾기) | — |
+| 번개장터 · Depop · Vinted · Vestiaire | — | 바로가기만 (다른 곳에서 찾기) | — |
 
 바로가기: 야후옥션 · 낙찰가 · 메루카리 · 라쿠마 · 2nd STREET · Buyee · 후루츠패밀리 · 번개장터 · Grailed · eBay · 판매 완료 · Depop · Vinted 유럽/미국 · Vestiaire.
 검색어가 브랜드뿐이면 후루츠패밀리·Grailed는 브랜드 페이지로 간다.
@@ -172,3 +175,27 @@ https://rozykuzy.github.io/ (저장소 `rozykuzy/rozykuzy.github.io`)가 이 사
 - **메일의 `전체 보기` 는 통합 사이트를 연다** (2026-09-28, ROK 결정) — `build.mjs` 의 `MAIL_URL`
   `https://rozykuzy.github.io/?archive=ccp`, 신규가 있는 날은 `&show=new&sort=new`. 이 페이지(`SITE_URL`)는 전과 같이 발행한다 —
   통합 사이트가 여기서 읽는다. 되돌리려면 `mail()` 의 `siteUrl` 기본값을 `SITE_URL` 로
+
+## Grailed — 검색 서비스로 읽는다 (2026-09-29, ROK 결정)
+
+ROK: "Grailed는 HL처럼 검색 백엔드로 읽어줘". 헬무트 랭 인덱스가 2026-09-15부터 매일 아침 Grailed를 읽는 방식과 같다.
+
+- grailed.com의 디자이너 페이지는 HTML에 매물이 없다. 보는 사람의 브라우저가 Grailed의 검색 서비스(Algolia, 앱 `MNRWEFSS2Q`)에
+  grailed.com이 모든 방문자에게 주는 검색 전용 공개 키로 묻는다. `grailed.mjs` 는 같은 곳에 같은 것(디자이너 = Carol Christian Poell)을 묻는다
+- `lib.get` 을 거친다: 검색 호스트의 robots.txt를 먼저(404 — 규칙 없음), 이름을 밝힌 UA, 2.5초 간격, 403·429면 그날은 멈춘다.
+  판매자 칸(`user`)은 담지 않는다
+- grailed.com의 robots.txt는 크롤러에게 `/search` 페이지를 막아 두었다. 이 방식은 그 페이지 뒤의 검색 서비스를 직접 부른다 —
+  헬무트 랭 기준서(2026-09-23 §3)가 짚은 점이고, 헬무트 랭도 같은 방식이다. 2026-09-29 ROK가 이 방식을 골랐다. 하루 검색 15번 안팎, 숨기는 것 없음
+- 한 번에 1,000건까지라 가격 구간(0–100 … 10,000–)으로 묻고, 넘치는 구간은 반으로 나눈다. 모든 구간이 다 돌아오고
+  읽은 수가 서비스가 센 수 이상일 때만 '끝까지 읽음' — 사라짐은 그날만 센다
+- 쓰는 칸: 가격 `price_i`(USD) · 사이즈 `size`('one size'는 뺀다) · 사진 `cover_photo.url` · 새 제품 `condition = is_new` ·
+  분류 `category_path`(제목이 무엇인지 말하지 않을 때만. `accessories.misc` 는 아무것도 말하지 않는다). `sold` · `deleted` 는 버린다
+- 태그만 Carol Christian Poell인 다른 브랜드(Luciano Soprani · Thom Browne · Yoshiyuki Konishi · Christian Louboutin · By Walid)는
+  다른 브랜드 목록에 넣어 제외한다. 제목에 이름이 없는 216건은 대부분 모델 번호·하우스 기법어가 있는 CCP였다
+- 첫 완독(2026-09-29 빌드)은 신규가 아니다(대장 규칙 그대로). 그날 대장이 크게 는다
+- 러너가 막히는 날: PC에서 `node tools/grailed_pc.mjs` → `data/raw/grailed_pc.json` push → 다음 빌드가 36시간 안의 PC 읽기를
+  그날 날짜로 쓴다(하루 늦음을 밝힌다). 예약하지 않았다
+- 2026-09-29 PC에서 시험(01:41 · 01:47 KST 두 번): 1,764건 · 검색 15번 · 37초 · 끝까지 읽음. 남는 것 1,749건
+  (제외 15: 다른 브랜드 13 · 이름도 분류도 없음 2). 사진은 전부 `media-assets.grailed.com`(사이트의 `?w=` 규칙 그대로),
+  사이즈 1,557건, 새 제품 423건, 연도·시즌 표기 165건. 분류: 아우터 507 · 신발 487 · 팬츠 174 · 가방·소품 152 · 테일러링 110 ·
+  셔츠 84 · 상의 84 · 주얼리 76 · 데님 60 · 기타 15

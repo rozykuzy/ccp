@@ -1,5 +1,11 @@
 // Grailed for Carol Christian Poell, read on ROK's PC (ROK 2026-09-28: "PC에서 매일 수집").
 //
+// NOT SCHEDULED. Tried on the PC on 2026-09-28: the designer page answers a headless
+// browser with HTTP 403, and the same page fetched plainly carries no listings (they
+// arrive from Grailed's search service in the reader's browser). Nothing here works
+// around that. If ROK chooses to read Grailed's search service the way the Helmut Lang
+// index does, that reader writes the same grailed_pc.json and the build side is ready.
+//
 // The GitHub runner is turned away by Grailed (HTTP 403); a PC in Korea is not. Once each
 // morning, after the Helmut Lang run, the PC reads the designer page that robots.txt
 // leaves open (/designers/carol-christian-poell) exactly as grailed.mjs does — the

@@ -265,6 +265,8 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   const m = mail(P, {}, {});
   assert.equal(m.meta.fresh, 1); assert.equal(m.meta.send, true); assert.match(m.meta.subject, /신규 1/);
   assert.equal(/<img/i.test(m.html), false);
+  // Gmail strips every background, so the mail may not need one to be readable
+  assert.equal(/background/i.test(m.html), false); assert.match(m.html, /border-top:3px solid #181715/);
   const quiet = mail({ ...P, items: P.items.map((o) => ({ ...o, n: 0 })) }, {}, {});
   assert.equal(quiet.meta.send, false);
   // a heavy day still goes out whole: fewer rows, the rest counted, no line a reader would cut
@@ -538,6 +540,17 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
     assert.equal(classify({ title: t, brandTagged: true }).exclude, undefined, t);
   assert.equal(classify({ title: 'Wool 40', brandTagged: true, cat: 'パンツ(スラックス)' }).section, '팬츠');
   assert.equal(classify({ title: 'Carol Christian Poell like Helmut Lang coat' }).exclude, undefined);
+  // the review of Issue 001: dress trousers are trousers, ブレーザー is a blazer, button-ups are shirts,
+  // a high-neck leather is the jacket; PREAMITA and Caroll are other houses
+  const sec = (t) => classify({ title: t, brandTagged: true });
+  assert.equal(sec('CAROL CHRISTIAN POELL PM/2219 ASA/8 Dress Pants ドレスパンツ').section, '팬츠');
+  assert.equal(sec('90年代 CAROL CHRISTIAN POELL A/W 96-97 ブレーザー').section, '테일러링');
+  assert.equal(sec('S/S2007 Carol Chrstian Poell -Button Ups').section, '셔츠');
+  assert.equal(sec('CAROL CHRISTIAN POELL ハイネックレザー').section, '아우터');
+  assert.equal(sec('Carol Christian Poell High Neck knit').section, '상의');
+  assert.equal(sec('Carol Christian Poell dress').section, '기타'); assert.equal(sec('Carol Christian Poell dress shoes').section, '신발');
+  assert.equal(sec('PREAMITA WHITEのレザーブーツ キャロルクリスチャンポエル').exclude, 'other-brand');
+  assert.equal(sec('【Caroll】フランス製テーラードジャケット').exclude, 'other-brand');
   // the workflow's browser step serves Mercari as well as Grailed
   assert.equal(S.mercari_jp.browser, true);
   ok('first live reading: Rakuma cards, Mercari cards, same-day correction');

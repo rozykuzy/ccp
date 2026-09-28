@@ -66,7 +66,7 @@ const OTHER = new RegExp('(?:' + [
   'morizane', 'nousan', 'christian\\s*roth', 'クリスチャンロス', 'at(?:e)?lier\\s*inscrire', 'taichi\\s*murakami',
   'leon\\s*emanuel\\s*blanck', 'jacquemyn', 'forme\\s*d.?expression', 'uma\\s*wang', 'portaille', 'giorgio\\s*brato',
   // found under Rakuma's Carol Christian Poell label on the first live reading (2026-09-28)
-  'hed\\s*mayner', 'ヘドメイナー', 'ishinn', 'イシン', 'lumen\\s*et\\s*umbra', 'ルーメン\\s*エト\\s*ウンブラ', 'valentino', 'ヴァレンティノ',
+  'preamita', 'caroll(?![\\s._\\-]*ch)', 'hed\\s*mayner', 'ヘドメイナー', 'ishinn', 'イシン', 'lumen\\s*et\\s*umbra', 'ルーメン\\s*エト\\s*ウンブラ', 'valentino', 'ヴァレンティノ',
   'helmut\\s*lang', 'ヘルムート\\s*ラング', 'raf\\s*simons', 'ラフ\\s*シモンズ', 'haider\\s*ackermann', 'ハイダー\\s*アッカーマン',
 ].join('|') + ')', 'i');
 // "like new" and "type-2" are not "in the style of"; "Style AM/2601L" is a style number
@@ -229,16 +229,16 @@ export function era(title) {
 // not a shirt, a knit vest is a knit.
 export const SECTIONS = ['아우터', '테일러링', '셔츠', '상의', '팬츠', '데님', '신발', '가방·소품', '주얼리', '기타'];
 const SECTION = [
-  ['기타', /\bdress(?!\s*shirt)(?:es)?\b|\bskirts?\b|ワンピース|スカート|ドレス(?!\s*シャツ)|원피스|스커트|드레스(?!\s*셔츠)/i],
+  ['기타', /\bdress(?!\s*(?:shirt|pants?|trousers?|slacks|shoes?|boots?))(?:es)?\b|\bskirts?\b|ワンピース|スカート|ドレス(?!\s*(?:シャツ|パンツ|シューズ|ブーツ))|원피스|스커트|드레스(?!\s*(?:셔츠|팬츠|슈즈))/i],
   ['주얼리', /\brings?\b|necklace|pendant|bracelet|bangle|earrings?|dog\s*tag|リング|ネックレス|ペンダント|ブレスレット|(?<!ー)ブレス(?!ト|ス|レ)|バングル|指輪|ピアス|イヤリング|ドッグタグ|반지|목걸이|팔찌|펜던트|귀걸이|이어링/i],
   ['가방·소품', /\bbags?\b|backpack|rucksack|\btote\b|pouch|wallet|\bpurse\b|バッグ|バックパック|リュック|ポーチ|財布|ウォレット|パース|鞄|가방|백팩|지갑|파우치|(?:베스트|토트|숄더)\s*백/i],
   ['신발', /boot(?!\s*-?cut)|sneakers?|\bshoes?\b|derbys?|derbies|loafers?|sandals?|slippers?|creepers?|\bbrogues?\b|ブーツ(?!カット)|スニーカー|シューズ|短靴|革靴|靴(?!下)|ダービー|ローファー|サンダル|スリッポン|부츠(?!컷)|스니커즈|신발|구두|더비|로퍼|샌들|워커/i],
   ['상의', /knit\s*(?:vest|top)|sleeveless\s*knit|ニット\s*ベスト|スリーブレス\s*ニット|니트\s*(?:베스트|조끼)/i],
-  ['테일러링', /blazer|tailored|\bsuit\b|set[\s-]?up|\b[12]\s*b\b|\b1\s*button\b|sport\s*coat|テーラード|(?<!ジャンプ)スーツ|ブレザー|セットアップ|블레이저|(?<!점프)수트|정장|셋업|테일러드/i],
-  ['아우터', /jacket|(?<![a-z])jkt(?![a-z])|(?<![a-z])jk(?![a-z])|coat(?!ed|ing)|parka|blouson|bomber|\bvest\b|gilet|caban|trench|riders|\bbiker\b|anorak|\bcape\b|poncho|ジャケット|コート|ブルゾン|ライダース|ボンバー|ベスト|ジレ|マウンテンパーカ|ケープ|マント|자켓|재킷|코트|점퍼|파카|베스트|조끼|블루종|카반|라이더/i],
+  ['테일러링', /blazer|tailored|\bsuit\b|set[\s-]?up|\b[12]\s*b\b|\b1\s*button\b|sport\s*coat|テーラード|(?<!ジャンプ)スーツ|ブレ[ー]?ザー|セットアップ|블레이저|(?<!점프)수트|정장|셋업|테일러드/i],
+  ['아우터', /high[\s-]?neck(?=[\s\S]*(?:leather|レザー|레더))|ハイネック\s*レザー|하이넥\s*레더|jacket|(?<![a-z])jkt(?![a-z])|(?<![a-z])jk(?![a-z])|coat(?!ed|ing)|parka|blouson|bomber|\bvest\b|gilet|caban|trench|riders|\bbiker\b|anorak|\bcape\b|poncho|ジャケット|コート|ブルゾン|ライダース|ボンバー|ベスト|ジレ|マウンテンパーカ|ケープ|マント|자켓|재킷|코트|점퍼|파카|베스트|조끼|블루종|카반|라이더/i],
   ['데님', /denim|jeans|\bjean\b|デニム|ジーンズ|데님|청바지/i],
   ['팬츠', /pants|trousers|slacks|shorts|leggings|long[\s-]?johns|パンツ|スラックス|トラウザー|ショーツ|ボトム|レギンス|팬츠|바지|슬랙스|반바지|트라우저|레깅스/i],
-  ['셔츠', /(?<!\bt[\s-]?)shirt(?!s?\s*jacket)|blouse|(?<![tTｔＴ])シャツ(?!\s*ジャケット)|ブラウス|(?<!티)셔츠|블라우스/i],
+  ['셔츠', /(?<!\bt[\s-]?)shirt(?!s?\s*jacket)|button[\s-]?(?:up|down)s?(?![a-z])|blouse|(?<![tTｔＴ])シャツ(?!\s*ジャケット)|ブラウス|(?<!티)셔츠|블라우스/i],
   ['상의', /\bt[\s-]?shirt|\btee\b|cut\s*(?:and\s*)?sew|knit|sweater|jumper|cardigan|hoodie|sweatshirt|\btanks?\b|\btops?\b|turtleneck|jersey|\bpolo\b|long[\s-]?sleeves?|tシャツ|カットソー|ニット|セーター|カーディガン|パーカー|フーディ|タンク|スウェット|トップス|티셔츠|니트|스웨터|가디건|후드|맨투맨|나시|반팔|긴팔/i],
   ['가방·소품', /\bbelts?\b|gloves?\b|mittens|scarf|stole|muffler|\bhats?\b|\bcaps?\b|beanie|socks|\btie\b|key\s*(?:ring|chain|holder)|metal\s*tag|ベルト|グローブ|手袋|マフラー|ストール|帽子|キャップ|ハット|ビーニー|ソックス|靴下|ネクタイ|キーリング|キーホルダー|メタルタグ|벨트|장갑|머플러|스카프|모자|비니|양말|넥타이|키링/i],
 ];

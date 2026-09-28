@@ -373,11 +373,14 @@ export function mail(payload, stats, { siteUrl = SITE_URL, first = false, limit 
     list.slice(0, max).map(fn).join('\n') + (list.length > max ? '\n<tr><td style="padding:10px 0;font-size:12px;color:#605c55">외 ' + won(list.length - max) + '건</td></tr>' : '') : '';
   const link = siteUrl + (fresh.length && !first ? '?show=new&sort=new' : '');
   const compose = (maxFresh, maxDrops) => '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + escH(P.issueLabel) + '</title></head>\n' +
-    '<body style="margin:0;padding:0;background:#f4f2ee"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f2ee"><tr><td align="center" style="padding:28px 14px">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;background:#ffffff;font-family:-apple-system,\'Apple SD Gothic Neo\',\'Malgun Gothic\',Arial,sans-serif;color:#181715">' +
-    '<tr><td style="background:#141312;color:#e9e5de;padding:22px 24px"><div style="font-size:10px;letter-spacing:.24em">ARCHIVE INDEX</div>' +
-    '<div style="font-size:15px;letter-spacing:.06em;margin-top:6px">Carol Christian Poell</div>' +
-    '<div style="font-size:11px;color:#a9a399;margin-top:10px">' + escH(P.issueLabel) + ' · ' + escH(P.dateKo) + '</div></td></tr>' +
+    // Gmail drops every `background` from a message (2026-09-28: the dark masthead
+    // arrived as pale text on white), so nothing here depends on one: dark type on
+    // the page's own white, rules drawn as borders
+    '<body style="margin:0;padding:0" bgcolor="#ffffff"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:28px 14px">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;font-family:-apple-system,\'Apple SD Gothic Neo\',\'Malgun Gothic\',Arial,sans-serif;color:#181715">' +
+    '<tr><td style="border-top:3px solid #181715;border-bottom:1px solid #181715;padding:18px 24px 16px;color:#181715"><div style="font-size:10px;letter-spacing:.24em;color:#181715">ARCHIVE INDEX</div>' +
+    '<div style="font-size:18px;letter-spacing:.04em;margin-top:6px;color:#181715">Carol Christian Poell</div>' +
+    '<div style="font-size:11px;color:#605c55;margin-top:10px">' + escH(P.issueLabel) + ' · ' + escH(P.dateKo) + '</div></td></tr>' +
     '<tr><td style="padding:18px 24px 0;font-size:12px;color:#605c55">매물 ' + won(P.counts.items) +
       (first ? ' · 첫 수집' : ' · 신규 ' + won(fresh.length) + (drops.length ? ' · 가격 내림 ' + won(drops.length) : '')) + '</td></tr>' +
     '<tr><td style="padding:0 24px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">' +

@@ -5,3 +5,5 @@ site/
 data/raw/*
 !data/raw/_summary.json
 !data/raw/_diag.json
+# Grailed as read on ROK's PC (tools/grailed_pc.mjs) — the runner cannot reach it
+!data/raw/grailed_pc.json

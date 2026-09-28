@@ -17,7 +17,7 @@ import { cardOf } from './grailed.mjs';
 import { cardOf as mercariCard, searchUrl as mercariUrl } from './mercari.mjs';
 import { itemOf } from './ebay.mjs';
 import { classify, era, codesOf, section, size, excludeReason } from './classify.mjs';
-import { updateLedger, updateSold, buildPayload, page, mail, toKRW, FILES, MAIL_URL } from './build.mjs';
+import { updateLedger, updateSold, buildPayload, page, mail, toKRW, FILES, MAIL_URL, markSeen } from './build.mjs';
 
 let n = 0; const ok = (label) => { n++; if (process.env.V) console.log('  ✓ ' + label); };
 const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
@@ -71,6 +71,65 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   const r = listingsFrom('<li><a href="https://item.fril.jp/ef8eaacc7b78fce2fd7bd9089d3dbd44">Carol Christian Poell スニーカー サイズ10</a><span>¥170,000</span><span>SOLD OUT</span></li>', S.rakuma.spec)[0];
   assert.deepEqual([r.id, r.sold], ['rakuma:ef8eaacc7b78fce2fd7bd9089d3dbd44', true]);
   ok('search pages: yahoo live and closed, fruitsfamily, mercari label, rakuma sold');
+}
+{
+  // Yahoo!フリマ: the page's own JSON, 100 a page. SOLD is read as sold; the auction
+  // module on the same page (links to 야후옥션, no title) is not a listing of this source
+  const nd = { props: { initialState: { searchState: { search: { result: { totalResultsAvailable: 3, items: [
+    { id: 'x1229425247', title: '2008‐9 スパイラル ネイル リング キャロルクリスチャンポエル Carol Christian Poell', price: 94000, itemStatus: 'OPEN',
+      thumbnailImageUrl: 'https://auc-pctr.c.yimg.jp/i/a.jpg', brand: { id: 1, name: 'CAROL CHRISTIAN POELL' } },
+    { id: 'z520111612', title: 'テーラードジャケット 黒', price: 112100, itemStatus: 'OPEN', brand: { id: 1, name: 'キャロルクリスチャンポエル' } },
+    { id: 'k1245640158', title: 'ccp レザー ブーツ', price: 450000, itemStatus: 'SOLD', brand: null } ] },
+    auctionItemsModule: { items: [{ id: 'v1200000001', price: 5000, url: 'https://auctions.yahoo.co.jp/jp/auction/v1200000001', isAuction: true }] } } } } } };
+  const html = '<script id="__NEXT_DATA__" type="application/json">' + JSON.stringify(nd) + '</script>' +
+    '<a href="/item/x1229425247"><img src="https://auc-pctr.c.yimg.jp/i/a.jpg"></a><a href="https://auctions.yahoo.co.jp/jp/auction/v1200000001">x</a>';
+  const r = listingsFrom(html, S.yahoo_fleamarket.spec);
+  assert.deepEqual(r.map((x) => x.id).sort(), ['yfm:k1245640158', 'yfm:x1229425247', 'yfm:z520111612']);
+  const by = Object.fromEntries(r.map((x) => [x.id, x]));
+  assert.equal(by['yfm:x1229425247'].url, 'https://paypayfleamarket.yahoo.co.jp/item/x1229425247');
+  assert.equal(by['yfm:x1229425247'].img, 'https://auc-pctr.c.yimg.jp/i/a.jpg');
+  assert.equal(by['yfm:z520111612'].brandTagged, true);          // the seller filed it under the brand
+  assert.equal(by['yfm:k1245640158'].sold, true); assert.equal(by['yfm:x1229425247'].cur, 'JPY');
+  assert.equal(S.yahoo_fleamarket.pages('carol christian poell', 1), 'https://paypayfleamarket.yahoo.co.jp/search/carol%20christian%20poell?withSpeller=0&page=2');
+  const yfm = parseRobots('User-agent: *\nDisallow: /item/*/edit\nDisallow: /search/*?*sort=\nDisallow: /search/*?*sold=\nDisallow: /search/*?*minPrice=\n');
+  assert.equal(robotsAllows(yfm, '/search/%E3%82%AD?withSpeller=0&page=2'), true);
+  assert.equal(robotsAllows(yfm, '/search/%E3%82%AD?sort=openTime'), false);
+
+  // 2nd STREET: brand on its own line, the piece in slash fields. The name is read from
+  // its own field even when the condition line is longer; a model number keeps its slash
+  const card = (id, name, size, price, off) => '<li class="js-favorite itemCard" goodsid="' + id + '"><a href="/goods/detail/goodsId/' + id + '/shopsId/31108" class="itemCard_inner">' +
+    '<div class="itemCard_img"><img src="https://cdn2.2ndstreet.jp/img/pc/goods/' + id + '/1_tn.jpg" loading="lazy" />' + (off ? '<ul class="itemCard_labelList"><li class="priceDown itemCard_label -off">25%OFF</li></ul>' : '') + '</div>' +
+    '<div class="itemCard_body"><p class="itemCard_brand">CAROL CHRISTIAN POELL</p><p class="itemCard_name">' + name + '</p><p class="itemCard_size">サイズ' + size + '</p>' +
+    '<p class="itemCard_status">商品の状態 : 中古B</p><p class="itemCard_price' + (off ? ' -down' : '') + ' itemCard_price">&yen;' + price + ' </p></div><a class="favorite itemCard_favorite"></a></a></li>';
+  const page2 = '<ul class="itemCardList -wrap">' + card('2346610082523', 'I/99AW/イタリア製/ジャケット/46/ウール/BEG/? NULL ?//', '46', '175,890', true) +
+    card('2347101730237', 'シャツ/CM/1716B', 'その他', '65,890') + '</ul>';
+  const t = listingsFrom(page2, S.secondstreet.spec);
+  assert.deepEqual(t.map((x) => [x.id, x.price, x.size || null, !!x.brandTagged]),
+    [['2nd:2346610082523', 175890, '46', true], ['2nd:2347101730237', 65890, null, true]]);
+  assert.equal(t[0].title, 'Carol Christian Poell I · 99AW · イタリア製 · ジャケット · 46 · ウール · BEG');
+  assert.equal(t[1].title, 'Carol Christian Poell シャツ · CM/1716B');
+  assert.equal(t[0].url, 'https://www.2ndstreet.jp/goods/detail/goodsId/2346610082523');
+  assert.equal(S.secondstreet.pages('Carol Christian Poell', 2), 'https://www.2ndstreet.jp/search?keyword=Carol%20Christian%20Poell&page=3');
+  ok('search pages: Yahoo!フリマ JSON and sold, 2nd STREET cards and titles');
+}
+{
+  // Grailed read on the PC the morning before: dated that day, a day's lag declared, and
+  // the page does not call it stopped until it is later than that
+  const st = {}, sum = { sources: { grailed: { ok: true, via: 'pc', seenDay: '2026-09-29', complete: true },
+                                    rakuma: { ok: true, complete: true } } };
+  markSeen(st, sum, { held: [] }, '2026-09-30');
+  assert.deepEqual([st.seen.grailed, st.lag.grailed, st.seen.rakuma, st.lag.rakuma], ['2026-09-29', 1, '2026-09-30', undefined]);
+  markSeen(st, { sources: { grailed: { ok: true, complete: true } } }, { held: [] }, '2026-10-01');   // read on the runner again
+  assert.deepEqual([st.seen.grailed, st.lag.grailed], ['2026-10-01', undefined]);
+  const tpl = readFileSync(new URL('./template.html', import.meta.url), 'utf8');
+  const fn = /function daysBetween[\s\S]*?\n(?=function )/.exec(tpl), dn = /function dnum[\s\S]*?\n(?=function )/.exec(tpl);
+  const stop = /function srcStopped[^\n]*\n/.exec(tpl);
+  assert.ok(fn && dn && stop, 'template helpers not found');
+  const run = new Function('SRCSTAT', 'TODAY', dn[0] + fn[0] + stop[0] + 'return srcStopped;');
+  assert.equal(run({ G: { seen: '2026-09-29', lag: 1 } }, '2026-09-30')('G'), false);
+  assert.equal(run({ G: { seen: '2026-09-28', lag: 1 } }, '2026-09-30')('G'), true);
+  assert.equal(run({ R: { seen: '2026-09-29' } }, '2026-09-30')('R'), true);
+  ok('grailed read on the PC: dated, lag declared, not called stopped');
 }
 {
   // two spellings, pages of 50: English 50 + 23, Japanese 30 of which 10 are also in the English results

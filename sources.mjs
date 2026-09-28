@@ -9,7 +9,7 @@
 //   라쿠마 약 800건 (설명 일치 · 판매 완료 포함)
 //   RAGTAG은 CCP 취급 없음, 2nd STREET는 결과가 스크립트로만 그려져 넣지 않았다
 
-import { get, listingsFrom, today } from './lib.mjs';
+import { get, listingsFrom, today, decode } from './lib.mjs';
 
 export const QUERIES = { en: 'carol christian poell', ja: 'キャロルクリスチャンポエル' };
 
@@ -38,6 +38,21 @@ function fromJsonAuction(o) {
 }
 // the number and the word come in either order on a card: 入札 16 · 16入札 · 16件
 const bidsOf = (t) => { const b = /入札\s*[:：]?\s*(\d+)|(\d+)\s*(?:件\s*)?入札/.exec(t); return b ? Number(b[1] ?? b[2]) : null; };
+
+// "I/99AW/イタリア製/ジャケット/46/ウール/BEG/? NULL ?//" → "Carol Christian Poell I · 99AW · イタリア製 · ジャケット · 46 · ウール · BEG"
+export function secondStreetCard(seg) {
+  const field = (cls) => { const m = new RegExp('class="[^"]*\\b' + cls + '\\b[^"]*"[^>]*>([^<]*)<').exec(seg || ''); return m ? decode(m[1]).replace(/\s+/g, ' ').trim() : ''; };
+  const out = {}, name = field('itemCard_name'), size = /^サイズ\s*(.+)$/.exec(field('itemCard_size'));
+  if (name) out.title = name;
+  if (size && !/^(?:その他|--|-|F)$/.test(size[1])) out.size = size[1];
+  return out;
+}
+// a model number keeps its own slash (CM/1716B, AM/2601L): only the field separators become dots
+export function secondStreetTitle(t, brand) {
+  const kept = String(t || '').replace(/\?\s*NULL\s*\?/gi, '/').replace(/\b([A-Z]{2})\/(\d{3,4}[A-Z0-9]*)\b/g, '$1\u2215$2');
+  const parts = kept.split('/').map((x) => x.trim().replace(/\u2215/g, '/')).filter((x) => x && x !== '--');
+  return (brand + ' ' + parts.join(' · ')).trim();
+}
 
 const CCP_LABEL = /^(?:carol\s*christian\s*poell|キャロル\s*[・･]?\s*クリスチャン\s*[・･]?\s*ポエル)$/i;
 
@@ -113,6 +128,43 @@ export const SOURCES = [
       key: (id) => 'rakuma:' + id, urlOf: (id) => 'https://item.fril.jp/' + id,
       idOf: (id) => (/^[0-9a-f]{32}$/i.test(id) ? id : null), soldRe: /SOLD|売り切れ/,
       brandChunkRe: CCP_LABEL,
+    },
+  },
+  {
+    name: '야후 플리마', market: '일본', file: 'yahoo_fleamarket',
+    // Yahoo!フリマ (formerly PayPayフリマ), same LY terms as 야후옥션. robots.txt closes
+    // /search/ only with sort= order= sold= open= price and filter parameters;
+    // the page and page= are open. Results come as the page's own JSON, 100 a page,
+    // with what has sold marked SOLD (read as gone, never as a listing).
+    queries: [QUERIES.en, QUERIES.ja],
+    pages: (q, i) => 'https://paypayfleamarket.yahoo.co.jp/search/' + encodeURIComponent(q) + (i ? '?withSpeller=0&page=' + (i + 1) : ''),
+    maxPages: 10, pageSize: 100, noneRe: /該当する商品(?:は|が)ありません|見つかりませんでした|商品が見つかりません/,
+    spec: {
+      cur: 'JPY', hrefRe: /(?:paypayfleamarket\.yahoo\.co\.jp)?\/item\/([a-z]\d{6,})(?:[\/?#"]|$)/i,
+      key: (id) => 'yfm:' + id, urlOf: (id) => 'https://paypayfleamarket.yahoo.co.jp/item/' + id,
+      idOf: (id) => (/^[a-z]\d{6,}$/i.test(id) ? id : null), soldRe: /^SOLD$|売り切れ/,
+      brandChunkRe: CCP_LABEL,
+      fromJson: (o) => ({ ...(o.itemStatus === 'SOLD' ? { sold: true } : {}),
+                          ...(o.brand && CCP_LABEL.test(String(o.brand.name || '').trim()) ? { brandTagged: true } : {}) }),
+    },
+  },
+  {
+    name: '세컨드스트리트', market: '일본', file: 'secondstreet',
+    // 2nd STREET online store. robots.txt closes only its share links; /search is open.
+    // 60 a page. The card names the brand on its own line and describes the piece in
+    // slash-separated fields (season, 本人期, category, size, material, colour); the
+    // title is the brand followed by those fields.
+    queries: ['Carol Christian Poell'],
+    pages: (q, i) => 'https://www.2ndstreet.jp/search?keyword=' + encodeURIComponent(q) + (i ? '&page=' + (i + 1) : ''),
+    maxPages: 10, pageSize: 60, noneRe: /該当する商品(?:は|が)ありません|見つかりませんでした|検索結果はありません/,
+    spec: {
+      cur: 'JPY', hrefRe: /\/goods\/detail\/goodsId\/(\d{8,})\/shopsId\/\d+/,
+      key: (id) => '2nd:' + id, urlOf: (id) => 'https://www.2ndstreet.jp/goods/detail/goodsId/' + id,
+      idOf: (id) => (/^\d{8,}$/.test(id) ? id : null), soldRe: /^SOLD\s*OUT$|売り切れ/,
+      brandChunkRe: CCP_LABEL,
+      // the card's own fields, not the longest text on it ("商品の状態 : 中古B" can be longer than a short name)
+      fromCard: (t, seg) => secondStreetCard(seg),
+      title: (t) => secondStreetTitle(t, 'Carol Christian Poell'),
     },
   },
   // ── Korea ───────────────────────────────────────────────────────────────

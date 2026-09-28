@@ -50,6 +50,8 @@ export const FILES = {
   yahoo_closed:   { kind: 'sold', name: '야후옥션', m: '일본', how: '180일 낙찰' },
   mercari_jp:     { kind: 'live', name: '메루카리', m: '일본' },
   rakuma:         { kind: 'live', name: '라쿠마', m: '일본' },
+  yahoo_fleamarket: { kind: 'live', name: '야후 플리마', m: '일본' },
+  secondstreet:   { kind: 'live', name: '세컨드스트리트', m: '일본', how: '온라인 스토어' },
   ff_brand:       { kind: 'live', name: '후루츠패밀리', m: '한국', how: '브랜드 페이지', brandPage: true, partial: true },
   ff_new:         { kind: 'live', name: '후루츠패밀리', m: '한국', how: '신규 등록', brandPage: false, partial: true },
   ff_check:       { kind: 'check', name: '후루츠패밀리', m: '한국' },
@@ -197,6 +199,19 @@ export function updateLedger(L, raw, summary, rates, day = TODAY, prevComplete =
   return stats;
 }
 
+// which sources answered today, and since when each has been read to the end
+export function markSeen(st, summary, stats, day = TODAY) {
+  st.srcFirst = st.srcFirst || {}; st.seen = st.seen || {}; st.complete = st.complete || {}; st.lag = st.lag || {};
+  for (const [f, s] of Object.entries(summary.sources)) {
+    if (!s.ok || s.idle || !FILES[f]) continue;
+    // a reading made ahead of the build (Grailed on the PC) is dated the day it was read
+    st.seen[f] = s.via === 'pc' && /^\d{4}-\d{2}-\d{2}$/.test(s.seenDay || '') && s.seenDay < day ? s.seenDay : day;
+    if (s.via === 'pc') st.lag[f] = Math.min(2, Math.max(0, dayDiff(st.seen[f], day))); else delete st.lag[f];
+    // a held reading is not a baseline: the next day still compares with the one before it
+    if ((FILES[f].partial || s.complete) && !(stats.held || []).includes(f)) { if (!st.srcFirst[f]) st.srcFirst[f] = day; st.complete[f] = day; }
+  }
+}
+
 // ── sale records ─────────────────────────────────────────────────────────
 export function updateSold(S, raw, summary, rates, day = TODAY) {
   let added = 0;
@@ -326,7 +341,9 @@ export function buildPayload(L, S, rates, summary, { day = TODAY, issue = 1, fre
     if (cfg.kind === 'check') continue;
     const s = summary.sources[f]; const seen = seenOf(f);
     if (!seen) continue;                                   // never answered: not claimed
-    const cur = srcs.get(cfg.name) || { m: cfg.m, name: cfg.name, how: [], seen: null };
+    const cur = srcs.get(cfg.name) || { m: cfg.m, name: cfg.name, how: [], seen: null, lag: 0 };
+    // read on the PC the morning before: its last reading is a day behind by design, not stopped
+    const lag = (L.state.lag || {})[f]; if (lag > cur.lag) cur.lag = lag;
     if (s && s.ok && cfg.how) cur.how.push(cfg.how);
     // the day the listings were last read, not the day the sale records were
     if (cfg.kind === 'live' && (!cur.seen || seen > cur.seen)) cur.seen = seen;
@@ -341,7 +358,8 @@ export function buildPayload(L, S, rates, summary, { day = TODAY, issue = 1, fre
     rates: { USD: rates.USD, GBP: rates.GBP, EUR: rates.EUR, JPY: rates.JPY, ...(rates.date ? { date: rates.date } : {}), ...(rates.stale ? { stale: true } : {}) },
     counts: { entries: Object.keys(L.items).length, items: liveN, grouped, fresh: freshN, changed: 0, sold: sold.length, gone: goneRecent.length },
     sections, sellers, yearSpan: years.length ? years[0] + '–' + years[years.length - 1] : '',
-    sources: [...srcs.values()].map((x) => ({ m: x.m, name: x.name, ...(x.how.length ? { how: [...new Set(x.how)].join(' + ') } : {}), ...(x.seen ? { seen: x.seen } : {}) })),
+    sources: [...srcs.values()].map((x) => ({ m: x.m, name: x.name, ...(x.how.length ? { how: [...new Set(x.how)].join(' + ') } : {}), ...(x.seen ? { seen: x.seen } : {}),
+                                              ...(x.lag ? { lag: x.lag } : {}) })),
     items,
   };
 }
@@ -433,12 +451,7 @@ async function main() {
   const stats = updateLedger(L, raw, summary, rates, TODAY, prevComplete);
   st.completeBefore = {};
   for (const [f, d] of Object.entries(prevComplete)) if (d) st.completeBefore[f] = d;
-  for (const [f, s] of Object.entries(summary.sources)) {
-    if (!s.ok || s.idle || !FILES[f]) continue;
-    st.seen[f] = TODAY;
-    // a held reading is not a baseline: the next day still compares with the one before it
-    if ((FILES[f].partial || s.complete) && !stats.held.includes(f)) { if (!st.srcFirst[f]) st.srcFirst[f] = TODAY; st.complete[f] = TODAY; }
-  }
+  markSeen(st, summary, stats, TODAY);
   // the first issue is the first one that had anything in it
   const firstBuild = !st.firstMail || st.firstMail === TODAY;
   const soldAdded = updateSold(S, raw, summary, rates);

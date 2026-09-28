@@ -36,7 +36,8 @@ export async function collectGrailed(log = () => {}, { maxScrolls = 260 } = {}) 
   let chromium;
   try { ({ chromium } = await import('playwright')); }
   catch { return { skipped: 'playwright is not installed', items: [] }; }
-  const browser = await chromium.launch();
+  // CCP_BROWSER_CHANNEL=chrome runs an installed Chrome (ROK's PC) instead of Playwright's own
+  const browser = await chromium.launch(process.env.CCP_BROWSER_CHANNEL ? { channel: process.env.CCP_BROWSER_CHANNEL } : {});
   try {
     const page = await browser.newPage();   // the browser's own, unaltered user agent
     const res = await page.goto('https://www.grailed.com' + PATH, { waitUntil: 'domcontentloaded', timeout: 60000 });

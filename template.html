@@ -1103,7 +1103,7 @@ function buildSrcStat(){
     if(it.f && (!s.last || it.f>s.last)) s.last=it.f;
   }
   (D.sources||[]).forEach(function(x){
-    if(x && x.name && SRCSTAT[x.name] && /^\d{4}-\d{2}-\d{2}$/.test(x.seen||'')) SRCSTAT[x.name].seen=x.seen });
+    if(x && x.name && SRCSTAT[x.name] && /^\d{4}-\d{2}-\d{2}$/.test(x.seen||'')){ SRCSTAT[x.name].seen=x.seen; SRCSTAT[x.name].lag=Math.max(0,x.lag|0) } });
 }
 // nothing new for three builds' worth of days is worth saying; one quiet day is not
 function srcOrder(){ return Object.keys(SRCSTAT).sort(function(a,b){ return SRCSTAT[b].n-SRCSTAT[a].n }) }
@@ -1111,7 +1111,8 @@ function srcStale(r){
   var s=SRCSTAT[r]; if(!s || !s.last || !TODAY) return false;
   var d=daysBetween(s.last,TODAY); return d!=null && d>=3;
 }
-function srcStopped(r){ var s=SRCSTAT[r]; return !!(s && s.seen && TODAY && s.seen<TODAY) }
+// a source read ahead of the build (lag: Grailed on the PC the morning before) is late by design
+function srcStopped(r){ var s=SRCSTAT[r]; if(!(s && s.seen && TODAY && s.seen<TODAY)) return false; var d=daysBetween(s.seen,TODAY); return d==null || d>(s.lag||0) }
 function srcFresh(r){
   var s=SRCSTAT[r]; if(!s) return '';
   var p=[];

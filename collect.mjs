@@ -137,7 +137,18 @@ if (want('ff_check')) {
 // ── the two that need more than a page ───────────────────────────────────
 if (want('grailed')) {
   const t0 = Date.now();
-  try {
+  // Grailed turns this runner away (HTTP 403). ROK's PC reads the same designer page
+  // each morning (tools/grailed_pc.mjs) and commits data/raw/grailed_pc.json. A PC
+  // reading at most 36 hours old stands in for today's, under the day it was read —
+  // it is copied to grailed.json (not kept in git) so the tracked file is never touched here.
+  const pc = readJson(join(OUT, 'grailed_pc.json'), null);
+  const ageH = pc && pc.fetchedAt ? (Date.now() - Date.parse(pc.fetchedAt)) / 36e5 : Infinity;
+  if (pc && Array.isArray(pc.items) && pc.items.length && ageH <= 36) {
+    writeFileSync(join(OUT, 'grailed.json'), JSON.stringify(pc));
+    summary.sources.grailed = { ok: true, kept: pc.items.length, cards: pc.cards, complete: !!pc.complete, via: 'pc',
+                                seenDay: pc.day || new Date(Date.parse(pc.fetchedAt) + 9 * 3600e3).toISOString().slice(0, 10), ageH: Math.round(ageH) };
+    log('grailed: ' + pc.items.length + ' listings read on the PC ' + Math.round(ageH) + ' h ago');
+  } else try {
     const r = await collectGrailed(log);
     if (r.skipped || r.refused) summary.sources.grailed = { ok: false, ...(r.skipped ? { skipped: r.skipped } : { refused: true, error: r.refused }) };
     else {

@@ -195,7 +195,7 @@ const PRICE = {
 const TITLEKEYS = ['title', 'name', 'itemName', 'auctionTitle', 'productName'];
 const PRICEKEYS = ['price', 'currentPrice', 'itemPrice', 'bidPrice', 'buyNowPrice', 'salePrice', 'priceValue', 'winPrice', 'endPrice'];
 const IDKEYS = ['auctionId', 'itemId', 'productId', 'id', 'item_id', 'pid'];
-const IMGKEYS = ['imageUrl', 'image', 'img', 'thumbnail', 'thumbnailUrl', 'thumbnails', 'photos', 'imageUrls', 'images', 'mainImage'];
+const IMGKEYS = ['imageUrl', 'image', 'img', 'thumbnail', 'thumbnailUrl', 'thumbnailImageUrl', 'thumbnails', 'photos', 'imageUrls', 'images', 'mainImage'];
 const pick = (o, ks) => { for (const k of ks) if (o[k] != null && o[k] !== '') return o[k]; return null; };
 const firstUrl = (v) => {
   if (!v) return null;
@@ -336,7 +336,9 @@ export function listingsFrom(html, spec) {
     }
     prevEnd = lastEnd; i = j;
   }
-  return [...byId.values()].filter((x) => x.title && x.price > 0).map((x) => ({ ...x, cur: x.cur || spec.cur }));
+  // a source may tidy its own titles (2nd STREET: brand + slash-separated fields)
+  return [...byId.values()].filter((x) => x.title && x.price > 0)
+    .map((x) => ({ ...x, cur: x.cur || spec.cur, ...(spec.title ? { title: spec.title(x.title, x) } : {}) }));
 }
 
 // ── what a page looked like, without what it said ─────────────────────────

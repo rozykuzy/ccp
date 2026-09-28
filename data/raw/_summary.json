@@ -1,5 +1,5 @@
 {
- "startedAt": "2026-09-28T01:18:44.305Z",
+ "startedAt": "2026-09-28T01:29:07.100Z",
  "day": "2026-09-28",
  "sources": {
   "yahoo_auctions": {
@@ -20,11 +20,11 @@
   },
   "rakuma": {
    "ok": true,
-   "read": 839,
-   "kept": 839,
+   "read": 841,
+   "kept": 841,
    "complete": true,
    "pages": 22,
-   "sec": 54
+   "sec": 53
   },
   "ff_brand": {
    "ok": true,
@@ -36,11 +36,11 @@
   },
   "mercari_jp": {
    "ok": true,
-   "read": 350,
-   "kept": 350,
+   "read": 349,
+   "kept": 349,
    "complete": true,
    "pages": 7,
-   "sec": 91
+   "sec": 119
   },
   "ff_new": {
    "ok": true,
@@ -70,5 +70,5 @@
    "skipped": "EBAY_CLIENT_ID / EBAY_CLIENT_SECRET not set"
   }
  },
- "finishedAt": "2026-09-28T01:21:33.566Z"
+ "finishedAt": "2026-09-28T01:32:24.278Z"
 }

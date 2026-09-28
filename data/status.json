@@ -37,7 +37,7 @@
   "from": "ECB"
  },
  "stats": {
-  "added": 167,
+  "added": 2,
   "back": 0,
   "changed": 0,
   "drops": 0,
@@ -67,11 +67,11 @@
   },
   "rakuma": {
    "ok": true,
-   "read": 839,
-   "kept": 839,
+   "read": 841,
+   "kept": 841,
    "complete": true,
    "pages": 22,
-   "sec": 54
+   "sec": 53
   },
   "ff_brand": {
    "ok": true,
@@ -83,11 +83,11 @@
   },
   "mercari_jp": {
    "ok": true,
-   "read": 350,
-   "kept": 350,
+   "read": 349,
+   "kept": 349,
    "complete": true,
    "pages": 7,
-   "sec": 91
+   "sec": 119
   },
   "ff_new": {
    "ok": true,
@@ -118,8 +118,8 @@
   }
  },
  "counts": {
-  "entries": 318,
-  "items": 318,
+  "entries": 320,
+  "items": 315,
   "grouped": 38,
   "fresh": 0,
   "changed": 0,

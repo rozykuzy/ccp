@@ -1,77 +1,86 @@
-// Grailed through the page its robots.txt leaves open: /designers/carol-christian-poell
-// (robots.txt closes /search and /sold, not /designers). The listings on that
-// page arrive through Grailed's own search service, as they would for anyone
-// reading it; we read what the page shows and scroll the way a reader does.
-// No automation flag is hidden and no identity is faked — the browser keeps
-// its own headless user agent. If Grailed turns it away, this says so and stops.
+// Grailed through its own search service (ROK 2026-09-29: "Grailed는 HL처럼 검색 백엔드로 읽어줘").
 //
-// Needs `playwright` (the workflow installs it).
+// Grailed's pages turn a headless browser away (HTTP 403, 2026-09-28), and the listings
+// on a designer page are not in its HTML: the reader's browser asks Grailed's search
+// service (Algolia, application MNRWEFSS2Q) for them with the public search-only key
+// that grailed.com hands every visitor. This asks the same service the same question —
+// the listings whose designer is Carol Christian Poell — the way the Helmut Lang index
+// has read Grailed every morning since 2026-09-15.
+//
+// Through lib.get, like every other source: the search host's robots.txt is read first
+// (it answers 404: no rules), one honest User-Agent, 2.5 s between requests, and a 403
+// or 429 stops it for the day. Nothing about the seller is kept.
+//
+// A search answers at most 1,000 hits, so the stock is read in price bands, each split
+// in two until it fits. Complete = every band came back whole.
 
-import { rulesFor, robotsAllows } from './lib.mjs';
+import { get } from './lib.mjs';
 
-export const PATH = '/designers/carol-christian-poell';
-const AGE = /\bago\b|^(?:\d+|an?)\s+(?:second|minute|hour|day|week|month|year)s?\b|^(?:new|free shipping|sold|price drop|reduced|offer|staff pick|like)$/i;
-// shoe sizes are one digit as often as two (9, 10.5): this label is mostly boots
-const SIZE = /^(?:XXS|XS|S|M|L|XL|XXL|XXXL|OS|One Size|\d{1,2}(?:\.5)?|\d{1,2}(?:\.5)?\s?\/\s?\d{2}|[A-Z]{1,4}\s?\/\s?\d{2}|US\s?\d{1,2}(?:\.5)?|EU\s?\d{2}|IT\s?\d{2}|UK\s?\d{1,2}(?:\.5)?)$/i;
-// the designer line: the brand alone, or the brand with a collaborator
-const DESIGNER = /^carol\s*christian\s*poell(?:\s*[×x&+]\s*.+)?$/i;
+export const APP = 'MNRWEFSS2Q';
+export const KEY = 'c89dbaddf15fe70e1941a109bf7c2a3d';     // the public search-only key grailed.com serves to every reader
+export const INDEX = 'Listing_by_date_added_production';
+export const DESIGNER = 'Carol Christian Poell';
+const HOST = 'https://' + APP.toLowerCase() + '-dsn.algolia.net';
+const EDGES = [0, 100, 200, 300, 400, 500, 650, 800, 1000, 1250, 1500, 2000, 3000, 5000, 10000];
 
-// one card's text lines → a listing (exported for the tests)
-export function cardOf(id, lines, img) {
-  lines = lines.filter((l) => !AGE.test(l));
-  const priceLine = lines.find((l) => /^\$\s?[\d,]+/.test(l));
-  const price = priceLine ? Number(priceLine.replace(/^\$\s?([\d,]+(?:\.\d{2})?).*$/, '$1').replace(/,/g, '')) : null;
-  const size = lines.find((l) => SIZE.test(l));
-  const rest = lines.filter((l) => l !== priceLine && l !== size && !/^\$/.test(l) && l.length > 3);
-  const title = rest.filter((l) => !DESIGNER.test(l)).sort((a, b) => b.length - a.length)[0];
-  if (!title || !(price > 0)) return null;
-  return { id: 'grailed:' + id, url: 'https://www.grailed.com/listings/' + id, title, price, cur: 'USD', img: img || null,
-           ...(size ? { size } : {}) };
+// what Grailed filed it under, in words classify.mjs reads (the title comes first there;
+// this is used only when the title does not say what the thing is)
+export function catOf(path) {
+  const p = String(path || '').toLowerCase();
+  if (/jewel/.test(p)) return 'ring';
+  if (/bags|luggage/.test(p)) return 'bag';
+  if (/footwear/.test(p)) return 'shoes';
+  if (/outerwear/.test(p)) return 'jacket';
+  if (/tailoring|suits|blazers/.test(p)) return 'suit';
+  if (/dresses/.test(p)) return 'dress';
+  if (/skirts/.test(p)) return 'skirt';
+  if (/bottoms/.test(p)) return /denim|jeans/.test(p) ? 'jeans' : 'pants';
+  if (/button_ups/.test(p)) return 'button up shirt';
+  if (/tops/.test(p)) return 't-shirt';
+  if (/accessories/.test(p)) return 'belt';
+  return '';
+}
+const COND_NEW = new Set(['is_new']);
+
+// one search hit → a listing (exported for the tests)
+export function hitOf(h) {
+  if (!h || h.sold || h.deleted || !h.id || !h.title || !(h.price_i > 0)) return null;
+  const img = h.cover_photo && (h.cover_photo.url || h.cover_photo.image_url);
+  const cat = catOf(h.category_path);
+  const size = h.size != null && String(h.size).trim() && !/^one\s*size$/i.test(String(h.size).trim()) ? String(h.size).trim().toUpperCase() : '';
+  return { id: 'grailed:' + h.id, url: 'https://www.grailed.com/listings/' + h.id, title: String(h.title).replace(/\s+/g, ' ').trim(),
+           price: h.price_i, cur: 'USD', img: /^https?:\/\//.test(img || '') ? img : null, brandTagged: true,
+           ...(cat ? { cat } : {}), ...(size ? { size } : {}), ...(COND_NEW.has(h.condition) ? { cond: 'new' } : {}) };
 }
 
-export async function collectGrailed(log = () => {}, { maxScrolls = 260 } = {}) {
-  const rules = await rulesFor('https://www.grailed.com');
-  if (!robotsAllows(rules, PATH))
-    return { skipped: rules[0] && rules[0].why ? 'grailed.com: ' + rules[0].why : 'robots.txt no longer allows ' + PATH, items: [] };
-  let chromium;
-  try { ({ chromium } = await import('playwright')); }
-  catch { return { skipped: 'playwright is not installed', items: [] }; }
-  // CCP_BROWSER_CHANNEL=chrome runs an installed Chrome (ROK's PC) instead of Playwright's own
-  const browser = await chromium.launch(process.env.CCP_BROWSER_CHANNEL ? { channel: process.env.CCP_BROWSER_CHANNEL } : {});
-  try {
-    const page = await browser.newPage();   // the browser's own, unaltered user agent
-    const res = await page.goto('https://www.grailed.com' + PATH, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    if (res && (res.status() === 403 || res.status() === 429)) return { refused: 'HTTP ' + res.status() + ' from grailed.com', items: [] };
-    // wherever the page ended up after redirects has to be open to us as well
-    const landed = new URL(page.url());
-    const rules2 = await rulesFor(landed.origin);
-    if (!robotsAllows(rules2, landed.pathname + landed.search)) return { refused: 'redirected to ' + landed.host + landed.pathname + ', which robots.txt closes', items: [] };
-    await page.waitForSelector('a[href*="/listings/"]', { timeout: 45000 }).catch(() => null);
-    const seen = new Map(); let still = 0, s = 0;
-    for (; s < maxScrolls && still < 5; s++) {
-      const batch = await page.$$eval('a[href*="/listings/"]', (as) => as.map((a) => {
-        const m = /\/listings\/(\d+)/.exec(a.getAttribute('href') || '');
-        const img = a.querySelector('img');
-        return m && { id: m[1], text: (a.innerText || '').trim(), img: img && (img.currentSrc || img.src) };
-      }).filter(Boolean));
-      let fresh = 0;
-      for (const b of batch) {
-        const cur = seen.get(b.id) || { id: b.id, lines: [], img: null };
-        for (const l of b.text.split('\n').map((x) => x.trim()).filter(Boolean)) if (!cur.lines.includes(l)) cur.lines.push(l);
-        if (!cur.img && b.img && /^https?:/.test(b.img)) cur.img = b.img;
-        if (!seen.has(b.id)) fresh++;
-        seen.set(b.id, cur);
+async function search(lo, hi) {
+  const q = new URLSearchParams({ query: '', hitsPerPage: '1000', page: '0',
+    facetFilters: JSON.stringify([['designers.name:' + DESIGNER]]),
+    numericFilters: JSON.stringify(['price_i>=' + lo].concat(hi != null ? ['price_i<' + hi] : [])) });
+  return get(HOST + '/1/indexes/' + INDEX + '?' + q, { type: 'json', headers: { 'x-algolia-application-id': APP, 'x-algolia-api-key': KEY } });
+}
+
+// ask(lo, hi) is the search itself; the tests hand in a stock of their own
+export async function collectGrailed(log = () => {}, ask = search) {
+  const seen = new Map(); let complete = true, calls = 0, total = 0;
+  async function band(lo, hi, depth) {
+    const r = await ask(lo, hi); calls++;
+    const n = r.nbHits || 0;
+    if (n > (r.hits || []).length) {
+      // more than one answer holds: halve the band (an open top band doubles first)
+      if (depth < 10) {
+        const mid = hi == null ? lo * 2 + 1 : Math.floor((lo + hi) / 2);
+        if (mid > lo) { await band(lo, mid, depth + 1); await band(mid, hi, depth + 1); return; }
       }
-      still = fresh ? 0 : still + 1;
-      if (s % 20 === 0) log('grailed scroll ' + s + ': ' + seen.size);
-      await page.mouse.wheel(0, 2400);
-      await page.waitForTimeout(1400);
+      complete = false;                           // a single price holding more than 1,000: read what came
     }
-    const items = [];
-    for (const v of seen.values()) { const it = cardOf(v.id, v.lines, v.img); if (it) items.push(it); }
-    // complete only when the page's own count says we have (nearly) all of it: a
-    // feed that stops loading looks exactly like a feed that has ended
-    const total = await page.evaluate(() => { const m = /([\d,]+)\s*(?:listings|results|items)\b/i.exec(document.body.innerText || ''); return m ? Number(m[1].replace(/,/g, '')) : null; });
-    return { items, cards: seen.size, scrolls: s, total, complete: still >= 5 && total > 0 && seen.size >= 0.95 * total };
-  } finally { await browser.close(); }
+    total += n;
+    for (const h of r.hits || []) seen.set(String(h.id), h);
+  }
+  for (let i = 0; i < EDGES.length - 1; i++) await band(EDGES[i], EDGES[i + 1], 0);
+  await band(EDGES[EDGES.length - 1], null, 0);
+  const items = [];
+  for (const h of seen.values()) { const it = hitOf(h); if (it) items.push(it); }
+  log('grailed: ' + items.length + ' listings from ' + seen.size + ' hits (' + total + ' counted, ' + calls + ' searches)');
+  return { items, cards: seen.size, total, calls, complete: complete && seen.size >= total };
 }

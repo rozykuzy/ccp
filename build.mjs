@@ -55,7 +55,7 @@ export const FILES = {
   ff_brand:       { kind: 'live', name: '후루츠패밀리', m: '한국', how: '브랜드 페이지', brandPage: true, partial: true },
   ff_new:         { kind: 'live', name: '후루츠패밀리', m: '한국', how: '신규 등록', brandPage: false, partial: true },
   ff_check:       { kind: 'check', name: '후루츠패밀리', m: '한국' },
-  grailed:        { kind: 'live', name: 'Grailed', m: '해외', how: '디자이너 페이지', brandPage: true },
+  grailed:        { kind: 'live', name: 'Grailed', m: '해외', how: '검색', brandPage: true },
   ebay:           { kind: 'live', name: 'eBay', m: '해외', how: '공식 API' },
 };
 

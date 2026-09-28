@@ -13,7 +13,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { SOURCES, collect, mdToDate, leftToEnd } from './sources.mjs';
 import { parseSitemap, productOf, isCCP, discover, SLUG_RE } from './fruitsfamily.mjs';
-import { cardOf } from './grailed.mjs';
+import { hitOf, catOf, collectGrailed } from './grailed.mjs';
 import { cardOf as mercariCard, searchUrl as mercariUrl } from './mercari.mjs';
 import { itemOf } from './ebay.mjs';
 import { classify, era, codesOf, section, size, excludeReason } from './classify.mjs';
@@ -181,16 +181,45 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   ok('fruitsfamily: sitemap slugs, listing meta, watermark');
 }
 
-// ── Grailed cards, eBay API items ─────────────────────────────────────────
+// ── Grailed search hits, eBay API items ───────────────────────────────────
 {
-  const g = cardOf('102614695', ['Carol Christian Poell', 'Drip Rubber Tornado Boots', '9', '$1,850', '$2,100', '3 days ago'], 'https://media-assets.grailed.com/prd/listing/a');
-  assert.deepEqual([g.id, g.title, g.price, g.size, g.cur], ['grailed:102614695', 'Drip Rubber Tornado Boots', 1850, '9', 'USD']);
-  assert.equal(cardOf('1', ['Carol Christian Poell', '$100'], null), null);           // a card with no title is not a listing
+  // one hit from Grailed's search service, as it answered on 2026-09-29 (seller fields cut to a name)
+  const g = hitOf({ id: 102614695, title: 'Drip  Rubber Tornado Boots ', price_i: 1850, size: '9', condition: 'is_gently_used', sold: false, deleted: false,
+    category_path: 'footwear.boots', cover_photo: { url: 'https://media-assets.grailed.com/prd/listing/a' }, user: { username: 'someone' } });
+  assert.deepEqual([g.id, g.url, g.title, g.price, g.cur, g.size, g.cat, g.img, g.brandTagged, g.cond],
+    ['grailed:102614695', 'https://www.grailed.com/listings/102614695', 'Drip Rubber Tornado Boots', 1850, 'USD', '9', 'shoes', 'https://media-assets.grailed.com/prd/listing/a', true, undefined]);
+  assert.equal(JSON.stringify(g).includes('someone'), false);                         // the seller is not kept
+  assert.equal(hitOf({ id: 1, title: 'x', price_i: 100, sold: true }), null);          // sold: not for sale
+  assert.equal(hitOf({ id: 1, title: 'x', price_i: 100, deleted: true }), null);
+  assert.equal(hitOf({ id: 1, title: '', price_i: 100 }), null);                      // no title: not a listing
+  assert.equal(hitOf({ id: 1, title: 'x', price_i: 0 }), null);                       // no price: not a listing
+  const h = hitOf({ id: 2, title: 'x', price_i: 100, size: 'one size', condition: 'is_new', cover_photo: { url: 'data:x' } });
+  assert.deepEqual([h.size, h.cond, h.img, h.cat], [undefined, 'new', null, undefined]);
+  assert.deepEqual(['outerwear.leather_jackets', 'bottoms.denim', 'bottoms.casual_pants', 'tops.button_ups', 'tops.sweaters_knitwear',
+    'tailoring.blazers', 'accessories.jewelry_watches', 'accessories.bags_luggage', 'accessories.belts', 'womens_dresses.mini', ''].map(catOf),
+    ['jacket', 'jeans', 'pants', 'button up shirt', 't-shirt', 'suit', 'ring', 'bag', 'belt', 'dress', '']);
+  // what Grailed filed it under decides only when the title says nothing
+  assert.equal(classify({ title: 'Carol Christian Poell', cat: 'shoes' }).section, '신발');
+  assert.equal(classify({ title: 'Carol Christian Poell leather jacket', cat: 'shoes' }).section, '아우터');
   const e = itemOf({ legacyItemId: '1234', itemWebUrl: 'https://www.ebay.com/itm/1234', title: 'Carol Christian Poell drip boots', price: { value: '900.00', currency: 'USD' },
     buyingOptions: ['AUCTION'], bidCount: 4, itemEndDate: '2026-10-01T10:00:00.000Z', seller: { username: 'someone' } });
   assert.deepEqual([e.id, e.price, e.cur, e.bids, e.endsPrec], ['ebay:1234', 900, 'USD', 4, 'm']);
   assert.equal(JSON.stringify(e).includes('someone'), false);                         // the seller is not kept
-  ok('grailed cards, ebay items');
+  ok('grailed search hits, ebay items');
+}
+{
+  // a search answers 1,000 hits at most: the stock is read in price bands, each halved until
+  // it fits (the open top band doubles first); complete only when every band came back whole
+  const ask = (stock) => async (lo, hi) => { const m = stock.filter((x) => x.price_i >= lo && (hi == null || x.price_i < hi)); return { nbHits: m.length, hits: m.slice(0, 1000) }; };
+  const L = (n, price, from) => Array.from({ length: n }, (_, i) => ({ id: from + i, title: 'Carol Christian Poell ' + (from + i), price_i: price(i) }));
+  const stock = [...L(1500, (i) => 250 + (i % 50), 1), ...L(1100, (i) => 2500 + i, 5000), ...L(1100, (i) => 10000 + i * 10, 9000), ...L(3, () => 120, 20000)];
+  let r = await collectGrailed(() => {}, ask(stock));
+  assert.deepEqual([r.items.length, r.cards, r.total, r.complete], [3703, 3703, 3703, true]);
+  assert.equal(new Set(r.items.map((x) => x.id)).size, 3703);
+  // 1,200 at a single price cannot be split: what came is kept, the reading is not complete
+  r = await collectGrailed(() => {}, ask([...L(1200, () => 500, 1), ...L(10, () => 700, 5000)]));
+  assert.deepEqual([r.items.length, r.total, r.complete], [1010, 1210, false]);
+  ok('grailed: price bands, split until each fits');
 }
 
 // ── reading titles: 354 real ones (2026-09-27) ────────────────────────────

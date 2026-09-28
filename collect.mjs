@@ -137,25 +137,31 @@ if (want('ff_check')) {
 // ── the two that need more than a page ───────────────────────────────────
 if (want('grailed')) {
   const t0 = Date.now();
-  // Grailed turns this runner away (HTTP 403). ROK's PC reads the same designer page
-  // each morning (tools/grailed_pc.mjs) and commits data/raw/grailed_pc.json. A PC
-  // reading at most 36 hours old stands in for today's, under the day it was read —
-  // it is copied to grailed.json (not kept in git) so the tracked file is never touched here.
-  const pc = readJson(join(OUT, 'grailed_pc.json'), null);
-  const ageH = pc && pc.fetchedAt ? (Date.now() - Date.parse(pc.fetchedAt)) / 36e5 : Infinity;
-  if (pc && Array.isArray(pc.items) && pc.items.length && ageH <= 36) {
-    writeFileSync(join(OUT, 'grailed.json'), JSON.stringify(pc));
-    summary.sources.grailed = { ok: true, kept: pc.items.length, cards: pc.cards, complete: !!pc.complete, via: 'pc',
-                                seenDay: pc.day || new Date(Date.parse(pc.fetchedAt) + 9 * 3600e3).toISOString().slice(0, 10), ageH: Math.round(ageH) };
-    log('grailed: ' + pc.items.length + ' listings read on the PC ' + Math.round(ageH) + ' h ago');
-  } else try {
+  // Grailed's own search service, from here (grailed.mjs). If it turns this runner away,
+  // a reading made on ROK's PC (tools/grailed_pc.mjs, the same reader) at most 36 hours old
+  // stands in, under the day it was read — copied to grailed.json so the tracked file is
+  // never touched here.
+  let done = false;
+  try {
     const r = await collectGrailed(log);
-    if (r.skipped || r.refused) summary.sources.grailed = { ok: false, ...(r.skipped ? { skipped: r.skipped } : { refused: true, error: r.refused }) };
-    else {
-      const n = writeRaw(join(OUT, 'grailed.json'), 'Grailed', '해외', r.items, { complete: r.complete, cards: r.cards, scrolls: r.scrolls });
-      summary.sources.grailed = { ok: n > 0, kept: n, cards: r.cards, scrolls: r.scrolls, complete: r.complete, sec: Math.round((Date.now() - t0) / 1000) };
-    }
+    if (r.items.length) {
+      const n = writeRaw(join(OUT, 'grailed.json'), 'Grailed', '해외', r.items, { complete: r.complete, cards: r.cards, total: r.total, calls: r.calls });
+      summary.sources.grailed = { ok: n > 0, kept: n, cards: r.cards, total: r.total, calls: r.calls, complete: r.complete, via: 'search',
+                                  sec: Math.round((Date.now() - t0) / 1000) };
+      done = true;
+    } else summary.sources.grailed = { ok: false, error: 'the search answered no listings' };
   } catch (e) { failed('grailed', e); }
+  if (!done) {
+    const pc = readJson(join(OUT, 'grailed_pc.json'), null);
+    const ageH = pc && pc.fetchedAt ? (Date.now() - Date.parse(pc.fetchedAt)) / 36e5 : Infinity;
+    if (pc && Array.isArray(pc.items) && pc.items.length && ageH <= 36) {
+      writeFileSync(join(OUT, 'grailed.json'), JSON.stringify(pc));
+      summary.sources.grailed = { ok: true, kept: pc.items.length, cards: pc.cards, complete: !!pc.complete, via: 'pc',
+                                  seenDay: pc.day || new Date(Date.parse(pc.fetchedAt) + 9 * 3600e3).toISOString().slice(0, 10), ageH: Math.round(ageH),
+                                  here: summary.sources.grailed && summary.sources.grailed.error };
+      log('grailed: ' + pc.items.length + ' listings read on the PC ' + Math.round(ageH) + ' h ago');
+    }
+  }
 }
 if (want('ebay')) {
   try {

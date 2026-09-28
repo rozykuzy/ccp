@@ -41,8 +41,8 @@ jobs:
       - name: Tests (robots, page reading, title reading, the build)
         run: node test.mjs
 
-      # without it Grailed is skipped for the day; everything else goes on
-      - name: Browser for the Grailed designer page
+      # without it Mercari is skipped for the day; everything else goes on
+      - name: Browser for the Mercari search page
         continue-on-error: true
         run: |
           npm i --no-save --no-audit --no-fund playwright@1

@@ -1,17 +1,10 @@
-// Grailed for Carol Christian Poell, read on ROK's PC (ROK 2026-09-28: "PC에서 매일 수집").
+// Grailed for Carol Christian Poell, read on ROK's PC: the stand-in, not the daily path.
 //
-// NOT SCHEDULED. Tried on the PC on 2026-09-28: the designer page answers a headless
-// browser with HTTP 403, and the same page fetched plainly carries no listings (they
-// arrive from Grailed's search service in the reader's browser). Nothing here works
-// around that. If ROK chooses to read Grailed's search service the way the Helmut Lang
-// index does, that reader writes the same grailed_pc.json and the build side is ready.
-//
-// The GitHub runner is turned away by Grailed (HTTP 403); a PC in Korea is not. Once each
-// morning, after the Helmut Lang run, the PC reads the designer page that robots.txt
-// leaves open (/designers/carol-christian-poell) exactly as grailed.mjs does — the
-// browser's own headless user agent, nothing hidden — writes data/raw/grailed_pc.json
-// and pushes it. The next daily build (07:17 KST) uses a reading up to 36 hours old,
-// dated the day it was read; the page says a day's lag is by design, not a stop.
+// Since 2026-09-29 the daily build reads Grailed itself, through Grailed's own search
+// service (grailed.mjs; ROK: "Grailed는 HL처럼 검색 백엔드로 읽어줘"). This stays for a day
+// when that service turns the GitHub runner away: the same reader, run here, writes
+// data/raw/grailed_pc.json and pushes it, and the next build (07:17 KST) uses a reading
+// up to 36 hours old, dated the day it was read. NOT SCHEDULED; run it by hand.
 //
 //   cd C:\Users\PC\ccp && node tools/grailed_pc.mjs
 //
@@ -27,20 +20,18 @@ const FILE = join(ROOT, 'data', 'raw', 'grailed_pc.json');
 const log = (s) => console.log(new Date().toISOString().slice(11, 19) + ' ' + s);
 const git = (...a) => execFileSync('git', a, { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'],
   env: { ...process.env, GIT_TERMINAL_PROMPT: '0', GCM_INTERACTIVE: 'never' } }).toString().trim();
-process.env.CCP_BROWSER_CHANNEL = process.env.CCP_BROWSER_CHANNEL || 'chrome';
 
 try { git('pull', '--rebase', '--autostash', 'origin', 'main'); }
 catch (e) { log('pull failed: ' + String(e.stderr || e.message).trim().slice(0, 200)); }
 
 const t0 = Date.now();
-const r = await collectGrailed(log);
-if (r.skipped || r.refused || !r.items || !r.items.length) {
-  console.log(JSON.stringify({ ok: false, why: r.skipped || r.refused || 'no listings on the page', cards: r.cards || 0 }));
-  process.exit(1);
-}
+let r;
+try { r = await collectGrailed(log); }
+catch (e) { console.log(JSON.stringify({ ok: false, why: String(e.message || e).slice(0, 200) })); process.exit(1); }
+if (!r.items.length) { console.log(JSON.stringify({ ok: false, why: 'the search answered no listings', cards: r.cards })); process.exit(1); }
 const n = writeRaw(FILE, 'Grailed', '해외', r.items,
-  { pc: true, day: today(), complete: !!r.complete, cards: r.cards, scrolls: r.scrolls, total: r.total ?? null });
-log('grailed: ' + n + ' listings, ' + r.cards + ' cards, ' + r.scrolls + ' scrolls' + (r.complete ? '' : ' (not to the end)'));
+  { pc: true, day: today(), complete: !!r.complete, cards: r.cards, total: r.total, calls: r.calls });
+log('grailed: ' + n + ' listings from ' + r.cards + ' hits' + (r.complete ? '' : ' (not complete)'));
 
 try {
   git('add', '--', 'data/raw/grailed_pc.json');

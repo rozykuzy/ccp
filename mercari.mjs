@@ -4,8 +4,10 @@
 // robots.txt closes /mypage /purchase /sell /transaction /language /v1 /v2 —
 // not /search. We read what the page shows and turn its pages with its own
 // 次へ link. The browser keeps its own headless user agent and nothing about it
-// is hidden; photos, fonts and video are not downloaded. If Mercari turns it
-// away, this says so and stops.
+// is hidden. Photos are answered inside the browser with a blank 1×1 image, so
+// the page still writes each photo's address into its card but nothing is
+// fetched from Mercari's image host; fonts and video are not fetched either.
+// If Mercari turns it away, this says so and stops.
 //
 // Needs `playwright` (the workflow installs it).
 
@@ -15,6 +17,7 @@ export const BASE = 'https://jp.mercari.com';
 const LINKS = 'a[href*="/item/m"], a[href*="/shops/product/"]';
 const NONE = /出品された商品がありません|見つかりませんでした|該当する商品(?:は|が)ありません|検索結果がありません/;
 const ID = /\/item\/(m\d{6,})|\/shops\/product\/([A-Za-z0-9]{16,32})/;
+const GIF = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
 
 export const searchUrl = (q, i) => BASE + '/search?keyword=' + encodeURIComponent(q) + '&status=on_sale' + (i ? '&page_token=v1%3A' + i : '');
 export const idOfHref = (href) => { const m = ID.exec(href || ''); return m ? m[1] || m[2] : null; };
@@ -45,8 +48,13 @@ export async function collectMercari(queries, log = () => {}, { maxPages = 10, g
   const all = new Map(), linked = new Set(), pagesRead = [];
   let complete = true, diag = null;
   try {
-    const ctx = await browser.newContext();                 // the browser's own, unaltered user agent
-    await ctx.route('**/*', (r) => (['image', 'media', 'font'].includes(r.request().resourceType()) ? r.abort() : r.continue()));
+    // the browser's own, unaltered user agent; a tall window, so a photo's card is on screen long enough to get its address
+    const ctx = await browser.newContext({ viewport: { width: 1280, height: 1600 } });
+    await ctx.route('**/*', (r) => {
+      const t = r.request().resourceType();
+      if (t === 'image') return r.fulfill({ status: 200, contentType: 'image/gif', body: GIF });
+      return t === 'media' || t === 'font' ? r.abort() : r.continue();
+    });
     const page = await ctx.newPage();
     for (const q of queries) {
       let ranOut = false;
@@ -67,9 +75,10 @@ export async function collectMercari(queries, log = () => {}, { maxPages = 10, g
           complete = false; break;
         }
         await page.waitForSelector(LINKS, { timeout: 30000 }).catch(() => null);
-        // the grid is drawn as it scrolls: read it at every step, until nothing new appears
+        // the grid is drawn as it scrolls: read it at every step, a screen at a time,
+        // until the end of the page has shown nothing new four times running
         const seen = new Map(); let still = 0;
-        for (let s = 0; s < 60 && still < 3; s++) {
+        for (let s = 0; s < 80 && still < 4; s++) {
           const batch = await page.$$eval(LINKS, (as) => as.map((a) => {
             const name = a.querySelector('[data-testid="thumbnail-item-name"]');
             const price = a.querySelector('[data-testid="item-tile-price"]');
@@ -79,11 +88,11 @@ export async function collectMercari(queries, log = () => {}, { maxPages = 10, g
                      text: (a.innerText || '').slice(0, 400) };
           }));
           const before = seen.size;
-          for (const c of batch) if (!seen.has(c.href)) seen.set(c.href, c);
+          for (const c of batch) { const had = seen.get(c.href); if (!had) seen.set(c.href, c); else if (!had.img && c.img) had.img = c.img; }
           const atEnd = await page.evaluate(() => window.innerHeight + window.scrollY >= document.body.scrollHeight - 80);
           still = seen.size === before && atEnd ? still + 1 : 0;
-          await page.mouse.wheel(0, 2400);
-          await page.waitForTimeout(600);
+          await page.mouse.wheel(0, 1200);
+          await page.waitForTimeout(800);
         }
         const next = await page.$$eval('a[href*="page_token"]', (as) => as.some((a) => /次へ|next/i.test((a.innerText || '') + ' ' + (a.getAttribute('aria-label') || ''))));
         const none = await page.evaluate((src) => new RegExp(src).test(document.body.innerText || ''), NONE.source);
@@ -108,6 +117,10 @@ export async function collectMercari(queries, log = () => {}, { maxPages = 10, g
       }
       if (!ranOut) complete = false;
     }
+    // every page before the last holds the same number of cards; one that came up
+    // short was not read to its end, and its missing cards must not count as gone
+    const full = pagesRead.filter((p) => p.next).map((p) => p.cards);
+    if (full.length && Math.min(...full) < 0.85 * Math.max(...full)) complete = false;
   } finally { await browser.close(); }
   return { items: [...all.values()], pagesRead, complete, linked: [...linked], ...(diag ? { diag } : {}) };
 }

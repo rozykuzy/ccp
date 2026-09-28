@@ -159,3 +159,13 @@ Actions 실행의 아티팩트(`data`, 14일)로 남는다.
 
 - r8: 카드에서 저장한 직후 필터판의 '저장한 매물 N' 줄이 다음 클릭 전까지 0으로 남는다 → `toggleSave` 에서 `buildWatch()` (CCP판에는 반영)
 - 같은 origin(rozykuzy.github.io)이라 저장 키를 나눴다: HL `hlx.*`, CCP `ccpx.*`
+
+## 통합 사이트가 이 페이지를 읽는다 (2026-09-28)
+
+https://rozykuzy.github.io/ (저장소 `rozykuzy/rozykuzy.github.io`)가 이 사이트의 `index.html` 을 열 때마다 받아
+`<script type="application/json" id="__data">` 를 읽는다. 저장소에 복사본을 두지 않으므로 매일 발행이 곧바로 반영된다.
+
+- 이 블록의 **id·형식을 바꾸지 않는다** — 바꾸면 통합 사이트의 CCP 칸이 `불러오지 못함` 이 된다
+- `template.html` 의 읽는 규칙(MOTIF · LEX · MARK · yearClaim · sizeToks · histHtml · dutyHtml · SEEK · thumb 등)을 바꾸면
+  통합 사이트의 `engine.js` 를 다시 만든다 — 그 저장소의 README와 프로젝트 문서 `claude/archive-index-site-runbook.md`
+- 저장 목록 `ccpx.saved` 는 통합 사이트와 같이 쓴다(같은 origin). 값 형식 `{k,p,u,d,g}` 를 바꾸지 않는다

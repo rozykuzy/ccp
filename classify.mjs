@@ -65,6 +65,9 @@ const OTHER = new RegExp('(?:' + [
   'somar', 'ute\\s*ploier', 'morgan\\s*homme', 'ripvanwinkle', 'bajra', 'gabriela\\s*coll', 'parts\\s*of\\s*four', 'tacet',
   'morizane', 'nousan', 'christian\\s*roth', 'クリスチャンロス', 'at(?:e)?lier\\s*inscrire', 'taichi\\s*murakami',
   'leon\\s*emanuel\\s*blanck', 'jacquemyn', 'forme\\s*d.?expression', 'uma\\s*wang', 'portaille', 'giorgio\\s*brato',
+  // found under Rakuma's Carol Christian Poell label on the first live reading (2026-09-28)
+  'hed\\s*mayner', 'ヘドメイナー', 'ishinn', 'イシン', 'lumen\\s*et\\s*umbra', 'ルーメン\\s*エト\\s*ウンブラ', 'valentino', 'ヴァレンティノ',
+  'helmut\\s*lang', 'ヘルムート\\s*ラング', 'raf\\s*simons', 'ラフ\\s*シモンズ', 'haider\\s*ackermann', 'ハイダー\\s*アッカーマン',
 ].join('|') + ')', 'i');
 // "like new" and "type-2" are not "in the style of"; "Style AM/2601L" is a style number
 const STYLE_OF = new RegExp(BRANDW + '\\s*(?:の)?\\s*(?:風|系|っぽい|ライク|好き|スタイル|st\\b|스타일|느낌|풍(?!성)|[\\s-]*(?:inspired|esque)\\b' +
@@ -245,6 +248,9 @@ const SECTION = [
 const CODEKIND = { AM: '신발', PM: '팬츠', CM: '셔츠', KM: '상의', TM: '상의' };
 // the house's own footwear names, when nothing else in the title says what it is
 const SHOEWORDS = /prosthetic|u[\s-]*sole|paper[\s-]*dart|officer|spur[\s-]*biter|tornado|diagonal[\s-]*zip|good[\s-]*year|u[\s-]*jack|プロステティック|ペーパーダート|トルネード|ダイアゴナル|グッドイヤー|프로스테틱|토네이도|u\s*솔/i;
+// the house's own techniques and lines, which name the maker without its name
+const HOUSE = /object[\s-]*dy(?:e|ed)|(?<![a-z])o\.\s?d\.|drip|scar[\s-]*stitch|dead[\s-]*end|over[\s-]*lock|melt[\s-]*lock|ドリップ|オブジェクト\s*ダイ|デッド\s*エンド|スカー\s*ステッチ|드립|오브젝트\s*다이|데드\s*엔드/i;
+const saysWhat = (t) => SECTION.some(([, re]) => re.test(t)) || SHOEWORDS.test(t) || HOUSE.test(t);
 export function section(title, codes = codesOf(title)) {
   const t = nk(title);
   for (const [s, re] of SECTION) if (re.test(t)) return s;
@@ -303,6 +309,12 @@ export function classify(item, { brandPage = false } = {}) {
   // (Rakuma: 靴/シューズ(ブーツ) · ジャケット/アウター(レザージャケット)); the title comes first
   const own = section(item.title, codes);
   const sec = own === '기타' && item.cat ? section(item.cat, []) : own;
+  // a brand label alone (the site's brand page, the seller's brand field) admits a
+  // title that never names the house only when the title says what the thing is,
+  // names one of the house's techniques or carries a model number: a record filed
+  // under the label is not a garment
+  const t = nk(item.title);
+  if (brandAt(t) < 0 && !codes.length && !saysWhat(t) && !(item.cat && section(item.cat, []) !== '기타')) return { exclude: 'no-brand' };
   const z = item.size || size(item.title, sec);
   return { tier: e.tier, era: e.era, ...(e.claim ? { claim: e.claim, claimKind: e.claimKind } : {}),
            section: sec, ...(z ? { size: z } : {}), ...(codes.length ? { codes } : {}) };

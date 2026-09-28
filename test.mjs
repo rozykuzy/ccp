@@ -528,6 +528,16 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   const P = buildPayload(L, { v: 1, items: {} }, rates, okR, { day: '2026-09-29', issue: 2 });
   const o = P.items.find((x) => x.l.endsWith('x1'));
   assert.equal(o.w, toKRW(298000, 'JPY', rates), 'the cut is measured from the corrected figure');
+  // filed under the label by a seller: another house named in the title, or nothing said at all
+  for (const t of ['HED MAYNER ヘドメイナー 25SS SLEEVELESS T-SHIRT XS', 'ISHINN calf leather blouson jacket イシン', 'ルーメンエトウンブラ パンツ 春夏',
+                   'VALENTINO ヴァレンティノ LOGO TEE L WHITE'])
+    assert.equal(classify({ title: t, brandTagged: true }).exclude, 'other-brand', t);
+  assert.equal(classify({ title: 'LP Chanson De Paris 35 EOS40010PROMO ODEON プロモ', brandTagged: true }).exclude, 'no-brand');
+  for (const t of ['LOW CROTCH DEADEND FLY TROUSERS', 'Paper Dart Combat Boots', 'Object Dyed Drip Rubber', 'Unlined Meltlocked 1 Button Jacket',
+                   'JM/2568-IN KIT-BW/101 데드엔드 데님 자켓', 'Wool wrap skirt 40'])
+    assert.equal(classify({ title: t, brandTagged: true }).exclude, undefined, t);
+  assert.equal(classify({ title: 'Wool 40', brandTagged: true, cat: 'パンツ(スラックス)' }).section, '팬츠');
+  assert.equal(classify({ title: 'Carol Christian Poell like Helmut Lang coat' }).exclude, undefined);
   // the workflow's browser step serves Mercari as well as Grailed
   assert.equal(S.mercari_jp.browser, true);
   ok('first live reading: Rakuma cards, Mercari cards, same-day correction');

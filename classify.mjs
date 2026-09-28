@@ -299,7 +299,10 @@ export function classify(item, { brandPage = false } = {}) {
   if (why) return { exclude: why };
   const e = era(item.title);
   const codes = codesOf(item.title);
-  const sec = section(item.title, codes);
+  // what the title does not say, the category the seller filed it under may
+  // (Rakuma: 靴/シューズ(ブーツ) · ジャケット/アウター(レザージャケット)); the title comes first
+  const own = section(item.title, codes);
+  const sec = own === '기타' && item.cat ? section(item.cat, []) : own;
   const z = item.size || size(item.title, sec);
   return { tier: e.tier, era: e.era, ...(e.claim ? { claim: e.claim, claimKind: e.claimKind } : {}),
            section: sec, ...(z ? { size: z } : {}), ...(codes.length ? { codes } : {}) };

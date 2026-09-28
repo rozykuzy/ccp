@@ -5,7 +5,7 @@
 
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { parseRobots, robotsAllows, listingsFrom, get, diagOf, Refused } from './lib.mjs';
+import { parseRobots, robotsAllows, listingsFrom, get, diagOf, Refused, unlinked } from './lib.mjs';
 import { createServer } from 'node:http';
 import { mkdtempSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -14,6 +14,7 @@ import { execFileSync } from 'node:child_process';
 import { SOURCES, collect, mdToDate, leftToEnd } from './sources.mjs';
 import { parseSitemap, productOf, isCCP, discover, SLUG_RE } from './fruitsfamily.mjs';
 import { cardOf } from './grailed.mjs';
+import { cardOf as mercariCard, searchUrl as mercariUrl } from './mercari.mjs';
 import { itemOf } from './ebay.mjs';
 import { classify, era, codesOf, section, size, excludeReason } from './classify.mjs';
 import { updateLedger, updateSold, buildPayload, page, mail, toKRW, FILES } from './build.mjs';
@@ -469,6 +470,67 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   assert.deepEqual([...cats].sort(), [...SECTIONS].sort(), 'categories: page and pipeline');
   for (const f of Object.keys(FILES)) assert.ok(FILES[f].name && FILES[f].kind);
   ok('template: slot, storage keys, categories');
+}
+
+// ── the first live reading (2026-09-28): Rakuma's cards, Mercari's cards, a same-day re-read ──
+{
+  // Rakuma's card, as its search page builds it (ids and figures made up here)
+  const card = (id, name, label, price, sold) => '<div class="item"><div class="item-box"><div class="item-box__image-wrapper">' +
+    '<a href="https://item.fril.jp/' + id + '" class="link_search_image" title="' + name + ' ' + label + '" ' +
+    'data-rat-item_name="' + name + '" data-rat-brand="Carol Christian Poell" data-rat-price="' + price + '">' +
+    '<img src="https://asset.fril.jp/assets/new_web/item_square_dummy-e093.png" data-original="https://img.fril.jp/img/' + price + '/m/1.jpg?1" class="img-responsive lazy" alt="キャロルクリスチャンポエル(Carol Christian Poell)の' + name + '">' +
+    '<noscript><img src="https://img.fril.jp/img/' + price + '/m/1.jpg?1"></noscript>' + (sold ? '<div class="item-box__soldout_ribbon">SOLD OUT</div>' : '') +
+    '</a></div><div class="item-box__text-wrapper"><div class="item-box__item-sub-name"><a href="/brand/2224" class="brand-name">Carol Christian Poell</a></div>' +
+    '<div class="item-box__item-name"><a href="https://item.fril.jp/' + id + '"><span>' + name + '</span></a></div>' +
+    '<div class="item-box__item-price"><span>¥</span><span>' + Number(price).toLocaleString('en-US') + '</span></div></div></div></div>';
+  const shoes = 'キャロルクリスチャンポエル(Carol Christian Poell)のメンズの靴/シューズ(スニーカー)の商品詳細ページへのリンク';
+  const jacket = 'キャロルクリスチャンポエル(Carol Christian Poell)のレディースのジャケット/アウター(レザージャケット)の商品詳細ページへのリンク';
+  const html = card('0123456789abcdef0123456789abcdef', 'Carol Christian Poell スニーカー　サイズ10', shoes, 170000, true) +
+               card('fedcba9876543210fedcba9876543210', '参考上代1082400円 Carol Christian Poell HIGH NECK 46（16394M）', jacket, 298000, false);
+  const got = listingsFrom(html, S.rakuma.spec);
+  assert.equal(got.length, 2);
+  const [a, b] = got;
+  assert.equal(a.title, 'Carol Christian Poell スニーカー サイズ10'); assert.equal(a.price, 170000);
+  assert.equal(a.img, 'https://img.fril.jp/img/170000/m/1.jpg?1'); assert.equal(a.sold, true); assert.equal(a.brandTagged, true);
+  assert.equal(a.cat, '靴/シューズ(スニーカー)');
+  assert.equal(b.price, 298000, 'the retail figure in the title is not the price'); assert.equal(b.sold, undefined);
+  assert.equal(b.title, '参考上代1082400円 Carol Christian Poell HIGH NECK 46（16394M）'); assert.equal(b.cat, 'ジャケット/アウター(レザージャケット)');
+  // the screen-reader words come off a label that has no name beside it, and the size before them stays
+  assert.equal(unlinked('Carol Christian Poell HIGH NECK 46（16394M）' + jacket), 'Carol Christian Poell HIGH NECK 46（16394M）');
+  assert.equal(unlinked('CCP Prosthetic Boots ノーブランドのメンズの靴/シューズ(ブーツ)の商品詳細ページへのリンク'), 'CCP Prosthetic Boots');
+  assert.equal(unlinked('Carol Christian Poell boots 9'), 'Carol Christian Poell boots 9');
+  // the category the seller chose speaks only where the title says nothing
+  assert.equal(classify({ title: 'Carol Christian Poell High Neck', cat: 'ジャケット/アウター(レザージャケット)' }).section, '아우터');
+  assert.equal(classify({ title: 'Carol Christian Poell High Neck' }).section, '기타');
+  assert.equal(classify({ title: 'Carol Christian Poell drip boots', cat: 'ジャケット/アウター(その他)' }).section, '신발');
+  assert.equal(classify({ title: 'Carol Christian Poell 極上カットソー 44', cat: 'トップス(Tシャツ/カットソー(七分/長袖))' }).section, '상의');
+  // Mercari's card, as the drawn page shows it
+  const m1 = mercariCard({ href: '/item/m45109765100', name: 'carol christian poell ブーツ', price: '¥50,000', alt: 'carol christian poell ブーツのサムネイル',
+                           img: 'https://static.mercdn.net/thumb/item/webp/m45109765100_1.jpg?1', text: '¥\n50,000\n\ncarol christian poell ブーツ' });
+  assert.deepEqual(m1, { id: 'mercari:m45109765100', url: 'https://jp.mercari.com/item/m45109765100', title: 'carol christian poell ブーツ', price: 50000,
+                         cur: 'JPY', img: 'https://static.mercdn.net/thumb/item/webp/m45109765100_1.jpg?1' });
+  const m2 = mercariCard({ href: '/shops/product/AbCdEfGhIjKlMnOpQrSt', name: '', price: '', alt: 'CCP レザージャケット 48のサムネイル', img: '', text: '¥\n128,000\nCCP レザージャケット 48' });
+  assert.equal(m2.url, 'https://jp.mercari.com/shops/product/AbCdEfGhIjKlMnOpQrSt'); assert.equal(m2.title, 'CCP レザージャケット 48'); assert.equal(m2.price, 128000);
+  assert.equal(mercariCard({ href: '/item/m45109765100', name: 'CCP', price: '' , text: 'no price' }), null);
+  assert.equal(mercariCard({ href: '/search?keyword=x', name: 'CCP boots', price: '¥1,000' }), null);
+  assert.equal(mercariUrl('キャロルクリスチャンポエル', 2), 'https://jp.mercari.com/search?keyword=%E3%82%AD%E3%83%A3%E3%83%AD%E3%83%AB%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%81%E3%83%A3%E3%83%B3%E3%83%9D%E3%82%A8%E3%83%AB&status=on_sale&page_token=v1%3A2');
+  // a second reading on the same day corrects that day's price; the day after is compared as usual
+  const rates = { USD: 1370, JPY: 9.1 };
+  const L = { v: 1, items: {}, state: {} };
+  const r = (price) => ({ rakuma: { items: [{ id: 'rakuma:x1', url: 'https://item.fril.jp/x1', title: 'CAROL CHRISTIAN POELL HIGH NECK LEATHER JACKET 46', price, cur: 'JPY' }] } });
+  const okR = { sources: { rakuma: { ok: true, complete: true, kept: 1 } } };
+  updateLedger(L, r(1082400), okR, rates, '2026-09-28');
+  let st = updateLedger(L, r(298000), okR, rates, '2026-09-28');
+  assert.equal(st.drops, 0); assert.equal(L.items['rakuma:x1'].h.length, 1); assert.equal(L.items['rakuma:x1'].p, 298000);
+  assert.equal(L.items['rakuma:x1'].h[0][2], 298000); assert.equal(L.items['rakuma:x1'].k, toKRW(298000, 'JPY', rates));
+  st = updateLedger(L, r(280000), okR, rates, '2026-09-29', { rakuma: '2026-09-28' });
+  assert.equal(st.drops, 1); assert.equal(L.items['rakuma:x1'].h.length, 2);
+  const P = buildPayload(L, { v: 1, items: {} }, rates, okR, { day: '2026-09-29', issue: 2 });
+  const o = P.items.find((x) => x.l.endsWith('x1'));
+  assert.equal(o.w, toKRW(298000, 'JPY', rates), 'the cut is measured from the corrected figure');
+  // the workflow's browser step serves Mercari as well as Grailed
+  assert.equal(S.mercari_jp.browser, true);
+  ok('first live reading: Rakuma cards, Mercari cards, same-day correction');
 }
 
 console.log('test: ' + n + ' groups pass');

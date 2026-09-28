@@ -15,6 +15,7 @@ import { fileURLToPath } from 'node:url';
 import { SOURCES, collect } from './sources.mjs';
 import { collectEbay } from './ebay.mjs';
 import { collectGrailed } from './grailed.mjs';
+import { collectMercari } from './mercari.mjs';
 import { discover, readProduct, isCCP, RECHECK, RECHECK_EVERY } from './fruitsfamily.mjs';
 import { writeRaw, Refused, diagOf, today } from './lib.mjs';
 
@@ -35,7 +36,7 @@ const failed = (file, e) => {
 
 // ── search pages ─────────────────────────────────────────────────────────
 for (const src of SOURCES) {
-  if (!want(src.file)) continue;
+  if (!want(src.file) || src.browser) continue;
   const t0 = Date.now();
   try {
     const r = await collect(src, log);
@@ -50,6 +51,25 @@ for (const src of SOURCES) {
     if (r.pagesRead[0] && r.pagesRead[0].found < 5) diag[src.file] = diagOf(r.firstHtml, src.spec);
     log(src.file + ': ' + n + ' listings' + (r.complete ? '' : ' (reading cut short)'));
   } catch (e) { failed(src.file, e); }
+}
+
+// ── 메루카리: the search page as a browser draws it ────────────────────────
+if (want('mercari_jp')) {
+  const src = SOURCES.find((s) => s.file === 'mercari_jp');
+  const t0 = Date.now();
+  try {
+    const r = await collectMercari(src.queries, log);
+    if (r.skipped || r.refused) summary.sources.mercari_jp = { ok: false, ...(r.skipped ? { skipped: r.skipped } : { refused: true, error: r.refused }) };
+    else if (!r.items.length) {
+      diag.mercari_jp = { browser: true, ...(r.diag || {}), pages: r.pagesRead };
+      throw new Error('first page yielded no listings — markup changed or the page is blocked (see _diag.json)');
+    } else {
+      const n = writeRaw(join(OUT, 'mercari_jp.json'), src.name, src.market, r.items, { pages: r.pagesRead, complete: r.complete, linked: r.linked });
+      summary.sources.mercari_jp = { ok: true, read: r.items.length, kept: n, complete: r.complete, pages: r.pagesRead.length,
+                                     sec: Math.round((Date.now() - t0) / 1000) };
+      log('mercari_jp: ' + n + ' listings' + (r.complete ? '' : ' (reading cut short)'));
+    }
+  } catch (e) { failed('mercari_jp', e); }
 }
 
 // ── 후루츠패밀리: what is new, from its own sitemap ───────────────────────

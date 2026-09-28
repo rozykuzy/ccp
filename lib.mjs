@@ -217,7 +217,14 @@ const PRICE_ONLY = {
   USD: /^\$\s*([\d,]+(?:\.\d{2})?)$/,
 };
 const BADGE = /^(?:sold(?:\s*out)?|売り切れ|売切れ|판매완료|품절|予約済み|reserved)$/i;
-const STRONG_ID = ['auctionId', 'itemId', 'productId', 'item_id', 'pid'];
+const PLACEHOLDER_IMG = /dummy|placeholder|no[-_]?image|spacer|blank\.(?:gif|png)|loading\.(?:gif|svg)/i;
+// words a link carries for screen readers, after the title: "{brand}({en})の{…}の商品詳細ページへのリンク"
+// (the brand word carries no brackets, so a size or model number just before it stays)
+export const unlinked = (x) => (x == null ? x : String(x)
+  .replace(/\s*[^\s()（）]*(?:[(（][^()（）]*[)）])?の\S*?の商品詳細ページへのリンク\s*$/, '').trim());
+// the same label names the category the seller filed the listing under
+const CAT_IN_LABEL = /[)）]の(?:(?:メンズ|レディース|キッズ|ユニセックス|ベビー)の)?(\S+?)の商品詳細ページへのリンク\s*$/;
+const STRONG_ID =['auctionId', 'itemId', 'productId', 'item_id', 'pid'];
 
 export function listingsFrom(html, spec) {
   const byId = new Map();
@@ -286,19 +293,32 @@ export function listingsFrom(html, spec) {
       ...[...g.open.matchAll(/\sdata-[\w-]*title[\w-]*\s*=\s*"([^"]*)"/gi)].map((x) => decode(x[1])));
     const alts = [...seg.matchAll(/<img\b[^>]*\balt\s*=\s*"([^"]+)"/gi)].map((x) => decode(x[1]));
     const byLen = (a, b) => b.length - a.length;
-    const title = own.filter(okTitle).sort(byLen)[0] || alts.filter(okTitle).sort(byLen)[0];
+    // the name a site attaches to the link as data (Rakuma: data-rat-item_name) is the
+    // title as the seller typed it, without the words its title attribute adds for
+    // screen readers ("…のメンズの靴/シューズ(ブーツ)の商品詳細ページへのリンク")
+    const named = group.map((g) => attr(g.open, 'data-rat-item_name') || attr(g.open, 'data-item-name'))
+      .map((x) => (x || '').replace(/\s+/g, ' ').trim()).find((x) => x.length > 2);
+    const title = named || own.map(unlinked).filter(okTitle).sort(byLen)[0] || alts.map(unlinked).filter(okTitle).sort(byLen)[0];
     // everything else is read from the card with the title taken out of it:
     // a title that says 定価198,000円 or 入札2件で終了 is not the price or the bids
-    const rest = cs.filter((c) => c.t !== title);
+    const flat = (x) => String(x || '').replace(/\s+/g, ' ').trim();
+    const rest = cs.filter((c) => c.t !== title && flat(c.t) !== flat(title));
     const priceChunk = rest.filter((c) => PRICE_ONLY[spec.cur].test(c.t)).sort((a, b) => (boxed ? a.at - b.at : dist(a) - dist(b)))[0];
-    let price = null;
-    if (priceChunk) { const pm = PRICE_ONLY[spec.cur].exec(priceChunk.t); price = num(pm[1] || pm[2]); }
+    // likewise a price attached as data (Rakuma: data-rat-price) is the listing's own
+    let price = group.map((g) => num(attr(g.open, 'data-rat-price'))).find((p) => p > 0) || null;
+    if (price) { /* the site's own figure */ }
+    else if (priceChunk) { const pm = PRICE_ONLY[spec.cur].exec(priceChunk.t); price = num(pm[1] || pm[2]); }
     else {
       const pm = PRICE[spec.cur].exec(rest.map((c) => c.t).join(' '));
       price = pm ? num(pm[1] || pm[2]) : num(attr(h.open, 'data-auction-price') || attr(h.open, 'data-price'));
     }
-    const imgs = [...seg.matchAll(/<img\b[^>]*?\s(?:data-src|src)\s*=\s*"(https?:\/\/[^"]+)"/gi)]
-      .map((x) => ({ u: decode(x[1]), at: start + x.index }));
+    // a lazily loaded photo keeps its address in data-original / data-src while src
+    // holds a placeholder
+    const imgs = [...seg.matchAll(/<img\b([^>]*)>/gi)].map((x) => {
+      const lazy = /\s(?:data-original|data-lazy-src|data-lazy|data-src)\s*=\s*"(https?:\/\/[^"]+)"/i.exec(x[1]);
+      const src = /\ssrc\s*=\s*"(https?:\/\/[^"]+)"/i.exec(x[1]);
+      return { u: decode((lazy && lazy[1]) || (src && src[1]) || ''), at: start + x.index };
+    }).filter((x) => x.u && !PLACEHOLDER_IMG.test(x.u));
     const img = (imgs.find((x) => group.some((g) => x.at > g.at && x.at < g.end)) ||
                  imgs.sort((a, b) => dist(a) - dist(b))[0] || {}).u || attr(h.open, 'data-auction-img');
     const sold = rest.some((c) => BADGE.test(c.t)) || (spec.soldRe && rest.some((c) => c.t.length < 20 && spec.soldRe.test(c.t)));
@@ -307,10 +327,12 @@ export function listingsFrom(html, spec) {
     const brandTagged = !!(spec.brandChunkRe && rest.some((c) => spec.brandChunkRe.test(c.t)));
     const restText = rest.map((c) => c.t).join(' ');
     const extra = spec.fromCard ? spec.fromCard(restText, seg) || {} : {};
+    const catm = group.map((g) => CAT_IN_LABEL.exec(attr(g.open, 'title') || '') || CAT_IN_LABEL.exec(attr(g.open, 'aria-label') || '')).find(Boolean);
     if (title || price) {
       const prev = byId.get(h.id);
       if (prev && title && (!prev.title || title.length > prev.title.length)) prev.title = title;
-      put(h.id, { title, price, img, ...(sold ? { sold: true } : {}), ...(brandTagged ? { brandTagged: true } : {}), ...extra });
+      put(h.id, { title, price, img, ...(sold ? { sold: true } : {}), ...(brandTagged ? { brandTagged: true } : {}),
+                  ...(catm ? { cat: catm[1] } : {}), ...extra });
     }
     prevEnd = lastEnd; i = j;
   }

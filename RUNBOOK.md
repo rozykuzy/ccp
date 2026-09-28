@@ -3,15 +3,15 @@
 지금 판매 중인 캐롤 크리스찬 포엘 매물을 매일 모아 사이트를 갱신하고, 새로 들어온 것이 있으면 메일로 알린다.
 헬무트 랭 인덱스와 같은 원칙, 따로 도는 사이트다.
 
-- **사이트** https://rozykuzy.github.io/ccp/ (저장소 `rozykuzy/ccp`, 공개, 2026-09-27 생성)
+- **사이트** https://rozykuzy.github.io/ccp/ (저장소 `rozykuzy/ccp`, 공개, 2026-09-27 생성, 2026-09-28 첫 호)
 - **발행** GitHub Actions `daily` — 매일 22:17 UTC = **07:17 KST**. PC가 필요 없다
-- **메일** 클라우드 예약 작업, 09:05 KST. `data/mail_meta.json` 의 `send` 가 true 일 때만
+- **메일** 클라우드 예약 작업 `Archive Index CCP 메일`, 09:05 KST, **rozykuzy@gmail.com 한 곳**(ROK이 정함). `data/mail_meta.json` 의 `send` 가 true 일 때만
 - **범위** 전 시즌. 연도·시즌은 상품명에 적힌 것만
 
-## 처음 한 번 (저장소 주인)
+## 처음 한 번 (저장소 주인) — 2026-09-28 마침
 
-1. 파일을 저장소에 올린다 — 이 세션에 `rozykuzy/ccp` 를 추가하면 Claude가 직접 push 한다.
-   아니면 웹에서: 루트 파일은 **Add file → Upload files**, 워크플로는 **Add file → Create new file** 에
+1. 파일을 저장소에 올린다 — 2026-09-28에는 PC(`C:\Users\PC\ccp`, Git Credential Manager)에서 push 했다.
+   웹에서 한다면: 루트 파일은 **Add file → Upload files**, 워크플로는 **Add file → Create new file** 에
    `.github/workflows/daily.yml` 이라고 이름을 적고 내용을 붙여 넣는다.
    `.gitignore` 는 빠져도 된다 — 워크플로가 커밋할 파일을 하나씩 적어 두어 그날의 원본 페이지는 올라가지 않는다
 2. **Settings → Pages → Source: GitHub Actions** — 이것이 없으면 워크플로 두 번째 단계에서 멈춘다(아무것도 수집·커밋하지 않고)
@@ -23,7 +23,8 @@
 | 파일 | 하는 일 |
 |---|---|
 | `collect.mjs` | 모든 수집기 → `data/raw/*.json`. 한 곳이 실패해도 나머지는 돈다. 전부 실패하면 종료 코드 1 |
-| `sources.mjs` | 야후옥션(진행 · 180일 낙찰, 영·일 두 검색어) · 메루카리(영·일) · 라쿠마 · 후루츠패밀리 브랜드 페이지 |
+| `sources.mjs` | 야후옥션(진행 · 180일 낙찰, 영·일 두 검색어) · 라쿠마 · 후루츠패밀리 브랜드 페이지. 메루카리의 경로와 매물 형식도 여기 있다 |
+| `mercari.mjs` | 메루카리 검색 페이지를 브라우저로 그려 읽는다(HTML에는 매물이 없다). 자기 `次へ` 링크로 넘기고, 없으면 마지막 페이지. 사진·글꼴은 받지 않는다 |
 | `fruitsfamily.mjs` | 후루츠패밀리 제품 사이트맵(최신순, 제목 슬러그)으로 신규 발견 → 매물 페이지의 `product:brand` 로 확인. 알고 있는 매물은 하루 40건씩 다시 본다(3일 간격) |
 | `grailed.mjs` | `/designers/carol-christian-poell` 을 브라우저로 스크롤. 페이지가 밝힌 총수에 95% 닿았을 때만 '끝까지 읽음' |
 | `ebay.mjs` | Browse API. 판매자 통화(`convertedFrom*`) 그대로 |
@@ -31,7 +32,7 @@
 | `classify.mjs` | 상품명 읽기: 제외 · 연도/시즌 · 분류 · 사이즈 · 모델 번호 |
 | `build.mjs` | 대장 갱신 → `site/index.html` · `data/archive.json` · `data/mail.html` · `data/mail_meta.json` · `data/status.json` |
 | `template.html` | 사이트 원본 (헬무트 랭 r8 엔진의 CCP판). `/*__DATA__*/` 자리에 데이터 |
-| `test.mjs` | 수집 전에 도는 시험 14묶음. 실패하면 그날 발행하지 않고 어제 사이트가 그대로 있다 |
+| `test.mjs` | 수집 전에 도는 시험 15묶음. 실패하면 그날 발행하지 않고 어제 사이트가 그대로 있다 |
 | `test_corpus.json` | 실제 매물 제목 354건 (2026-09-27, 판매자 정보 없음, 구매 예약자 이름은 ○○) |
 
 `data/ledger.json`(대장)과 `data/sold.json`(판매 기록)은 **지우지 않는다.** 읽을 수 없거나, 지난 빌드(`status.json`)보다
@@ -44,10 +45,10 @@ Actions 실행의 아티팩트(`data`, 14일)로 남는다.
 |---|---|---|---|
 | 야후옥션 진행 | `/search/search?p=` (정렬·n 파라미터 금지) | 자동 수집 | "carol christian poell" 73건 · 가타카나 68건 |
 | 야후옥션 낙찰 | `/closedsearch/closedsearch?p=` (robots 명시 허용) | 판매 기록 | 180일 59건 |
-| 메루카리 | `/search?keyword=&status=on_sale` | 자동 수집 | 첫 페이지 약 120 (절반은 설명에만 이름이 있는 다른 브랜드) |
+| 메루카리 | `/search?keyword=&status=on_sale` | 자동 수집 (브라우저) | 첫 페이지 약 120 (절반은 설명에만 이름이 있는 다른 브랜드) |
 | 라쿠마 | `/s?query=` | 자동 수집 | 약 800 (다른 브랜드·판매 완료 다수) |
 | 후루츠패밀리 | `/brand/Carol Christian Poell` · `/sitemap.product.xml?page=` · `/product/{id}/` | 자동 수집 (`*` 허용, AI 학습 크롤러 그룹은 우리 규칙이 아니다) | 브랜드 페이지 669건 표기, 정적 40건(트렌드순) |
-| Grailed | `/designers/…` (`/search` `/sold` 금지) | 자동 수집 | 페이지가 스크립트로 그려짐 |
+| Grailed | `/designers/…` (`/search` `/sold` 금지) | **막힘** — 2026-09-28 헤드리스 브라우저에 403. 우회하지 않는다 | 바로가기만 남는다 |
 | eBay | Browse API (`/sch/` 금지) | 키가 있을 때 | — |
 | RAGTAG | — | 취급 없음 | 0 |
 | 2nd STREET · 번개장터 · Depop · Vinted · Vestiaire | — | 바로가기만 (다른 곳에서 찾기) | — |
@@ -91,6 +92,7 @@ Actions 실행의 아티팩트(`data`, 14일)로 남는다.
 - 가격을 못 읽었어도 매물 링크가 페이지에 있으면 '봤다'로 친다
 - 지난번 끝까지 읽은 날 본 매물 가운데 5건 이상, 그리고 80%(야후 60%) 넘게가 안 보이면 그날은 판단 보류 — 기준일은 그대로, 최대 3일
 - 가격 변동은 판매자 통화로만. 환율은 ECB(frankfurter). 못 받으면 어제 환율, 그것도 없으면 빌드 중단
+- 하루에 가격은 하나: 같은 날 다시 읽으면(수집기를 고친 뒤 다시 돌린 날) 그날 값을 고쳐 적고, 가격 변동으로 치지 않는다. 비교는 전날 값과
 - **신규**: 그 소스가 이전에 끝까지 읽은 날이 있을 때만. 소스의 첫 완독은 신규가 아니다. 코드 수정으로 한 소스가 더 멀리 읽게 되는 날은 `ledger.json` 의 `state.quiet[<file>] = "<그날>"` 로 그 소스의 신규를 끈다
 - 같은 날 다시 돌려도 같은 호수, 첫 메일 표시 유지. 첫 호 = 매물이 처음 있었던 날
 - 판매 기록은 매물이 아니다: 대장에 없고, 신규도 사라짐도 없다
@@ -104,14 +106,14 @@ Actions 실행의 아티팩트(`data`, 14일)로 남는다.
 
 ## 메일 (예약 작업, 09:05 KST)
 
-클라우드 예약 작업이 저장소가 만든 것을 받아 보내기만 한다. PC는 필요 없다. 예약 작업은 ROK이 받는 사람을 정하고 만들라고 하면 만든다.
+클라우드 예약 작업 `Archive Index CCP 메일 (매일 09:05 KST)`(2026-09-28 생성, 승인 없이 돈다)이 저장소가 만든 것을 받아 보내기만 한다. PC는 필요 없다. 받는 사람은 **rozykuzy@gmail.com 한 곳**.
 
 1. `https://raw.githubusercontent.com/rozykuzy/ccp/main/data/mail_meta.json` 을 받는다. 404면 가동 전 — 보내지 않는다
 2. `date` 가 오늘(KST)이 아니면 9분 뒤 한 번 더 받고, 그래도 아니면 보내지 않고 "오늘 CCP 빌드 없음"이라고 보고
 3. `send` 가 false면 보내지 않는다(신규·오늘 가격 내림 없음)
 4. `data/mail.html` 을 받아 `mail_meta.subject` 의 호수가 들어 있는지 본다(raw.githubusercontent.com 은 5분 캐시)
 5. 같은 호수가 보낸편지함에 이미 있으면 보내지 않는다
-6. `mail.html` 전문을 Gmail로(`cat` 으로 읽는다 — Read는 줄 번호를 붙인다). subject = `mail_meta.subject`. 받는 사람은 ROK이 정한 대로
+6. `mail.html` 전문을 Gmail로(`cat` 으로 읽는다 — Read는 줄 번호를 붙인다). subject = `mail_meta.subject`. 받는 사람 rozykuzy@gmail.com
 7. 보고에 `data/status.json` 에서 실패한 소스와 그 이유를 적는다
 
 메일은 목록과 링크만, 사진 없음. 가격 내림은 그날 내린 것만 한 번. 한 줄에 매물 하나, 전체 2만 4천 자 이하 — 넘으면 적게 싣고 "외 N건"으로 센다(사이트에는 다 있다).
@@ -122,7 +124,20 @@ Actions 실행의 아티팩트(`data`, 14일)로 남는다.
 - 브라우저(Chromium) 11묶음: 세 언어 검색(드립 = ドリップ = drip) · 번호 검색 · `?category=shoes` · 같은 번호 → 검색과 뒤로 가기 · 저장 키 `ccpx.*` · 다른 곳에서 찾기 · 연도 1995– · 소재 필터 · 360–2560px 가로 넘침 0 · 옮기기 링크 · 판매 기록
 - 패싯 산술 15,000회 불일치 0 (헬무트 랭 검사기를 CCP 템플릿에 그대로)
 - 독립 검토 네 번: 20 → 12 → 4 → 1건, 전부 고치고 시험으로 고정
-- **수집기는 실제 판매처 페이지에 아직 한 번도 대 보지 못했다** (이 작업 공간은 판매처에 닿지 않는다). 첫 실행의 `status.json` · `_diag.json` 으로 맞춘다
+- 수집기는 이날까지 실제 판매처 페이지에 대 보지 못했다. 첫 실행(아래)으로 맞췄다
+
+## 첫 실행 (2026-09-28, Issue 001)
+
+| 곳 | 결과 | 한 일 |
+|---|---|---|
+| 야후옥션 진행 · 낙찰 | 66건 · 60건, 끝까지 읽음 | 그대로 |
+| 라쿠마 | 837건 읽음 → 66건. 제목에 링크 설명(`…の商品詳細ページへのリンク`)이 붙고, 사진은 자리표시 그림, 제목 속 `参考上代` 금액이 가격으로 읽힌 매물이 있었다 | 카드 링크에 달린 `data-rat-item_name` · `data-rat-price` 를 쓰고, 사진은 `data-original`. 링크 설명의 카테고리(`靴/シューズ(ブーツ)` 등)는 제목이 분류를 말하지 않을 때만 쓴다 |
+| 메루카리 | 실패 — HTML(395 KB)에 매물이 없다. 브라우저가 그린다 | `mercari.mjs`: 헤드리스 브라우저로 검색 페이지를 그려 읽는다(PC의 Chrome으로 먼저 확인) |
+| 후루츠패밀리 | 브랜드 페이지 40 · 사이트맵 신규 2 | 그대로 |
+| Grailed | 헤드리스 브라우저에 403 | 막힌 채 둔다(바로가기만) |
+| eBay | 키 없음 | 키를 넣으면 돈다 |
+
+고친 수집기로 같은 날 다시 돌려 Issue 001을 다시 만들었다(같은 호수, 같은 날 가격은 고쳐 적기).
 
 ## 헬무트 랭 쪽에 옮길 것
 

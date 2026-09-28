@@ -84,8 +84,10 @@ export const SOURCES = [
     },
   },
   {
-    name: '메루카리', market: '일본', file: 'mercari_jp',
-    // robots.txt closes /mypage /purchase /sell /transaction /v1 /v2 — not /search
+    name: '메루카리', market: '일본', file: 'mercari_jp', browser: true,
+    // robots.txt closes /mypage /purchase /sell /transaction /v1 /v2 — not /search.
+    // The search page draws its listings in the browser, so collect.mjs reads it
+    // through mercari.mjs; the routes and the listing format below stay the same.
     queries: [QUERIES.en, QUERIES.ja],
     pages: (q, i) => 'https://jp.mercari.com/search?keyword=' + encodeURIComponent(q) + '&status=on_sale' + (i ? '&page_token=v1%3A' + i : ''),
     maxPages: 10, pageSize: 120, noneRe: /出品された商品がありません|見つかりませんでした|該当する商品はありません/,

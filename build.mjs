@@ -93,6 +93,7 @@ function observe(L, it, file, day, rates, stats) {
       id: it.id, file, src: cfg.name, m: cfg.m, t: it.title, u: it.url, img: it.img || null, p: it.price, cur: it.cur || 'KRW', k,
       first: day, last: day, gone: null, miss: 0, h: [[day, k, it.price]],
       ...(it.size ? { z: it.size } : {}), ...(it.brandTagged ? { tagged: 1 } : {}), ...(it.cond === 'new' ? { cn: 'new' } : {}),
+      ...(it.cat ? { cat: it.cat } : {}),
       ...(Number.isFinite(it.bids) ? { bids: it.bids } : {}), ...(it.endsAt ? { ends: it.endsAt, endsPrec: it.endsPrec || 'd' } : {}),
       ...(Array.isArray(it.im) && it.im.length ? { im: it.im.slice(0, 12) } : {}),
     };
@@ -105,11 +106,20 @@ function observe(L, it, file, day, rates, stats) {
   if (it.img) cur.img = it.img;
   if (it.size) cur.z = it.size;
   if (it.brandTagged) cur.tagged = 1;
+  if (it.cat) cur.cat = it.cat;
   if (Number.isFinite(it.bids)) cur.bids = it.bids;
   if (it.endsAt) { cur.ends = it.endsAt; cur.endsPrec = it.endsPrec || 'd'; }
   const sameCur = (cur.cur || 'KRW') === (it.cur || 'KRW');
   if (!sameCur) { cur.cur = it.cur || 'KRW'; cur.p = it.price; cur.h = [[day, k || cur.k, it.price]]; stats.recur++; }
-  else if (it.price !== cur.p) { cur.h.push([day, k || cur.k, it.price]); if (it.price < cur.p) stats.drops++; else stats.rises++; cur.p = it.price; stats.changed++; }
+  else if (it.price !== cur.p) {
+    const lastH = cur.h[cur.h.length - 1];
+    // a day has one price: a second reading on the same day corrects that day's
+    // figure (a re-run after a parser fix) and is compared with the day before
+    if (lastH && lastH[0] === day) {
+      lastH[1] = k || lastH[1]; lastH[2] = it.price; cur.p = it.price;
+      if (cur.h.length === 1) cur.k = k || cur.k;
+    } else { cur.h.push([day, k || cur.k, it.price]); if (it.price < cur.p) stats.drops++; else stats.rises++; cur.p = it.price; stats.changed++; }
+  }
 }
 
 const PREC = { m: 6e4, h: 36e5, d: 864e5 };
@@ -248,7 +258,7 @@ export function buildPayload(L, S, rates, summary, { day = TODAY, issue = 1, fre
   const live = [], goneRecent = [];
   for (const x of Object.values(L.items)) {
     if (x.ex) continue;
-    const c = classify({ title: x.t, brandTagged: !!x.tagged, size: x.z }, { brandPage: FILES[x.file] ? !!FILES[x.file].brandPage : false });
+    const c = classify({ title: x.t, brandTagged: !!x.tagged, size: x.z, cat: x.cat }, { brandPage: FILES[x.file] ? !!FILES[x.file].brandPage : false });
     if (c.exclude) continue;
     const o = payloadItem(x, c, rates, day);
     if (fresh.has(x.id)) o.n = 1;

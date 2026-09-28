@@ -1,0 +1,126 @@
+{
+ "day": "2026-09-28",
+ "issue": 1,
+ "rates": {
+  "USD": 1355,
+  "GBP": 1796,
+  "EUR": 1545,
+  "JPY": 860,
+  "more": {
+   "AUD": 952.63,
+   "BRL": 261.49,
+   "CAD": 958.12,
+   "CHF": 1635.96,
+   "CNY": 201.85,
+   "CZK": 63.47,
+   "DKK": 206.7,
+   "HKD": 172.75,
+   "HUF": 4.23,
+   "IDR": 0.08,
+   "ILS": 446.66,
+   "INR": 14.14,
+   "ISK": 11.31,
+   "MXN": 76.56,
+   "MYR": 332.61,
+   "NOK": 142.54,
+   "NZD": 768.43,
+   "PHP": 21.69,
+   "PLN": 353.44,
+   "RON": 292.84,
+   "SEK": 136.86,
+   "SGD": 1061.02,
+   "THB": 40.64,
+   "TRY": 27.69,
+   "ZAR": 83.16
+  },
+  "date": "2026-09-25",
+  "from": "ECB"
+ },
+ "stats": {
+  "added": 151,
+  "back": 0,
+  "changed": 0,
+  "drops": 0,
+  "rises": 0,
+  "recur": 0,
+  "vanished": 0,
+  "held": [],
+  "flood": []
+ },
+ "soldAdded": 43,
+ "sources": {
+  "yahoo_auctions": {
+   "ok": true,
+   "read": 66,
+   "kept": 66,
+   "complete": true,
+   "pages": 4,
+   "sec": 9
+  },
+  "yahoo_closed": {
+   "ok": true,
+   "read": 60,
+   "kept": 60,
+   "complete": true,
+   "pages": 4,
+   "sec": 10
+  },
+  "mercari_jp": {
+   "ok": false,
+   "refused": false,
+   "error": "first page yielded no listings — markup changed or the page is blocked (see _diag.json)"
+  },
+  "rakuma": {
+   "ok": true,
+   "read": 837,
+   "kept": 837,
+   "complete": true,
+   "pages": 22,
+   "sec": 54
+  },
+  "ff_brand": {
+   "ok": true,
+   "read": 40,
+   "kept": 40,
+   "complete": false,
+   "pages": 1,
+   "sec": 4
+  },
+  "ff_new": {
+   "ok": true,
+   "kept": 2,
+   "candidates": 3,
+   "read": 3,
+   "notBrand": 1,
+   "pages": 29,
+   "reached": true,
+   "newest": "2026-09-27T20:00:08.000Z",
+   "complete": false,
+   "sec": 79
+  },
+  "ff_check": {
+   "ok": true,
+   "checked": 0,
+   "idle": true,
+   "sec": 0
+  },
+  "grailed": {
+   "ok": false,
+   "refused": true,
+   "error": "HTTP 403 from grailed.com"
+  },
+  "ebay": {
+   "ok": false,
+   "skipped": "EBAY_CLIENT_ID / EBAY_CLIENT_SECRET not set"
+  }
+ },
+ "counts": {
+  "entries": 151,
+  "items": 151,
+  "grouped": 0,
+  "fresh": 0,
+  "changed": 0,
+  "sold": 43,
+  "gone": 0
+ }
+}

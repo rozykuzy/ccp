@@ -169,3 +169,6 @@ https://rozykuzy.github.io/ (저장소 `rozykuzy/rozykuzy.github.io`)가 이 사
 - `template.html` 의 읽는 규칙(MOTIF · LEX · MARK · yearClaim · sizeToks · histHtml · dutyHtml · SEEK · thumb 등)을 바꾸면
   통합 사이트의 `engine.js` 를 다시 만든다 — 그 저장소의 README와 프로젝트 문서 `claude/archive-index-site-runbook.md`
 - 저장 목록 `ccpx.saved` 는 통합 사이트와 같이 쓴다(같은 origin). 값 형식 `{k,p,u,d,g}` 를 바꾸지 않는다
+- **메일의 `전체 보기` 는 통합 사이트를 연다** (2026-09-28, ROK 결정) — `build.mjs` 의 `MAIL_URL`
+  `https://rozykuzy.github.io/?archive=ccp`, 신규가 있는 날은 `&show=new&sort=new`. 이 페이지(`SITE_URL`)는 전과 같이 발행한다 —
+  통합 사이트가 여기서 읽는다. 되돌리려면 `mail()` 의 `siteUrl` 기본값을 `SITE_URL` 로

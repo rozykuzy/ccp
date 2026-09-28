@@ -17,7 +17,7 @@ import { cardOf } from './grailed.mjs';
 import { cardOf as mercariCard, searchUrl as mercariUrl } from './mercari.mjs';
 import { itemOf } from './ebay.mjs';
 import { classify, era, codesOf, section, size, excludeReason } from './classify.mjs';
-import { updateLedger, updateSold, buildPayload, page, mail, toKRW, FILES } from './build.mjs';
+import { updateLedger, updateSold, buildPayload, page, mail, toKRW, FILES, MAIL_URL } from './build.mjs';
 
 let n = 0; const ok = (label) => { n++; if (process.env.V) console.log('  ✓ ' + label); };
 const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
@@ -269,6 +269,11 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   assert.equal(/background/i.test(m.html), false); assert.match(m.html, /border-top:3px solid #181715/);
   const quiet = mail({ ...P, items: P.items.map((o) => ({ ...o, n: 0 })) }, {}, {});
   assert.equal(quiet.meta.send, false);
+  // 전체 보기 opens the combined site on this archive — on today's new listings when there are any
+  assert.equal(MAIL_URL, 'https://rozykuzy.github.io/?archive=ccp'); assert.equal(m.meta.url, MAIL_URL);
+  assert.ok(m.html.includes('href="https://rozykuzy.github.io/?archive=ccp&amp;show=new&amp;sort=new"'));
+  assert.ok(quiet.html.includes('href="https://rozykuzy.github.io/?archive=ccp"'));
+  assert.ok(mail(P, {}, { siteUrl: 'https://example.test/ccp/' }).html.includes('href="https://example.test/ccp/?show=new&amp;sort=new"'));
   // a heavy day still goes out whole: fewer rows, the rest counted, no line a reader would cut
   const many = { ...P, items: Array.from({ length: 120 }, (_, i) => ({ ...a4, l: a4.l + i, t: a4.t + ' ' + 'x'.repeat(90) + i, n: 1 })) };
   const big = mail(many, {}, {});

@@ -27,6 +27,9 @@ const DATA = process.env.CCP_DATA || join(ROOT, 'data');
 const RAW = process.env.CCP_RAW || join(DATA, 'raw');
 const SITE = process.env.CCP_SITE || join(ROOT, 'site');
 export const SITE_URL = 'https://rozykuzy.github.io/ccp/';
+// the mail's 전체 보기 opens the combined site on this archive (ROK 2026-09-28). The page is still
+// built and published at SITE_URL — the combined site reads it from there
+export const MAIL_URL = 'https://rozykuzy.github.io/?archive=ccp';
 const kst = (t = Date.now()) => new Date(t + 9 * 3600e3).toISOString().slice(0, 10);
 const TODAY = process.env.CCP_TODAY || kst();
 const readJson = (f, d) => { try { return JSON.parse(readFileSync(f, 'utf8')); } catch { return d; } };
@@ -360,7 +363,7 @@ const SYM = { USD: '$', GBP: '£', EUR: '€', JPY: '¥', CAD: 'CA$', AUD: 'A$',
 // The mail task reads this file whole and sends it as it is, so it is kept to
 // one row per line and under `limit` characters: past that it lists fewer and
 // says how many more (the page has them all).
-export function mail(payload, stats, { siteUrl = SITE_URL, first = false, limit = 24000 } = {}) {
+export function mail(payload, stats, { siteUrl = MAIL_URL, first = false, limit = 24000 } = {}) {
   const P = payload, live = P.items.filter((o) => !o.x && !o.so);
   const fresh = live.filter((o) => o.n).sort((a, b) => b.k - a.k);
   // only what moved today: the page keeps a cut marked for two weeks, the mail says it once
@@ -371,7 +374,7 @@ export function mail(payload, stats, { siteUrl = SITE_URL, first = false, limit 
     '<span style="font-size:12px;color:#605c55">' + [price(o), escH(o.r), o.z ? escH(o.z) : '', o.e ? escH(o.e) : '', o.mc ? escH(o.mc) : ''].filter(Boolean).join(' · ') + extra + '</span></td></tr>';
   const sect = (label, list, fn, max) => list.length ? '\n<tr><td style="padding:26px 0 6px;font-size:10px;letter-spacing:.18em;color:#605c55">' + label + ' ' + won(list.length) + '</td></tr>\n' +
     list.slice(0, max).map(fn).join('\n') + (list.length > max ? '\n<tr><td style="padding:10px 0;font-size:12px;color:#605c55">외 ' + won(list.length - max) + '건</td></tr>' : '') : '';
-  const link = siteUrl + (fresh.length && !first ? '?show=new&sort=new' : '');
+  const link = siteUrl + (fresh.length && !first ? (siteUrl.includes('?') ? '&' : '?') + 'show=new&sort=new' : '');
   const compose = (maxFresh, maxDrops) => '<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + escH(P.issueLabel) + '</title></head>\n' +
     // Gmail drops every `background` from a message (2026-09-28: the dark masthead
     // arrived as pale text on white), so nothing here depends on one: dark type on

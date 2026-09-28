@@ -50,8 +50,8 @@ Actions 실행의 아티팩트(`data`, 14일)로 남는다.
 | 라쿠마 | `/s?query=` | 자동 수집 | 약 800 (다른 브랜드·판매 완료 다수) |
 | 후루츠패밀리 | `/brand/Carol Christian Poell` · `/sitemap.product.xml?page=` · `/product/{id}/` | 자동 수집 (`*` 허용, AI 학습 크롤러 그룹은 우리 규칙이 아니다) | 브랜드 페이지 669건 표기, 정적 40건(트렌드순) |
 | Grailed | 검색 서비스 `mnrwefss2q-dsn.algolia.net` (robots.txt 404 — 규칙 없음). grailed.com의 `/search` 페이지는 열지 않는다 | 자동 수집 (2026-09-29부터, ROK 결정). 디자이너 페이지는 2026-09-28 헤드리스 브라우저에 403 | 1,764건 (2026-09-29) |
-| 야후 플리마 | `/search/{검색어}` · `page=` | 자동 수집 (2026-09-28부터) | — |
-| 세컨드스트리트 | `/search?keyword=` · `page=` | 자동 수집 (2026-09-28부터) | — |
+| 야후 플리마 | `/search/<검색어>` · `page=` (robots가 `sort=` `order=` `sold=` 등만 막음) | 자동 수집 (2026-09-28 추가) — 페이지 자체 JSON, 한 쪽 100건. `SOLD` 는 사라짐 | 영·일 두 검색어 |
+| 2nd STREET (세컨드스트리트) | 온라인 스토어 브랜드 검색 | 자동 수집 (2026-09-28 추가) — 카드 칸별로 읽는다. 모델 번호의 `/` 는 지킨다 | — |
 | eBay | Browse API (`/sch/` 금지) | 키가 있을 때 | — |
 | RAGTAG | — | 취급 없음 | 0 |
 | 번개장터 · Depop · Vinted · Vestiaire | — | 바로가기만 (다른 곳에서 찾기) | — |
@@ -176,6 +176,16 @@ https://rozykuzy.github.io/ (저장소 `rozykuzy/rozykuzy.github.io`)가 이 사
   `https://rozykuzy.github.io/?archive=ccp`, 신규가 있는 날은 `&show=new&sort=new`. 이 페이지(`SITE_URL`)는 전과 같이 발행한다 —
   통합 사이트가 여기서 읽는다. 되돌리려면 `mail()` 의 `siteUrl` 기본값을 `SITE_URL` 로
 
+## 2026-09-29 — 야후 사진 크기 · 통합 사이트 재디자인
+
+- `template.html` `thumb()` 에 야후 사진 프록시 규칙: `auc-pctr.c.yimg.jp` 는 요청한 `w`·`h` 로 준다(300 · 600 · 1200, 9/28 PC에서 225×300 · 450×600 · 900×1200 확인),
+  야후 플리마의 정사각 채움(`ccw`·`cch`·`fill=1`)은 뗀다. `rozykuzy/ccp` `9002653`, 다음 07:17 빌드부터. 통합 사이트 `engine.js` 에도 같은 줄(그쪽은 이미 반영)
+- 통합 사이트가 새 디자인으로 바뀌었다(움직임·Index Sans·문구) — `claude/archive-index-site-runbook.md` 9/29 절. 이 페이지와 데이터 형식은 그대로
+- 야후 플리마 · 세컨드스트리트는 9/28 추가(`2e206b5`), 첫 빌드는 9/29 07:17. 첫 완독 날은 신규로 세지 않는다(대장 규칙)
+- Grailed: 9/28 ROK가 고른 'PC에서 매일 수집'은 허용된 `/designers/` 페이지가 헤드리스 Chrome에 403이라 우회 없이는 안 됐다.
+  9/29 ROK 결정으로 Grailed의 검색 서비스로 읽는다 — 아래 절
+- eBay는 공식 Browse API 키(저장소 Secrets `EBAY_CLIENT_ID` · `EBAY_CLIENT_SECRET`)를 ROK가 넣으면 켜진다 — 코드는 준비돼 있다
+
 ## Grailed — 검색 서비스로 읽는다 (2026-09-29, ROK 결정)
 
 ROK: "Grailed는 HL처럼 검색 백엔드로 읽어줘". 헬무트 랭 인덱스가 2026-09-15부터 매일 아침 Grailed를 읽는 방식과 같다.
@@ -195,6 +205,7 @@ ROK: "Grailed는 HL처럼 검색 백엔드로 읽어줘". 헬무트 랭 인덱�
 - 첫 완독(2026-09-29 빌드)은 신규가 아니다(대장 규칙 그대로). 그날 대장이 크게 는다
 - 러너가 막히는 날: PC에서 `node tools/grailed_pc.mjs` → `data/raw/grailed_pc.json` push → 다음 빌드가 36시간 안의 PC 읽기를
   그날 날짜로 쓴다(하루 늦음을 밝힌다). 예약하지 않았다
+- 첫 빌드(2026-09-29 07:17 KST) 뒤 `data/status.json` 의 `grailed` 가 `ok` · `complete` · `via: search` 인지 본다. 러너가 403·429를 받았으면 위의 PC 읽기
 - 2026-09-29 PC에서 시험(01:41 · 01:47 KST 두 번): 1,764건 · 검색 15번 · 37초 · 끝까지 읽음. 남는 것 1,749건
   (제외 15: 다른 브랜드 13 · 이름도 분류도 없음 2). 사진은 전부 `media-assets.grailed.com`(사이트의 `?w=` 규칙 그대로),
   사이즈 1,557건, 새 제품 423건, 연도·시즌 표기 165건. 분류: 아우터 507 · 신발 487 · 팬츠 174 · 가방·소품 152 · 테일러링 110 ·

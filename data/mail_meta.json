@@ -1,11 +1,11 @@
 {
- "date": "2026-09-28",
- "issue": 1,
- "subject": "Archive Index CCP Issue 001 · 9/28 · 매물 315",
- "fresh": 0,
- "drops": 0,
- "items": 315,
+ "date": "2026-09-29",
+ "issue": 2,
+ "subject": "Archive Index CCP Issue 002 · 9/29 · 신규 8 · 가격 내림 3",
+ "fresh": 8,
+ "drops": 3,
+ "items": 2088,
  "send": true,
- "first": true,
- "url": "https://rozykuzy.github.io/ccp/"
+ "first": false,
+ "url": "https://rozykuzy.github.io/?archive=ccp"
 }

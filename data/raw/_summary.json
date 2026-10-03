@@ -1,11 +1,11 @@
 {
- "startedAt": "2026-10-02T01:40:39.878Z",
- "day": "2026-10-02",
+ "startedAt": "2026-10-03T01:11:11.261Z",
+ "day": "2026-10-03",
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 74,
-   "kept": 74,
+   "read": 72,
+   "kept": 72,
    "complete": true,
    "pages": 4,
    "sec": 9
@@ -20,8 +20,8 @@
   },
   "rakuma": {
    "ok": true,
-   "read": 839,
-   "kept": 839,
+   "read": 838,
+   "kept": 838,
    "complete": true,
    "pages": 22,
    "sec": 53
@@ -32,7 +32,7 @@
    "kept": 62,
    "complete": true,
    "pages": 2,
-   "sec": 4
+   "sec": 5
   },
   "secondstreet": {
    "ok": true,
@@ -48,38 +48,38 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 4
+   "sec": 1
   },
   "mercari_jp": {
    "ok": true,
-   "read": 361,
-   "kept": 361,
+   "read": 364,
+   "kept": 364,
    "complete": true,
    "pages": 7,
-   "sec": 87
+   "sec": 94
   },
   "ff_new": {
    "ok": true,
-   "kept": 1,
-   "candidates": 1,
-   "read": 1,
+   "kept": 0,
+   "candidates": 0,
+   "read": 0,
    "notBrand": 0,
-   "pages": 19,
+   "pages": 18,
    "reached": true,
-   "newest": "2026-10-01T19:59:44.000Z",
+   "newest": "2026-10-02T19:59:54.000Z",
    "complete": false,
-   "sec": 49
+   "sec": 44
   },
   "ff_check": {
    "ok": true,
-   "checked": 4,
-   "sec": 9
+   "checked": 1,
+   "sec": 2
   },
   "grailed": {
    "ok": true,
-   "kept": 1781,
-   "cards": 1781,
-   "total": 1781,
+   "kept": 1782,
+   "cards": 1782,
+   "total": 1782,
    "calls": 15,
    "complete": true,
    "via": "search",
@@ -90,5 +90,5 @@
    "skipped": "EBAY_CLIENT_ID / EBAY_CLIENT_SECRET not set"
   }
  },
- "finishedAt": "2026-10-02T01:45:03.005Z"
+ "finishedAt": "2026-10-03T01:15:26.257Z"
 }

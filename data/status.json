@@ -1,6 +1,6 @@
 {
- "day": "2026-10-03",
- "issue": 6,
+ "day": "2026-10-04",
+ "issue": 7,
  "rates": {
   "USD": 1348,
   "GBP": 1780,
@@ -37,13 +37,13 @@
   "from": "ECB"
  },
  "stats": {
-  "added": 20,
-  "back": 0,
-  "changed": 20,
-  "drops": 15,
-  "rises": 5,
+  "added": 12,
+  "back": 2,
+  "changed": 18,
+  "drops": 16,
+  "rises": 2,
   "recur": 0,
-  "vanished": 14,
+  "vanished": 17,
   "held": [],
   "flood": []
  },
@@ -51,35 +51,35 @@
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 72,
-   "kept": 72,
+   "read": 70,
+   "kept": 70,
    "complete": true,
    "pages": 4,
    "sec": 9
   },
   "yahoo_closed": {
    "ok": true,
-   "read": 58,
-   "kept": 58,
+   "read": 57,
+   "kept": 57,
    "complete": true,
    "pages": 4,
    "sec": 10
   },
   "rakuma": {
    "ok": true,
-   "read": 838,
-   "kept": 838,
-   "complete": true,
+   "read": 834,
+   "kept": 834,
+   "complete": false,
    "pages": 22,
    "sec": 53
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 62,
-   "kept": 62,
+   "read": 60,
+   "kept": 60,
    "complete": true,
    "pages": 2,
-   "sec": 5
+   "sec": 4
   },
   "secondstreet": {
    "ok": true,
@@ -95,38 +95,38 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 1
+   "sec": 2
   },
   "mercari_jp": {
    "ok": true,
-   "read": 364,
-   "kept": 364,
+   "read": 358,
+   "kept": 358,
    "complete": true,
    "pages": 7,
-   "sec": 94
+   "sec": 96
   },
   "ff_new": {
    "ok": true,
-   "kept": 0,
-   "candidates": 0,
-   "read": 0,
+   "kept": 2,
+   "candidates": 2,
+   "read": 2,
    "notBrand": 0,
-   "pages": 18,
+   "pages": 16,
    "reached": true,
-   "newest": "2026-10-02T19:59:54.000Z",
+   "newest": "2026-10-03T19:59:47.000Z",
    "complete": false,
-   "sec": 44
+   "sec": 46
   },
   "ff_check": {
    "ok": true,
-   "checked": 1,
-   "sec": 2
+   "checked": 7,
+   "sec": 16
   },
   "grailed": {
    "ok": true,
-   "kept": 1782,
-   "cards": 1782,
-   "total": 1782,
+   "kept": 1784,
+   "cards": 1784,
+   "total": 1784,
    "calls": 15,
    "complete": true,
    "via": "search",
@@ -138,12 +138,12 @@
   }
  },
  "counts": {
-  "entries": 2195,
-  "items": 2133,
+  "entries": 2207,
+  "items": 2127,
   "grouped": 46,
-  "fresh": 20,
-  "changed": 20,
+  "fresh": 12,
+  "changed": 18,
   "sold": 43,
-  "gone": 46
+  "gone": 61
  }
 }

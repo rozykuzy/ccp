@@ -1,7 +1,9 @@
 # Archive Index — Carol Christian Poell. Collect, build and publish once a day.
 #
-# 22:17 UTC is 07:17 KST, so the day's page and mail are ready well before the
-# 09:05 mail goes out (scheduled runs often start 5–30 minutes late).
+# 17:17 UTC is 02:17 KST. GitHub starts scheduled runs late: a 07:17 KST schedule
+# started between 09:35 and 11:16 KST every day from 2026-09-29 to 10-09 (138–240
+# minutes late), after the 09:00 mail. From 02:17 even a four-hour delay ends near
+# 06:30, before the mail. The build counts days in KST (lib.mjs today()).
 #
 # Once, by the repository owner:
 #   Settings → Pages → Source: "GitHub Actions"
@@ -11,7 +13,7 @@
 name: daily
 on:
   schedule:
-    - cron: '17 22 * * *'
+    - cron: '17 17 * * *'
   workflow_dispatch: {}
 
 permissions:

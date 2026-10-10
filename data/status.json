@@ -1,6 +1,6 @@
 {
- "day": "2026-10-10",
- "issue": 13,
+ "day": "2026-10-11",
+ "issue": 14,
  "rates": {
   "USD": 1341,
   "GBP": 1773,
@@ -37,25 +37,22 @@
   "from": "ECB"
  },
  "stats": {
-  "added": 22,
-  "back": 0,
-  "changed": 19,
-  "drops": 15,
-  "rises": 4,
+  "added": 8,
+  "back": 1,
+  "changed": 23,
+  "drops": 20,
+  "rises": 3,
   "recur": 0,
-  "vanished": 5,
+  "vanished": 17,
   "held": [],
   "flood": []
  },
  "soldAdded": 0,
  "sources": {
   "yahoo_auctions": {
-   "ok": true,
-   "read": 73,
-   "kept": 73,
-   "complete": true,
-   "pages": 4,
-   "sec": 9
+   "ok": false,
+   "refused": false,
+   "error": "HTTP 500 https://auctions.yahoo.co.jp/search/search?p=carol%20christian%20poell"
   },
   "yahoo_closed": {
    "ok": true,
@@ -63,20 +60,20 @@
    "kept": 57,
    "complete": true,
    "pages": 4,
-   "sec": 10
+   "sec": 8
   },
   "rakuma": {
    "ok": true,
-   "read": 839,
-   "kept": 839,
+   "read": 840,
+   "kept": 840,
    "complete": true,
    "pages": 22,
    "sec": 53
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 68,
-   "kept": 68,
+   "read": 67,
+   "kept": 67,
    "complete": true,
    "pages": 2,
    "sec": 4
@@ -95,38 +92,38 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 2
+   "sec": 1
   },
   "mercari_jp": {
    "ok": true,
-   "read": 359,
-   "kept": 359,
-   "complete": false,
+   "read": 364,
+   "kept": 364,
+   "complete": true,
    "pages": 7,
-   "sec": 92
+   "sec": 95
   },
   "ff_new": {
    "ok": true,
-   "kept": 2,
-   "candidates": 4,
-   "read": 3,
-   "notBrand": 1,
-   "pages": 17,
+   "kept": 1,
+   "candidates": 1,
+   "read": 1,
+   "notBrand": 0,
+   "pages": 16,
    "reached": true,
-   "newest": "2026-10-09T19:59:57.000Z",
+   "newest": "2026-10-10T19:59:04.000Z",
    "complete": false,
-   "sec": 50
+   "sec": 40
   },
   "ff_check": {
    "ok": true,
-   "checked": 6,
-   "sec": 15
+   "checked": 10,
+   "sec": 26
   },
   "grailed": {
    "ok": true,
-   "kept": 1803,
-   "cards": 1803,
-   "total": 1803,
+   "kept": 1795,
+   "cards": 1795,
+   "total": 1795,
    "calls": 15,
    "complete": true,
    "via": "search",
@@ -138,12 +135,12 @@
   }
  },
  "counts": {
-  "entries": 2321,
-  "items": 2165,
+  "entries": 2329,
+  "items": 2153,
   "grouped": 46,
-  "fresh": 22,
-  "changed": 19,
+  "fresh": 8,
+  "changed": 23,
   "sold": 46,
-  "gone": 125
+  "gone": 141
  }
 }

@@ -1,38 +1,38 @@
 {
- "startedAt": "2026-10-12T23:38:37.787Z",
- "day": "2026-10-13",
+ "startedAt": "2026-10-13T21:53:07.982Z",
+ "day": "2026-10-14",
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 73,
-   "kept": 73,
+   "read": 75,
+   "kept": 75,
    "complete": true,
    "pages": 4,
    "sec": 9
   },
   "yahoo_closed": {
    "ok": true,
-   "read": 58,
-   "kept": 58,
+   "read": 57,
+   "kept": 57,
    "complete": true,
    "pages": 4,
    "sec": 10
   },
   "rakuma": {
    "ok": true,
-   "read": 840,
-   "kept": 840,
+   "read": 842,
+   "kept": 842,
    "complete": true,
    "pages": 22,
    "sec": 53
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 65,
-   "kept": 65,
+   "read": 66,
+   "kept": 66,
    "complete": true,
    "pages": 2,
-   "sec": 4
+   "sec": 5
   },
   "secondstreet": {
    "ok": true,
@@ -40,7 +40,7 @@
    "kept": 6,
    "complete": true,
    "pages": 1,
-   "sec": 2
+   "sec": 1
   },
   "ff_brand": {
    "ok": true,
@@ -52,34 +52,34 @@
   },
   "mercari_jp": {
    "ok": true,
-   "read": 365,
-   "kept": 365,
+   "read": 361,
+   "kept": 361,
    "complete": true,
    "pages": 7,
-   "sec": 92
+   "sec": 95
   },
   "ff_new": {
    "ok": true,
-   "kept": 1,
-   "candidates": 5,
-   "read": 2,
-   "notBrand": 1,
-   "pages": 18,
+   "kept": 0,
+   "candidates": 0,
+   "read": 0,
+   "notBrand": 0,
+   "pages": 19,
    "reached": true,
-   "newest": "2026-10-12T19:59:29.000Z",
+   "newest": "2026-10-13T19:59:45.000Z",
    "complete": false,
-   "sec": 49
+   "sec": 46
   },
   "ff_check": {
    "ok": true,
-   "checked": 10,
-   "sec": 25
+   "checked": 8,
+   "sec": 20
   },
   "grailed": {
    "ok": true,
-   "kept": 1784,
-   "cards": 1784,
-   "total": 1784,
+   "kept": 1780,
+   "cards": 1780,
+   "total": 1780,
    "calls": 15,
    "complete": true,
    "via": "search",
@@ -90,5 +90,5 @@
    "skipped": "EBAY_CLIENT_ID / EBAY_CLIENT_SECRET not set"
   }
  },
- "finishedAt": "2026-10-12T23:43:20.163Z"
+ "finishedAt": "2026-10-13T21:57:44.924Z"
 }

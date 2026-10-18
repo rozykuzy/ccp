@@ -1,6 +1,6 @@
 {
- "day": "2026-10-18",
- "issue": 21,
+ "day": "2026-10-19",
+ "issue": 22,
  "rates": {
   "USD": 1332,
   "GBP": 1776,
@@ -37,46 +37,46 @@
   "from": "ECB"
  },
  "stats": {
-  "added": 20,
-  "back": 2,
-  "changed": 13,
-  "drops": 9,
-  "rises": 4,
+  "added": 11,
+  "back": 5,
+  "changed": 16,
+  "drops": 13,
+  "rises": 3,
   "recur": 0,
-  "vanished": 78,
+  "vanished": 22,
   "held": [],
   "flood": []
  },
- "soldAdded": 0,
+ "soldAdded": 2,
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 80,
-   "kept": 80,
+   "read": 75,
+   "kept": 75,
    "complete": true,
    "pages": 4,
    "sec": 9
   },
   "yahoo_closed": {
    "ok": true,
-   "read": 52,
-   "kept": 52,
+   "read": 54,
+   "kept": 54,
    "complete": true,
    "pages": 4,
    "sec": 10
   },
   "rakuma": {
    "ok": true,
-   "read": 839,
-   "kept": 839,
+   "read": 843,
+   "kept": 843,
    "complete": true,
    "pages": 22,
    "sec": 53
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 64,
-   "kept": 64,
+   "read": 63,
+   "kept": 63,
    "complete": true,
    "pages": 2,
    "sec": 5
@@ -96,11 +96,11 @@
   },
   "mercari_jp": {
    "ok": true,
-   "read": 363,
-   "kept": 363,
+   "read": 366,
+   "kept": 366,
    "complete": true,
    "pages": 7,
-   "sec": 97
+   "sec": 96
   },
   "ff_new": {
    "ok": true,
@@ -108,16 +108,16 @@
    "candidates": 0,
    "read": 0,
    "notBrand": 0,
-   "pages": 1,
+   "pages": 18,
    "reached": true,
-   "newest": "2026-10-16T19:59:54.000Z",
+   "newest": "2026-10-17T19:59:43.000Z",
    "complete": false,
-   "sec": 1
+   "sec": 43
   },
   "ff_check": {
    "ok": true,
-   "checked": 18,
-   "sec": 45
+   "checked": 12,
+   "sec": 31
   },
   "grailed": {
    "ok": true,
@@ -135,12 +135,12 @@
   }
  },
  "counts": {
-  "entries": 2447,
-  "items": 2061,
-  "grouped": 52,
-  "fresh": 20,
-  "changed": 13,
-  "sold": 47,
-  "gone": 336
+  "entries": 2458,
+  "items": 2056,
+  "grouped": 53,
+  "fresh": 11,
+  "changed": 16,
+  "sold": 49,
+  "gone": 353
  }
 }

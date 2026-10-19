@@ -572,6 +572,29 @@ const S = Object.fromEntries(SOURCES.map((s) => [s.file, s]));
   for (const f of Object.keys(FILES)) assert.ok(FILES[f].name && FILES[f].kind);
   ok('template: slot, storage keys, categories');
 }
+// ── the page on an old phone and under its own policy (2026-10-20) ──────────
+{
+  const tpl = readFileSync(new URL('./template.html', import.meta.url), 'utf8');
+  const code = tpl.slice(tpl.indexOf('<script>'));
+  // Safari before 16.4 stops at a lookbehind and the whole page is blank
+  assert.equal(/\(\?<[!=]/.test(code), false, 'no lookbehind in the page script');
+  const usole = new RegExp(/\['usole','U솔',\/(.+?)\/i\]/.exec(tpl)[1], 'i');
+  for (const [t, want] of [['AM/2601L U-SOLE', true], ['u sole boots', true], ['CCP PU SOLE', false], ['menu sole', false], ['2601u sole', true], ['uソール', true]])
+    assert.equal(usole.test(t), want, 'U-sole: ' + t);
+  // the policy is the first thing in <head> after the charset, and lets the page do what it does
+  const csp = /<meta http-equiv="Content-Security-Policy" content="([^"]+)">/.exec(tpl);
+  assert.ok(csp && tpl.indexOf(csp[0]) < tpl.indexOf('<link'), 'CSP before any resource');
+  for (const d of ["default-src 'none'", 'https://fonts.googleapis.com', 'https://fonts.gstatic.com', "connect-src 'self'", "base-uri 'none'", "object-src 'none'"])
+    assert.ok(csp[1].includes(d), 'CSP has ' + d);
+  // a currency that is not one of ours is written as text
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const won = (n) => Number(n || 0).toLocaleString('ko-KR');
+  const hh = /function histHtml[\s\S]*?\r?\n}\r?\n/.exec(tpl)[0];   // (a Windows checkout has CRLF)
+  const histHtml = new Function('esc', 'won', 'SYM', hh + 'return histHtml;')(esc, won, { USD: '$' });
+  const out = histHtml({ u: '<img src=x onerror=alert(1)>', h: [['2026-10-01', 100000, 70], ['2026-10-02', 90000, 60]] });
+  assert.ok(!out.includes('<img') && out.includes('&lt;img'), 'currency escaped in the price history');
+  ok('template: no lookbehind, U-sole as before, CSP, currency escaped');
+}
 
 // ── the first live reading (2026-09-28): Rakuma's cards, Mercari's cards, a same-day re-read ──
 {

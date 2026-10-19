@@ -2,6 +2,9 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<!-- What this page may load: its own inline code and data, Google Fonts, listing photos from any seller's host,
+     archive.json from here. No other scripts, no connections elsewhere, no forms, no <base>, no plugins. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src https: http: data: blob:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <link rel="icon" href="data:,">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Archive Index — Carol Christian Poell</title>
@@ -734,7 +737,8 @@ var MOTIF=[['drip','드립',/drip|ドリップ|드립/i],
  ['prosthetic','프로스테틱',/prosthetic|プロステティック|프로스테틱/i],
  ['tornado','토네이도',/tornado|トルネード|토네이도/i],
  ['diagonalzip','다이애거널 지퍼',/diagonal[\s-]*zip|ダイアゴナル|다이[애아]고?[널날]/i],
- ['usole','U솔',/(?<![a-z])u[\s-]*sole|uソール|u\s*솔/i],
+ // (no lookbehind: Safari before 16.4 cannot parse one, and the whole script would stop there)
+ ['usole','U솔',/(?:^|[^a-z])u[\s-]*sole|uソール|u\s*솔/i],
  ['paperdart','페이퍼 다트',/paper[\s-]*dart|ペーパーダート|페이퍼\s*다트/i],
  ['goodyear','굿이어',/good[\s-]*year|グッドイヤー|굿이어/i],
  ['officer','오피서',/officer|オフィサー|오피서/i],
@@ -1877,7 +1881,7 @@ function medianOf(a){ var m=a.length>>1; return a.length%2 ? a[m] : Math.round((
    with won, the way the cards do, with the seller's price beside it. */
 function histHtml(it){
   if(!it.h||it.h.length<2) return '';
-  var cur=it.u||'', sym=cur&&cur!=='KRW'?(SYM[cur]||cur+' '):'';
+  var cur=it.u||'', sym=cur&&cur!=='KRW'?(SYM[cur]||esc(cur)+' '):'';
   var nat=function(pt){ return pt.length>2 && pt[2]>0 ? pt[2] : null };
   var haveNat=it.h.every(function(pt){ return nat(pt)!=null });
   // For a listing priced in another currency, the won figure alone cannot say

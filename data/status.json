@@ -1,6 +1,6 @@
 {
- "day": "2026-10-24",
- "issue": 27,
+ "day": "2026-10-25",
+ "issue": 28,
  "rates": {
   "USD": 1324,
   "GBP": 1771,
@@ -38,12 +38,12 @@
  },
  "stats": {
   "added": 16,
-  "back": 0,
-  "changed": 17,
-  "drops": 13,
+  "back": 1,
+  "changed": 19,
+  "drops": 15,
   "rises": 4,
   "recur": 0,
-  "vanished": 63,
+  "vanished": 14,
   "held": [],
   "flood": []
  },
@@ -51,8 +51,8 @@
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 77,
-   "kept": 77,
+   "read": 76,
+   "kept": 76,
    "complete": true,
    "pages": 4,
    "sec": 9
@@ -67,16 +67,16 @@
   },
   "rakuma": {
    "ok": true,
-   "read": 620,
-   "kept": 620,
+   "read": 623,
+   "kept": 623,
    "complete": true,
    "pages": 16,
-   "sec": 38
+   "sec": 39
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 61,
-   "kept": 61,
+   "read": 64,
+   "kept": 64,
    "complete": true,
    "pages": 2,
    "sec": 5
@@ -92,42 +92,42 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 1
+   "sec": 2
   },
   "mercari_jp": {
    "ok": true,
-   "read": 390,
-   "kept": 390,
+   "read": 391,
+   "kept": 391,
    "complete": true,
    "pages": 7,
-   "sec": 94
+   "sec": 93
   },
   "ff_new": {
    "ok": true,
-   "kept": 1,
-   "candidates": 1,
-   "read": 1,
+   "kept": 0,
+   "candidates": 0,
+   "read": 0,
    "notBrand": 0,
-   "pages": 18,
+   "pages": 1,
    "reached": true,
    "newest": "2026-10-23T19:59:20.000Z",
    "complete": false,
-   "sec": 46
+   "sec": 1
   },
   "ff_check": {
    "ok": true,
-   "checked": 21,
-   "sec": 52
+   "checked": 12,
+   "sec": 30
   },
   "grailed": {
    "ok": true,
-   "kept": 1543,
-   "cards": 1543,
-   "total": 1543,
+   "kept": 1544,
+   "cards": 1544,
+   "total": 1544,
    "calls": 15,
    "complete": true,
    "via": "search",
-   "sec": 36
+   "sec": 35
   },
   "ebay": {
    "ok": false,
@@ -135,12 +135,12 @@
   }
  },
  "counts": {
-  "entries": 2542,
-  "items": 1925,
-  "grouped": 49,
+  "entries": 2558,
+  "items": 1926,
+  "grouped": 50,
   "fresh": 16,
-  "changed": 17,
+  "changed": 19,
   "sold": 52,
-  "gone": 564
+  "gone": 577
  }
 }

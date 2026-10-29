@@ -1,49 +1,49 @@
 {
- "day": "2026-10-29",
- "issue": 32,
+ "day": "2026-10-30",
+ "issue": 33,
  "rates": {
-  "USD": 1340,
+  "USD": 1337,
   "GBP": 1781,
-  "EUR": 1492,
-  "JPY": 849,
+  "EUR": 1488,
+  "JPY": 846,
   "more": {
-   "AUD": 942.74,
-   "BRL": 251.63,
-   "CAD": 954.31,
-   "CHF": 1613.87,
-   "CNY": 201.08,
-   "CZK": 61.24,
-   "DKK": 199.67,
-   "HKD": 170.87,
+   "AUD": 939.53,
+   "BRL": 249.89,
+   "CAD": 955.51,
+   "CHF": 1613.97,
+   "CNY": 200.74,
+   "CZK": 61.16,
+   "DKK": 199.15,
+   "HKD": 170.43,
    "HUF": 4.07,
    "IDR": 0.07,
-   "ILS": 428.82,
-   "INR": 14.08,
-   "ISK": 10.99,
-   "MXN": 71.95,
-   "MYR": 328.79,
-   "NOK": 144.22,
-   "NZD": 752.46,
+   "ILS": 429.18,
+   "INR": 14.04,
+   "ISK": 10.96,
+   "MXN": 71.33,
+   "MYR": 329.42,
+   "NOK": 144.06,
+   "NZD": 751.07,
    "PHP": 20.95,
-   "PLN": 338.82,
-   "RON": 278.9,
-   "SEK": 134.98,
-   "SGD": 1045.5,
-   "THB": 39.69,
-   "TRY": 26.9,
-   "ZAR": 80.52
+   "PLN": 338.75,
+   "RON": 278.51,
+   "SEK": 135.32,
+   "SGD": 1043.39,
+   "THB": 39.62,
+   "TRY": 26.83,
+   "ZAR": 80.36
   },
-  "date": "2026-10-28",
+  "date": "2026-10-29",
   "from": "ECB"
  },
  "stats": {
-  "added": 28,
-  "back": 0,
-  "changed": 184,
-  "drops": 184,
+  "added": 121,
+  "back": 2,
+  "changed": 187,
+  "drops": 187,
   "rises": 0,
   "recur": 0,
-  "vanished": 37,
+  "vanished": 132,
   "held": [],
   "flood": []
  },
@@ -51,35 +51,35 @@
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 71,
-   "kept": 71,
+   "read": 73,
+   "kept": 73,
    "complete": true,
    "pages": 4,
    "sec": 9
   },
   "yahoo_closed": {
    "ok": true,
-   "read": 57,
-   "kept": 57,
+   "read": 56,
+   "kept": 56,
    "complete": true,
    "pages": 4,
    "sec": 10
   },
   "rakuma": {
    "ok": true,
-   "read": 620,
-   "kept": 620,
+   "read": 622,
+   "kept": 622,
    "complete": true,
    "pages": 16,
-   "sec": 38
+   "sec": 40
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 71,
-   "kept": 71,
+   "read": 74,
+   "kept": 74,
    "complete": true,
    "pages": 2,
-   "sec": 4
+   "sec": 5
   },
   "secondstreet": {
    "ok": false,
@@ -92,38 +92,38 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 1
+   "sec": 2
   },
   "mercari_jp": {
    "ok": true,
-   "read": 404,
-   "kept": 404,
+   "read": 403,
+   "kept": 403,
    "complete": true,
    "pages": 7,
-   "sec": 96
+   "sec": 97
   },
   "ff_new": {
    "ok": true,
-   "kept": 0,
-   "candidates": 0,
-   "read": 0,
+   "kept": 2,
+   "candidates": 2,
+   "read": 2,
    "notBrand": 0,
    "pages": 20,
    "reached": true,
-   "newest": "2026-10-28T19:59:48.000Z",
+   "newest": "2026-10-29T19:59:48.000Z",
    "complete": false,
-   "sec": 48
+   "sec": 54
   },
   "ff_check": {
    "ok": true,
-   "checked": 12,
-   "sec": 30
+   "checked": 20,
+   "sec": 50
   },
   "grailed": {
    "ok": true,
-   "kept": 1425,
-   "cards": 1425,
-   "total": 1425,
+   "kept": 1484,
+   "cards": 1484,
+   "total": 1484,
    "calls": 15,
    "complete": true,
    "via": "search",
@@ -135,12 +135,12 @@
   }
  },
  "counts": {
-  "entries": 2630,
-  "items": 1936,
+  "entries": 2751,
+  "items": 1925,
   "grouped": 14,
-  "fresh": 28,
-  "changed": 184,
+  "fresh": 121,
+  "changed": 187,
   "sold": 53,
-  "gone": 640
+  "gone": 770
  }
 }

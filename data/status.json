@@ -1,6 +1,6 @@
 {
- "day": "2026-10-31",
- "issue": 34,
+ "day": "2026-11-01",
+ "issue": 35,
  "rates": {
   "USD": 1335,
   "GBP": 1789,
@@ -37,13 +37,13 @@
   "from": "ECB"
  },
  "stats": {
-  "added": 29,
-  "back": 4,
-  "changed": 188,
-  "drops": 20,
-  "rises": 168,
+  "added": 23,
+  "back": 6,
+  "changed": 178,
+  "drops": 28,
+  "rises": 150,
   "recur": 0,
-  "vanished": 61,
+  "vanished": 26,
   "held": [],
   "flood": []
  },
@@ -51,16 +51,16 @@
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 74,
-   "kept": 74,
+   "read": 77,
+   "kept": 77,
    "complete": true,
    "pages": 4,
    "sec": 9
   },
   "yahoo_closed": {
    "ok": true,
-   "read": 56,
-   "kept": 56,
+   "read": 54,
+   "kept": 54,
    "complete": true,
    "pages": 4,
    "sec": 10
@@ -71,15 +71,15 @@
    "kept": 621,
    "complete": true,
    "pages": 16,
-   "sec": 38
+   "sec": 39
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 73,
-   "kept": 73,
+   "read": 71,
+   "kept": 71,
    "complete": true,
    "pages": 2,
-   "sec": 6
+   "sec": 5
   },
   "secondstreet": {
    "ok": false,
@@ -92,38 +92,38 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 2
+   "sec": 1
   },
   "mercari_jp": {
    "ok": true,
-   "read": 400,
-   "kept": 400,
+   "read": 395,
+   "kept": 395,
    "complete": true,
    "pages": 7,
-   "sec": 94
+   "sec": 98
   },
   "ff_new": {
    "ok": true,
-   "kept": 3,
-   "candidates": 4,
-   "read": 3,
+   "kept": 2,
+   "candidates": 2,
+   "read": 2,
    "notBrand": 0,
-   "pages": 19,
+   "pages": 16,
    "reached": true,
-   "newest": "2026-10-30T19:59:56.000Z",
+   "newest": "2026-10-31T19:59:46.000Z",
    "complete": false,
-   "sec": 53
+   "sec": 43
   },
   "ff_check": {
    "ok": true,
-   "checked": 14,
+   "checked": 13,
    "sec": 36
   },
   "grailed": {
    "ok": true,
-   "kept": 1483,
-   "cards": 1483,
-   "total": 1483,
+   "kept": 1492,
+   "cards": 1492,
+   "total": 1492,
    "calls": 15,
    "complete": true,
    "via": "search",
@@ -135,12 +135,12 @@
   }
  },
  "counts": {
-  "entries": 2780,
-  "items": 1895,
-  "grouped": 13,
-  "fresh": 29,
-  "changed": 188,
+  "entries": 2803,
+  "items": 1900,
+  "grouped": 14,
+  "fresh": 23,
+  "changed": 178,
   "sold": 53,
-  "gone": 827
+  "gone": 847
  }
 }

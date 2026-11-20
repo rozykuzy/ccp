@@ -1,11 +1,11 @@
 {
- "startedAt": "2026-11-19T23:36:56.026Z",
- "day": "2026-11-20",
+ "startedAt": "2026-11-20T23:07:46.557Z",
+ "day": "2026-11-21",
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 83,
-   "kept": 83,
+   "read": 82,
+   "kept": 82,
    "complete": true,
    "pages": 4,
    "sec": 19
@@ -28,8 +28,8 @@
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 71,
-   "kept": 71,
+   "read": 74,
+   "kept": 74,
    "complete": true,
    "pages": 2,
    "sec": 5
@@ -45,15 +45,15 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 1
+   "sec": 2
   },
   "mercari_jp": {
    "ok": true,
-   "read": 460,
-   "kept": 460,
+   "read": 445,
+   "kept": 445,
    "complete": true,
    "pages": 7,
-   "sec": 100
+   "sec": 96
   },
   "ff_new": {
    "ok": true,
@@ -63,29 +63,29 @@
    "notBrand": 0,
    "pages": 19,
    "reached": true,
-   "newest": "2026-11-19T19:59:14.000Z",
+   "newest": "2026-11-20T19:59:59.000Z",
    "complete": false,
    "sec": 51
   },
   "ff_check": {
    "ok": true,
-   "checked": 26,
-   "sec": 65
+   "checked": 21,
+   "sec": 51
   },
   "grailed": {
    "ok": true,
-   "kept": 1634,
-   "cards": 1634,
-   "total": 1634,
+   "kept": 1632,
+   "cards": 1632,
+   "total": 1632,
    "calls": 15,
    "complete": true,
    "via": "search",
-   "sec": 36
+   "sec": 35
   },
   "ebay": {
    "ok": false,
    "skipped": "EBAY_CLIENT_ID / EBAY_CLIENT_SECRET not set"
   }
  },
- "finishedAt": "2026-11-19T23:42:21.273Z"
+ "finishedAt": "2026-11-20T23:12:54.893Z"
 }

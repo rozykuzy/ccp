@@ -1,6 +1,6 @@
 {
- "day": "2026-11-21",
- "issue": 55,
+ "day": "2026-11-22",
+ "issue": 56,
  "rates": {
   "USD": 1339,
   "GBP": 1758,
@@ -37,13 +37,13 @@
   "from": "ECB"
  },
  "stats": {
-  "added": 6,
-  "back": 0,
-  "changed": 218,
-  "drops": 218,
-  "rises": 0,
+  "added": 9,
+  "back": 2,
+  "changed": 195,
+  "drops": 17,
+  "rises": 178,
   "recur": 0,
-  "vanished": 11,
+  "vanished": 12,
   "held": [],
   "flood": []
  },
@@ -59,27 +59,27 @@
   },
   "yahoo_closed": {
    "ok": true,
-   "read": 56,
-   "kept": 56,
+   "read": 55,
+   "kept": 55,
    "complete": true,
    "pages": 4,
    "sec": 10
   },
   "rakuma": {
    "ok": true,
-   "read": 616,
-   "kept": 616,
+   "read": 615,
+   "kept": 615,
    "complete": true,
    "pages": 16,
    "sec": 38
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 74,
-   "kept": 74,
+   "read": 75,
+   "kept": 75,
    "complete": true,
    "pages": 2,
-   "sec": 5
+   "sec": 6
   },
   "secondstreet": {
    "ok": false,
@@ -92,42 +92,42 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 2
+   "sec": 1
   },
   "mercari_jp": {
    "ok": true,
-   "read": 445,
-   "kept": 445,
+   "read": 449,
+   "kept": 449,
    "complete": true,
    "pages": 7,
-   "sec": 96
+   "sec": 95
   },
   "ff_new": {
    "ok": true,
-   "kept": 2,
-   "candidates": 2,
-   "read": 2,
+   "kept": 1,
+   "candidates": 1,
+   "read": 1,
    "notBrand": 0,
-   "pages": 19,
+   "pages": 17,
    "reached": true,
-   "newest": "2026-11-20T19:59:59.000Z",
+   "newest": "2026-11-21T19:59:58.000Z",
    "complete": false,
-   "sec": 51
+   "sec": 44
   },
   "ff_check": {
    "ok": true,
-   "checked": 21,
-   "sec": 51
+   "checked": 17,
+   "sec": 43
   },
   "grailed": {
    "ok": true,
-   "kept": 1632,
-   "cards": 1632,
-   "total": 1632,
+   "kept": 1637,
+   "cards": 1637,
+   "total": 1637,
    "calls": 15,
    "complete": true,
    "via": "search",
-   "sec": 35
+   "sec": 36
   },
   "ebay": {
    "ok": false,
@@ -135,12 +135,12 @@
   }
  },
  "counts": {
-  "entries": 3227,
-  "items": 2046,
+  "entries": 3236,
+  "items": 2044,
   "grouped": 15,
-  "fresh": 6,
-  "changed": 218,
+  "fresh": 9,
+  "changed": 195,
   "sold": 58,
-  "gone": 1107
+  "gone": 1117
  }
 }

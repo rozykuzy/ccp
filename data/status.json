@@ -1,6 +1,6 @@
 {
- "day": "2026-11-22",
- "issue": 56,
+ "day": "2026-11-23",
+ "issue": 57,
  "rates": {
   "USD": 1339,
   "GBP": 1758,
@@ -37,13 +37,13 @@
   "from": "ECB"
  },
  "stats": {
-  "added": 9,
-  "back": 2,
-  "changed": 195,
-  "drops": 17,
-  "rises": 178,
+  "added": 10,
+  "back": 0,
+  "changed": 296,
+  "drops": 116,
+  "rises": 180,
   "recur": 0,
-  "vanished": 12,
+  "vanished": 13,
   "held": [],
   "flood": []
  },
@@ -51,35 +51,35 @@
  "sources": {
   "yahoo_auctions": {
    "ok": true,
-   "read": 82,
-   "kept": 82,
+   "read": 74,
+   "kept": 74,
    "complete": true,
    "pages": 4,
    "sec": 19
   },
   "yahoo_closed": {
    "ok": true,
-   "read": 55,
-   "kept": 55,
+   "read": 56,
+   "kept": 56,
    "complete": true,
    "pages": 4,
    "sec": 10
   },
   "rakuma": {
    "ok": true,
-   "read": 615,
-   "kept": 615,
+   "read": 612,
+   "kept": 612,
    "complete": true,
    "pages": 16,
    "sec": 38
   },
   "yahoo_fleamarket": {
    "ok": true,
-   "read": 75,
-   "kept": 75,
+   "read": 72,
+   "kept": 72,
    "complete": true,
    "pages": 2,
-   "sec": 6
+   "sec": 5
   },
   "secondstreet": {
    "ok": false,
@@ -92,32 +92,32 @@
    "kept": 40,
    "complete": false,
    "pages": 1,
-   "sec": 1
+   "sec": 2
   },
   "mercari_jp": {
    "ok": true,
-   "read": 449,
-   "kept": 449,
+   "read": 446,
+   "kept": 446,
    "complete": true,
    "pages": 7,
-   "sec": 95
+   "sec": 96
   },
   "ff_new": {
    "ok": true,
-   "kept": 1,
-   "candidates": 1,
-   "read": 1,
+   "kept": 0,
+   "candidates": 0,
+   "read": 0,
    "notBrand": 0,
-   "pages": 17,
+   "pages": 18,
    "reached": true,
-   "newest": "2026-11-21T19:59:58.000Z",
+   "newest": "2026-11-22T19:59:46.000Z",
    "complete": false,
    "sec": 44
   },
   "ff_check": {
    "ok": true,
-   "checked": 17,
-   "sec": 43
+   "checked": 26,
+   "sec": 65
   },
   "grailed": {
    "ok": true,
@@ -135,12 +135,12 @@
   }
  },
  "counts": {
-  "entries": 3236,
-  "items": 2044,
-  "grouped": 15,
-  "fresh": 9,
-  "changed": 195,
+  "entries": 3246,
+  "items": 2041,
+  "grouped": 13,
+  "fresh": 10,
+  "changed": 296,
   "sold": 58,
-  "gone": 1117
+  "gone": 1130
  }
 }
